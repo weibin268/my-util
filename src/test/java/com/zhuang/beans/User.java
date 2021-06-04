@@ -1,5 +1,6 @@
 package com.zhuang.beans;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ public class User {
 
     private String name;
     private Integer age;
+    private BigDecimal height;
     private Date birthday;
     private User wife;
     private List<User> sons = new ArrayList<>();
@@ -26,6 +28,14 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public BigDecimal getHeight() {
+        return height;
+    }
+
+    public void setHeight(BigDecimal height) {
+        this.height = height;
     }
 
     public Date getBirthday() {

@@ -9,9 +9,14 @@ import java.util.function.Consumer;
 
 public class BeanUtils {
 
+    @FunctionalInterface
+    public interface propertyHandler {
+        void handle(Object bean, String propertyName, Object propertyValue);
+    }
+
     private static List<Class> primitiveClasses = Arrays.asList(Number.class, String.class);
 
-    public static void recursiveProperty(Object bean, Consumer<Object> consumer, Class... classes) {
+    public static void recursiveProperty(Object bean, propertyHandler propertyHandler, Class... propertyClasses) {
         try {
             PropertyDescriptor[] descriptors = PropertyUtils.getPropertyDescriptors(bean);
             for (int i = 0; i < descriptors.length; i++) {
@@ -19,17 +24,17 @@ public class BeanUtils {
                 if (!"class".equals(name)) {
                     Object objProperty = PropertyUtils.getNestedProperty(bean, name);
                     if (objProperty == null) continue;
-                    if (classes.length > 0) {
-                        if (Arrays.stream(classes).anyMatch(c -> c.equals(objProperty.getClass()))) {
-                            consumer.accept(objProperty);
+                    if (propertyClasses.length > 0) {
+                        if (Arrays.stream(propertyClasses).anyMatch(c -> c.equals(objProperty.getClass()))) {
+                            propertyHandler.handle(bean, name, objProperty);
                         } else if (!primitiveClasses.stream().anyMatch(c -> c.isAssignableFrom(objProperty.getClass()))) {
-                            recursiveProperty(objProperty, consumer, classes);
+                            recursiveProperty(objProperty, propertyHandler, propertyClasses);
                         }
                     } else {
                         if (primitiveClasses.stream().anyMatch(c -> c.isAssignableFrom(objProperty.getClass()))) {
-                            consumer.accept(objProperty);
+                            propertyHandler.handle(bean, name, objProperty);
                         } else {
-                            recursiveProperty(objProperty, consumer, classes);
+                            recursiveProperty(objProperty, propertyHandler, propertyClasses);
                         }
                     }
                 }
