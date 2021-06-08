@@ -61,4 +61,16 @@ public class User {
     public void setSons(List<User> sons) {
         this.sons = sons;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", height=" + height +
+                ", birthday=" + birthday +
+                ", wife=" + wife +
+                ", sons=" + sons +
+                '}';
+    }
 }

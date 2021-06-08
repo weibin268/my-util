@@ -4,7 +4,6 @@ import com.zhuang.beans.User;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class BeanUtilsTest {
 
@@ -19,10 +18,9 @@ public class BeanUtilsTest {
         wife.setAge(17);
         wife.setHeight(new BigDecimal("1.60"));
         user.setWife(wife);
-        BeanUtils.recursiveProperty(user, (a, b, c) -> {
-            System.out.println(a);
-            System.out.println(b);
-            System.out.println(c);
+        BeanUtils.recursiveProperty(user, c -> {
+            System.out.println(c.getName() + ":" + c.getValue());
+            c.write(((BigDecimal) c.getValue()).stripTrailingZeros());
         }, BigDecimal.class);
 
         System.out.println(user);
