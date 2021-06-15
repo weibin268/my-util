@@ -144,7 +144,7 @@ public class BeanUtils {
     }
 
     private static boolean inClassList(Object obj, List<Class<?>> classList) {
-        return classList.stream().anyMatch(c -> c.equals(obj.getClass()));
+        return classList.stream().anyMatch(c -> c.isAssignableFrom(obj.getClass()));
     }
 
     private static boolean isPrimitiveClass(Object obj) {
