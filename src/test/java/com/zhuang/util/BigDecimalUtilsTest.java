@@ -13,7 +13,7 @@ public class BigDecimalUtilsTest {
     public void test() {
         BigDecimal a = new BigDecimal("0.3");
         BigDecimal b = new BigDecimal("0.4");
-        BigDecimal c = BigDecimalUtils.divide(a, b,4, RoundingMode.HALF_UP);
+        BigDecimal c = BigDecimalUtils.divide(a, b, 4, RoundingMode.HALF_UP);
         System.out.println(c);
         System.out.println(c.stripTrailingZeros());
         System.out.println(c.toPlainString());
@@ -23,6 +23,12 @@ public class BigDecimalUtilsTest {
     public void equals() {
         BigDecimal a = new BigDecimal("0.30");
         BigDecimal b = new BigDecimal("0.3");
-        System.out.println(BigDecimalUtils.equals(a,b));
+        System.out.println(BigDecimalUtils.equals(a, b));
+    }
+
+    @Test
+    public void equalsZero() {
+        BigDecimal a = new BigDecimal("0.0");
+        System.out.println(BigDecimalUtils.equalsZero(a));
     }
 }
