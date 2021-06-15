@@ -129,6 +129,11 @@ public class BeanUtils {
                     for (Object o : collection) {
                         recursiveProperty(o, propertyHandler, propertyClasses);
                     }
+                } else if (objProperty.getClass().isArray()) {
+                    Object[] objects = (Object[]) objProperty;
+                    for (Object o : objects) {
+                        recursiveProperty(o, propertyHandler, propertyClasses);
+                    }
                 } else {
                     recursiveProperty(objProperty, propertyHandler, propertyClasses);
                 }
