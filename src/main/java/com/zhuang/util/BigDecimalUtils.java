@@ -6,8 +6,11 @@ import java.math.RoundingMode;
 public class BigDecimalUtils {
 
     public static BigDecimal divide(BigDecimal a, BigDecimal b) {
-
         return divide(a, b, 4, RoundingMode.HALF_UP);
+    }
+
+    public static BigDecimal divide(BigDecimal a, BigDecimal b, int scale) {
+        return divide(a, b, scale, RoundingMode.HALF_UP);
     }
 
     public static BigDecimal divide(BigDecimal a, BigDecimal b, int scale, RoundingMode roundingMode) {
