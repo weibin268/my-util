@@ -6,6 +6,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class BeanUtils {
@@ -90,9 +91,9 @@ public class BeanUtils {
         }
     }
 
-    private static List<Class> primitiveClasses = Arrays.asList(Number.class, String.class);
+    private static final List<Class<?>> primitiveClasses = Arrays.asList(Number.class, String.class);
 
-    public static void recursiveProperty(Object bean, PropertyHandler propertyHandler, Class... propertyClasses) {
+    public static void recursiveProperty(Object bean, PropertyHandler propertyHandler, Class<?>... propertyClasses) {
         try {
             BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
@@ -114,12 +115,22 @@ public class BeanUtils {
                 if (propertyClasses.length > 0) {
                     if (Arrays.stream(propertyClasses).anyMatch(c -> c.equals(objProperty.getClass()))) {
                         propertyHandler.handle(propertyContext);
-                    } else if (!primitiveClasses.stream().anyMatch(c -> c.isAssignableFrom(objProperty.getClass()))) {
+                    } else if (Collection.class.isAssignableFrom(objProperty.getClass())) {
+                        Collection<?> collection = (Collection<?>) objProperty;
+                        for (Object o : collection) {
+                            recursiveProperty(o, propertyHandler, propertyClasses);
+                        }
+                    } else if (!isPrimitiveClass(objProperty)) {
                         recursiveProperty(objProperty, propertyHandler, propertyClasses);
                     }
                 } else {
-                    if (primitiveClasses.stream().anyMatch(c -> c.isAssignableFrom(objProperty.getClass()))) {
+                    if (isPrimitiveClass(objProperty)) {
                         propertyHandler.handle(propertyContext);
+                    } else if (Collection.class.isAssignableFrom(objProperty.getClass())) {
+                        Collection<?> collection = (Collection<?>) objProperty;
+                        for (Object o : collection) {
+                            recursiveProperty(o, propertyHandler, propertyClasses);
+                        }
                     } else {
                         recursiveProperty(objProperty, propertyHandler, propertyClasses);
                     }
@@ -128,6 +139,10 @@ public class BeanUtils {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean isPrimitiveClass(Object obj) {
+        return primitiveClasses.stream().anyMatch(c -> c.isAssignableFrom(obj.getClass()));
     }
 
 }
