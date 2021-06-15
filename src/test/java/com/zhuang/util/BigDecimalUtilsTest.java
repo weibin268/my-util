@@ -19,4 +19,10 @@ public class BigDecimalUtilsTest {
         System.out.println(c.toPlainString());
     }
 
+    @Test
+    public void equals() {
+        BigDecimal a = new BigDecimal("0.30");
+        BigDecimal b = new BigDecimal("0.3");
+        System.out.println(BigDecimalUtils.equals(a,b));
+    }
 }
