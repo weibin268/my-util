@@ -19,4 +19,28 @@ public class BigDecimalUtils {
         return a.divide(b, scale, roundingMode);
     }
 
+    public static BigDecimal multiply(BigDecimal a, BigDecimal b) {
+        if (a == null || b == null) return null;
+        return a.multiply(b);
+    }
+
+    public static BigDecimal subtract(BigDecimal a, BigDecimal b) {
+        if (a == null || b == null) return null;
+        return a.subtract(b);
+    }
+
+    public static BigDecimal add(BigDecimal a, BigDecimal b) {
+        if (a == null || b == null) return null;
+        return a.add(b);
+    }
+
+    public static boolean equals(BigDecimal a, BigDecimal b) {
+        if (a == null || b == null) return false;
+        return a.compareTo(b) == 0;
+    }
+
+    public static boolean equalsZero(BigDecimal a) {
+        if (a == null) return false;
+        return a.compareTo(BigDecimal.ZERO) == 0;
+    }
 }
