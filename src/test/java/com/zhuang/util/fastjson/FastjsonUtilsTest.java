@@ -4,6 +4,7 @@ import com.zhuang.model.User4Fastjson;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class FastjsonUtilsTest {
     @Test
@@ -12,6 +13,7 @@ public class FastjsonUtilsTest {
         user.setName("zwb");
         user.setAge(18);
         user.setHeight(new BigDecimal("1.10"));
+        user.setBirthday(new Date());
         String s = FastjsonUtils.toJsonStr(user);
         System.out.println(s);
     }

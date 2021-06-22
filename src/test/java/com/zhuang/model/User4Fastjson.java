@@ -14,6 +14,7 @@ public class User4Fastjson {
     private Integer age;
     @JSONField(serializeUsing = DecimalToStringSerializer.class)
     private BigDecimal height;
+    @JSONField(format="yyyy-MM-dd")
     private Date birthday;
 
 }
