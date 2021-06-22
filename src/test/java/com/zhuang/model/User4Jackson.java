@@ -1,5 +1,6 @@
 package com.zhuang.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zhuang.util.jackson.DecimalToStringSerializer;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class User4Jackson {
     private Integer age;
     @JsonSerialize(using = DecimalToStringSerializer.class)
     private BigDecimal height;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
 
 }
