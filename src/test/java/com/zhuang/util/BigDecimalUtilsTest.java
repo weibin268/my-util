@@ -31,4 +31,9 @@ public class BigDecimalUtilsTest {
         BigDecimal a = new BigDecimal("0.0");
         System.out.println(BigDecimalUtils.equalsZero(a));
     }
+
+    @Test
+    public void round() {
+        System.out.println(BigDecimalUtils.round(new BigDecimal("11.011"), 3));
+    }
 }

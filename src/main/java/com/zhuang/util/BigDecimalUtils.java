@@ -1,6 +1,7 @@
 package com.zhuang.util;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 public class BigDecimalUtils {
@@ -42,5 +43,53 @@ public class BigDecimalUtils {
     public static boolean equalsZero(BigDecimal a) {
         if (a == null) return false;
         return a.compareTo(BigDecimal.ZERO) == 0;
+    }
+
+    /**
+     * 保留有效数字
+     *
+     * @param num
+     * @param precision
+     * @return
+     */
+    public static BigDecimal round(BigDecimal num, int precision) {
+        return round(num, precision, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * 保留有效数字
+     *
+     * @param num
+     * @param precision
+     * @param roundingMode
+     * @return
+     */
+    public static BigDecimal round(BigDecimal num, int precision, RoundingMode roundingMode) {
+        if (num == null) return null;
+        return num.round(new MathContext(precision, roundingMode));
+    }
+
+    /**
+     * 保留小数位数
+     *
+     * @param num
+     * @param scale
+     * @return
+     */
+    public static BigDecimal scale(BigDecimal num, int scale) {
+        return scale(num, scale, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * 保留小数位数
+     *
+     * @param num
+     * @param scale
+     * @param roundingMode
+     * @return
+     */
+    public static BigDecimal scale(BigDecimal num, int scale, RoundingMode roundingMode) {
+        if (num == null) return null;
+        return num.setScale(scale, roundingMode);
     }
 }
