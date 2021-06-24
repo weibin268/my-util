@@ -3,6 +3,9 @@ package com.zhuang.util;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class BigDecimalUtils {
 
@@ -91,5 +94,28 @@ public class BigDecimalUtils {
     public static BigDecimal scale(BigDecimal num, int scale, RoundingMode roundingMode) {
         if (num == null) return null;
         return num.setScale(scale, roundingMode);
+    }
+
+    public static BigDecimal sum(List<BigDecimal> numList) {
+        return numList.stream().filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public static BigDecimal min(List<BigDecimal> numList) {
+        return numList.stream().filter(Objects::nonNull).min(BigDecimal::compareTo).orElse(null);
+    }
+
+    public static BigDecimal max(List<BigDecimal> numList) {
+        return numList.stream().filter(Objects::nonNull).max(BigDecimal::compareTo).orElse(null);
+    }
+
+    public static BigDecimal avg(List<BigDecimal> numList, int scale) {
+        return avg(numList, scale, RoundingMode.HALF_UP);
+    }
+
+    public static BigDecimal avg(List<BigDecimal> numList, int scale, RoundingMode roundingMode) {
+        numList = numList.stream().filter(Objects::nonNull).collect(Collectors.toList());
+        int size = numList.size();
+        if (size == 0) return null;
+        return divide(sum(numList), BigDecimal.valueOf(size), scale, roundingMode);
     }
 }
