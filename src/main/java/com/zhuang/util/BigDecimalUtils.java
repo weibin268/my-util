@@ -3,7 +3,7 @@ package com.zhuang.util;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -98,27 +98,27 @@ public class BigDecimalUtils {
         return num.setScale(scale, roundingMode);
     }
 
-    public static BigDecimal sum(List<BigDecimal> numList) {
+    public static BigDecimal sum(Collection<BigDecimal> numList) {
         return numList.stream().filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public static BigDecimal min(List<BigDecimal> numList) {
+    public static BigDecimal min(Collection<BigDecimal> numList) {
         return numList.stream().filter(Objects::nonNull).min(BigDecimal::compareTo).orElse(null);
     }
 
-    public static BigDecimal max(List<BigDecimal> numList) {
+    public static BigDecimal max(Collection<BigDecimal> numList) {
         return numList.stream().filter(Objects::nonNull).max(BigDecimal::compareTo).orElse(null);
     }
 
-    public static BigDecimal avg(List<BigDecimal> numList) {
+    public static BigDecimal avg(Collection<BigDecimal> numList) {
         return avg(numList, DEFAULT_SCALE);
     }
 
-    public static BigDecimal avg(List<BigDecimal> numList, int scale) {
+    public static BigDecimal avg(Collection<BigDecimal> numList, int scale) {
         return avg(numList, scale, RoundingMode.HALF_UP);
     }
 
-    public static BigDecimal avg(List<BigDecimal> numList, int scale, RoundingMode roundingMode) {
+    public static BigDecimal avg(Collection<BigDecimal> numList, int scale, RoundingMode roundingMode) {
         numList = numList.stream().filter(Objects::nonNull).collect(Collectors.toList());
         int size = numList.size();
         if (size == 0) return null;
