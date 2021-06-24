@@ -9,8 +9,10 @@ import java.util.stream.Collectors;
 
 public class BigDecimalUtils {
 
+    private static final int DEFAULT_SCALE = 4;
+
     public static BigDecimal divide(BigDecimal a, BigDecimal b) {
-        return divide(a, b, 4, RoundingMode.HALF_UP);
+        return divide(a, b, DEFAULT_SCALE, RoundingMode.HALF_UP);
     }
 
     public static BigDecimal divide(BigDecimal a, BigDecimal b, int scale) {
@@ -106,6 +108,10 @@ public class BigDecimalUtils {
 
     public static BigDecimal max(List<BigDecimal> numList) {
         return numList.stream().filter(Objects::nonNull).max(BigDecimal::compareTo).orElse(null);
+    }
+
+    public static BigDecimal avg(List<BigDecimal> numList) {
+        return avg(numList, DEFAULT_SCALE);
     }
 
     public static BigDecimal avg(List<BigDecimal> numList, int scale) {
