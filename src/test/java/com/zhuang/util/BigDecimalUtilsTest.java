@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -31,4 +32,15 @@ public class BigDecimalUtilsTest {
         BigDecimal a = new BigDecimal("0.0");
         System.out.println(BigDecimalUtils.equalsZero(a));
     }
+
+    @Test
+    public void round() {
+        System.out.println(BigDecimalUtils.round(new BigDecimal("11.011"), 3));
+    }
+
+    @Test
+    public void avg() {
+        System.out.println(BigDecimalUtils.avg(Arrays.asList(new BigDecimal("1.23"), new BigDecimal("4.33"), new BigDecimal("3.33"))));
+    }
+
 }

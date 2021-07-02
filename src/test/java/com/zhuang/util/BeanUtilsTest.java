@@ -1,6 +1,6 @@
 package com.zhuang.util;
 
-import com.zhuang.beans.User;
+import com.zhuang.model.User;
 import org.junit.Test;
 
 import java.math.BigDecimal;
