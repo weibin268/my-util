@@ -43,4 +43,14 @@ public class BigDecimalUtils {
         if (a == null) return false;
         return a.compareTo(BigDecimal.ZERO) == 0;
     }
+
+    /**
+     * 获取小数部分
+     * @param num
+     * @return
+     */
+    public BigDecimal getFraction(BigDecimal num){
+        return num.remainder(BigDecimal.ONE);
+    }
+
 }
