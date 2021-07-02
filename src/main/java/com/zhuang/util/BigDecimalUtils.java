@@ -124,4 +124,14 @@ public class BigDecimalUtils {
         if (size == 0) return null;
         return divide(sum(numList), BigDecimal.valueOf(size), scale, roundingMode);
     }
+
+    /**
+     * 获取小数部分
+     * @param num
+     * @return
+     */
+    public BigDecimal getFraction(BigDecimal num){
+        return num.remainder(BigDecimal.ONE);
+    }
+
 }
