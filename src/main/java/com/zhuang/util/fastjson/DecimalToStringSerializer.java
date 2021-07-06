@@ -18,8 +18,19 @@ public class DecimalToStringSerializer implements ObjectSerializer {
     @Override
     public void write(JSONSerializer jsonSerializer, Object o, Object o1, Type type, int i) {
         if (o instanceof BigDecimal) {
-            jsonSerializer.write(o.toString());
+            jsonSerializer.write(toString((BigDecimal) o));
         }
+    }
+
+    /**
+     * 转字符串，去小数多余零，去科学计数法
+     *
+     * @param num
+     * @return
+     */
+    private String toString(BigDecimal num) {
+        if (num == null) return null;
+        return num.stripTrailingZeros().toPlainString();
     }
 
 }
