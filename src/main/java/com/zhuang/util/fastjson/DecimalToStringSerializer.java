@@ -16,9 +16,9 @@ import java.math.BigDecimal;
 public class DecimalToStringSerializer implements ObjectSerializer {
 
     @Override
-    public void write(JSONSerializer jsonSerializer, Object o, Object o1, Type type, int i) throws IOException {
+    public void write(JSONSerializer jsonSerializer, Object o, Object o1, Type type, int i) {
         if (o instanceof BigDecimal) {
-            jsonSerializer.write(((BigDecimal) o).toString());
+            jsonSerializer.write(o.toString());
         }
     }
 
