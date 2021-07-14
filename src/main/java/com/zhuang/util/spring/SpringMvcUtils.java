@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class SpringMvcUtils {
 
-    private static final String DEFAULT_CHARSET = "UTF-8";
+    public static final String DEFAULT_CHARSET = "UTF-8";
 
     /**
      * 获取当前会话的 request
