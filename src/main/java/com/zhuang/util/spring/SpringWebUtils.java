@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
-public class SpringMvcUtils {
+public class SpringWebUtils {
 
     public static final String DEFAULT_CHARSET = "UTF-8";
 
@@ -71,7 +71,7 @@ public class SpringMvcUtils {
     }
 
     public static InputStream getFileInputStream(String resourceFilePath) {
-        return SpringMvcUtils.class.getResourceAsStream(resourceFilePath);
+        return SpringWebUtils.class.getResourceAsStream(resourceFilePath);
     }
 
     public static void toExcelFileResponse(HttpServletResponse response, String fileName) {
