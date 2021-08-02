@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(KafkaUtils.class)
-public @interface EnableKafkaUtils {
+@Import(RedisUtils.class)
+public @interface EnableRedisUtils {
 
 }
