@@ -1,18 +1,14 @@
 package com.zhuang.util;
 
 import org.apache.http.*;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import java.io.BufferedReader;
@@ -24,6 +20,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * http 请求工具（可以选择使用hutool的HttpUtil来替代该类功能）
+ */
 public class HttpClientUtils {
 
     /**
@@ -34,16 +33,13 @@ public class HttpClientUtils {
     public static String doGet(String url) {
         try {
             try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-                //发送get请求
                 HttpGet request = new HttpGet(url);
                 try (CloseableHttpResponse response = httpclient.execute(request)) {
-                    /**请求发送成功，并得到响应**/
                     if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                        /**读取服务器返回过来的json字符串数据**/
                         String strResult = EntityUtils.toString(response.getEntity());
                         return strResult;
                     } else {
-                        return "fail status code -> " + response.getStatusLine().getStatusCode();
+                        return getFailResult(response);
                     }
                 }
             }
@@ -59,14 +55,11 @@ public class HttpClientUtils {
      * @param params
      * @return
      */
-    public static String doPost(String url, Map params) {
+    public static String doPost(String url, Map<String, Object> params) {
         try {
-            // 定义HttpClient
             try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
-                // 实例化HTTP方法
                 HttpPost request = new HttpPost();
                 request.setURI(new URI(url));
-                //设置参数
                 List<NameValuePair> nameValuePairList = new ArrayList<>();
                 for (Iterator iter = params.keySet().iterator(); iter.hasNext(); ) {
                     String name = (String) iter.next();
@@ -76,7 +69,7 @@ public class HttpClientUtils {
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairList, Consts.UTF_8));
                 try (CloseableHttpResponse response = httpclient.execute(request)) {
                     int code = response.getStatusLine().getStatusCode();
-                    if (code == 200) {    //请求成功
+                    if (code == 200) {
                         BufferedReader in = null;
                         in = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), Consts.UTF_8));
                         StringBuffer sb = new StringBuffer("");
@@ -106,7 +99,7 @@ public class HttpClientUtils {
      */
     public static String doPostJson(String url, String json) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(url);// 创建httpPost
+        HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader("Content-Type", "application/json");
         String charSet = "UTF-8";
@@ -132,5 +125,4 @@ public class HttpClientUtils {
     private static String getFailResult(HttpResponse response) {
         return "fail status code -> " + response.getStatusLine().getStatusCode();
     }
-
 }
