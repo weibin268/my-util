@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * http 请求工具（可以选择使用hutool的HttpUtil来替代该类功能）
+ * http 请求工具（可以选择使用Hutool的HttpUtil来替代该类功能）
  */
 public class HttpClientUtils {
 
