@@ -14,7 +14,7 @@ public class PoiUtils {
 
     public static InputStream removeSheet(InputStream inputStream, List<Integer> sheetIndexList) {
         if (sheetIndexList == null || sheetIndexList.size() == 0) {
-            throw new RuntimeException("sheetIndexList can't be null or empty!");
+            return inputStream;
         }
         Workbook workbook = WorkbookUtil.createBook(inputStream);
         sheetIndexList.forEach(index -> workbook.removeSheetAt(index));
