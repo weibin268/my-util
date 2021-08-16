@@ -8,18 +8,20 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class PoiUtils {
 
-    public InputStream removeSheet(InputStream inputStream, Integer... sheetIndexes) {
-        Workbook workbook = WorkbookUtil.createBook(inputStream);
-        for (int i = 0; i < sheetIndexes.length; i++) {
-            workbook.removeSheetAt(i);
+    public static InputStream removeSheet(InputStream inputStream, List<Integer> sheetIndexList) {
+        if (sheetIndexList == null || sheetIndexList.size() == 0) {
+            throw new RuntimeException("sheetIndexList can't be null or empty!");
         }
+        Workbook workbook = WorkbookUtil.createBook(inputStream);
+        sheetIndexList.forEach(index -> workbook.removeSheetAt(index));
         return workbookToInputStream(workbook);
     }
 
-    public InputStream workbookToInputStream(Workbook workbook) {
+    public static InputStream workbookToInputStream(Workbook workbook) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             workbook.write(byteArrayOutputStream);
@@ -29,5 +31,5 @@ public class PoiUtils {
         ByteArrayInputStream result = IoUtil.toStream(byteArrayOutputStream.toByteArray());
         return result;
     }
-    
+
 }
