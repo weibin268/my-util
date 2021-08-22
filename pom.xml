@@ -10,7 +10,7 @@
 
     <groupId>com.github.weibin268</groupId>
     <artifactId>my-util</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
     <name>my-util</name>
     <description>my-util</description>
