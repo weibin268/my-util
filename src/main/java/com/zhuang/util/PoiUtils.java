@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,11 +37,17 @@ public class PoiUtils {
             return inputStream;
         }
         Workbook workbook = WorkbookUtil.createBook(inputStream);
-        sheetNameList.forEach(sheetName -> {
-            int sheetIndex = workbook.getSheetIndex(sheetName);
-            workbook.removeSheetAt(sheetIndex);
-        });
-        return workbookToInputStream(workbook);
+
+        return removeSheetByNames(workbook, sheetNameList);
+    }
+
+    public static InputStream removeSheetByIndexes(InputStream inputStream, List<Integer> sheetIndexList) {
+        if (sheetIndexList == null || sheetIndexList.size() == 0) {
+            return inputStream;
+        }
+        Workbook workbook = WorkbookUtil.createBook(inputStream);
+        List<String> sheetNameList = sheetIndexList.stream().map(c -> workbook.getSheetAt(c).getSheetName()).collect(Collectors.toList());
+        return removeSheetByNames(workbook, sheetNameList);
     }
 
     public static InputStream workbookToInputStream(Workbook workbook) {
@@ -74,4 +81,13 @@ public class PoiUtils {
         });
         return workbookToInputStream(workbook);
     }
+
+    private static InputStream removeSheetByNames(Workbook workbook, List<String> sheetNameList) {
+        sheetNameList.forEach(sheetName -> {
+            int sheetIndex = workbook.getSheetIndex(sheetName);
+            workbook.removeSheetAt(sheetIndex);
+        });
+        return workbookToInputStream(workbook);
+    }
+
 }

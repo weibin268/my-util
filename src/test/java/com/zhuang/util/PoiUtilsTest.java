@@ -21,9 +21,9 @@ public class PoiUtilsTest {
     @Test
     public void removeSheet() throws IOException {
         InputStream resourceAsStream = getClass().getResourceAsStream("/excel/test.xlsx");
+        //InputStream inputStream = PoiUtils.removeSheetByIndexes(resourceAsStream, Arrays.asList(0));
         InputStream inputStream = PoiUtils.removeSheetByNames(resourceAsStream, Arrays.asList("sheet1"));
         FileUtil.writeFromStream(inputStream, new File("D:\\temp\\test-out.xlsx"));
     }
-
 
 }
