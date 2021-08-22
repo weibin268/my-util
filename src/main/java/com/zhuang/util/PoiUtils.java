@@ -31,6 +31,29 @@ public class PoiUtils {
         return hiddenSheetByIndexes(workbook, false, sheetIndexList);
     }
 
+    public static InputStream removeSheetByNames(InputStream inputStream, List<String> sheetNameList) {
+        if (sheetNameList == null || sheetNameList.size() == 0) {
+            return inputStream;
+        }
+        Workbook workbook = WorkbookUtil.createBook(inputStream);
+        sheetNameList.forEach(sheetName -> {
+            int sheetIndex = workbook.getSheetIndex(sheetName);
+            workbook.removeSheetAt(sheetIndex);
+        });
+        return workbookToInputStream(workbook);
+    }
+
+    public static InputStream workbookToInputStream(Workbook workbook) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            workbook.write(byteArrayOutputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ByteArrayInputStream result = IoUtil.toStream(byteArrayOutputStream.toByteArray());
+        return result;
+    }
+
     private static InputStream hiddenSheetByIndexes(Workbook workbook, boolean veryHidden, List<Integer> sheetIndexList) {
         sheetIndexList.sort(Integer::compareTo);
         sheetIndexList.forEach(index -> {
@@ -51,16 +74,4 @@ public class PoiUtils {
         });
         return workbookToInputStream(workbook);
     }
-
-    public static InputStream workbookToInputStream(Workbook workbook) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try {
-            workbook.write(byteArrayOutputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ByteArrayInputStream result = IoUtil.toStream(byteArrayOutputStream.toByteArray());
-        return result;
-    }
-
 }

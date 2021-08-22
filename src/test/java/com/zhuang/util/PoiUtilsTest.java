@@ -11,10 +11,19 @@ import java.util.Arrays;
 public class PoiUtilsTest {
 
     @Test
-    public void removeSheet() throws IOException {
+    public void hiddenSheet() throws IOException {
         InputStream resourceAsStream = getClass().getResourceAsStream("/excel/test.xlsx");
         //InputStream inputStream = PoiUtils.hiddenSheetByIndexes(resourceAsStream, Arrays.asList(0));
         InputStream inputStream = PoiUtils.hiddenSheetByNames(resourceAsStream, Arrays.asList("sheet1"));
         FileUtil.writeFromStream(inputStream, new File("D:\\temp\\test-out.xlsx"));
     }
+
+    @Test
+    public void removeSheet() throws IOException {
+        InputStream resourceAsStream = getClass().getResourceAsStream("/excel/test.xlsx");
+        InputStream inputStream = PoiUtils.removeSheetByNames(resourceAsStream, Arrays.asList("sheet1"));
+        FileUtil.writeFromStream(inputStream, new File("D:\\temp\\test-out.xlsx"));
+    }
+
+
 }
