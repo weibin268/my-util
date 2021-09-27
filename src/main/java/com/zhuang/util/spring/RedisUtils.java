@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -41,12 +42,22 @@ public class RedisUtils {
         return _this.stringRedisTemplate.opsForValue().get(key);
     }
 
-    public static void delete(String pattern) {
+    public static void delete(String key) {
+        Set<String> keys = new HashSet<>();
+        keys.add(key);
+        _this.stringRedisTemplate.delete(keys);
+    }
+
+    public static void delete(Set<String> keys) {
+        _this.stringRedisTemplate.delete(keys);
+    }
+
+    public static void deleteByPattern(String pattern) {
         Set<String> keys = _this.stringRedisTemplate.keys(pattern);
         _this.stringRedisTemplate.delete(keys);
     }
 
-    public Object getNativeConnection(){
-        return  _this.stringRedisTemplate.getConnectionFactory().getConnection().getNativeConnection();
+    public Object getNativeConnection() {
+        return _this.stringRedisTemplate.getConnectionFactory().getConnection().getNativeConnection();
     }
 }
