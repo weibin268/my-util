@@ -41,7 +41,7 @@ public class RedisUtils {
         return _this.stringRedisTemplate.opsForValue().get(key);
     }
 
-    public void delete(String pattern) {
+    public static void delete(String pattern) {
         Set<String> keys = _this.stringRedisTemplate.keys(pattern);
         _this.stringRedisTemplate.delete(keys);
     }
