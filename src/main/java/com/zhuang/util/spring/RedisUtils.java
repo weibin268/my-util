@@ -56,6 +56,14 @@ public class RedisUtils {
         _this.stringRedisTemplate.delete(keys);
     }
 
+    public Long getExpire(String key, TimeUnit timeUnit) {
+        return _this.stringRedisTemplate.getExpire(key, timeUnit);
+    }
+
+    public Long getExpire(String key) {
+        return _this.stringRedisTemplate.getExpire(key);
+    }
+
     public Object getNativeConnection() {
         return _this.stringRedisTemplate.getConnectionFactory().getConnection().getNativeConnection();
     }
