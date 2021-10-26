@@ -17,6 +17,13 @@ import java.util.stream.Collectors;
 
 public class PoiUtils {
 
+    /**
+     * 根据工作表名称隐藏工作表
+     *
+     * @param inputStream
+     * @param sheetNameList
+     * @return
+     */
     public static InputStream hiddenSheetByNames(InputStream inputStream, List<String> sheetNameList) {
         if (sheetNameList == null || sheetNameList.size() == 0) {
             return inputStream;
@@ -26,6 +33,13 @@ public class PoiUtils {
         return hiddenSheetByIndexes(workbook, false, sheetIndexList);
     }
 
+    /**
+     * 根据工作表索引隐藏工作表
+     *
+     * @param inputStream
+     * @param sheetIndexList
+     * @return
+     */
     public static InputStream hiddenSheetByIndexes(InputStream inputStream, List<Integer> sheetIndexList) {
         if (sheetIndexList == null || sheetIndexList.size() == 0) {
             return inputStream;
@@ -34,6 +48,13 @@ public class PoiUtils {
         return hiddenSheetByIndexes(workbook, false, sheetIndexList);
     }
 
+    /**
+     * 根据工作表名称删除工作表
+     *
+     * @param inputStream
+     * @param sheetNameList
+     * @return
+     */
     public static InputStream removeSheetByNames(InputStream inputStream, List<String> sheetNameList) {
         if (sheetNameList == null || sheetNameList.size() == 0) {
             return inputStream;
@@ -43,6 +64,13 @@ public class PoiUtils {
         return removeSheetByNames(workbook, sheetNameList);
     }
 
+    /**
+     * 根据工作表索引删除工作表
+     *
+     * @param inputStream
+     * @param sheetIndexList
+     * @return
+     */
     public static InputStream removeSheetByIndexes(InputStream inputStream, List<Integer> sheetIndexList) {
         if (sheetIndexList == null || sheetIndexList.size() == 0) {
             return inputStream;
@@ -52,6 +80,12 @@ public class PoiUtils {
         return removeSheetByNames(workbook, sheetNameList);
     }
 
+    /**
+     * 将工作簿转为输入流
+     *
+     * @param workbook
+     * @return
+     */
     public static InputStream workbookToInputStream(Workbook workbook) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
@@ -65,6 +99,7 @@ public class PoiUtils {
 
     /**
      * 根据参数替换Word里的文本内容
+     *
      * @param inputStream
      * @param params
      * @return
