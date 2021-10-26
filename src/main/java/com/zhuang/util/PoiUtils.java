@@ -63,6 +63,12 @@ public class PoiUtils {
         return result;
     }
 
+    /**
+     * 根据参数替换Word里的文本内容
+     * @param inputStream
+     * @param params
+     * @return
+     */
     public static InputStream replaceWord(InputStream inputStream, Map<String, Object> params) {
         if (params == null && params.isEmpty()) {
             return inputStream;
