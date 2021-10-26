@@ -4,6 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.WorkbookUtil;
 import org.apache.poi.ss.usermodel.SheetVisibility;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PoiUtils {
@@ -61,6 +63,35 @@ public class PoiUtils {
         return result;
     }
 
+    public static InputStream replaceWord(InputStream inputStream, Map<String, Object> params) {
+        if (params == null && params.isEmpty()) {
+            return inputStream;
+        }
+        try {
+            XWPFDocument xwpfDocument = new XWPFDocument(inputStream);
+            // 处理段落
+            List<XWPFParagraph> paragraphs = xwpfDocument.getParagraphs();
+            replaceParagraphs(paragraphs, params);
+            // 处理表格
+            List<XWPFTable> tables = xwpfDocument.getTables();
+            for (XWPFTable table : tables) {
+                List<XWPFTableRow> rows = table.getRows();
+                for (XWPFTableRow row : rows) {
+                    List<XWPFTableCell> cells = row.getTableCells();
+                    for (XWPFTableCell cell : cells) {
+                        replaceParagraphs(cell.getParagraphs(), params);
+                    }
+                }
+            }
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            xwpfDocument.write(byteArrayOutputStream);
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+            return byteArrayInputStream;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static InputStream hiddenSheetByIndexes(Workbook workbook, boolean veryHidden, List<Integer> sheetIndexList) {
         sheetIndexList.sort(Integer::compareTo);
         sheetIndexList.forEach(index -> {
@@ -90,4 +121,16 @@ public class PoiUtils {
         return workbookToInputStream(workbook);
     }
 
+    private static void replaceParagraphs(List<XWPFParagraph> paragraphs, Map<String, Object> params) {
+        if (paragraphs == null || paragraphs.isEmpty()) return;
+        for (XWPFParagraph paragraph : paragraphs) {
+            List<XWPFRun> runs = paragraph.getRuns();
+            for (int i = 0; i < runs.size(); i++) {
+                XWPFRun run = runs.get(i);
+                params.entrySet().forEach(p -> {
+                    run.setText(run.getText(run.getTextPosition()).replace(p.getKey(), p.getValue().toString()), 0);
+                });
+            }
+        }
+    }
 }
