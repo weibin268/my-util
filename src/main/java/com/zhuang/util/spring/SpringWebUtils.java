@@ -4,6 +4,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
+import sun.nio.ch.IOUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +47,12 @@ public class SpringWebUtils {
         return servletRequestAttributes.getResponse();
     }
 
+    /**
+     * 获取上传文件的输入流
+     *
+     * @param request
+     * @return
+     */
     public static InputStream getFileInputStream(HttpServletRequest request) {
         InputStream result = null;
         StandardMultipartHttpServletRequest multipartRequest = new StandardMultipartHttpServletRequest(request);
@@ -61,6 +69,13 @@ public class SpringWebUtils {
         return result;
     }
 
+    /**
+     * 获取下载文件的输出流
+     *
+     * @param fileName
+     * @param response
+     * @return
+     */
     public static OutputStream getFileOutputStream(String fileName, HttpServletResponse response) {
         try {
             toFileResponse(response, fileName);
@@ -70,8 +85,35 @@ public class SpringWebUtils {
         }
     }
 
+    /**
+     * 获取资源文件的输入流
+     *
+     * @param resourceFilePath
+     * @return
+     */
     public static InputStream getFileInputStream(String resourceFilePath) {
         return SpringWebUtils.class.getResourceAsStream(resourceFilePath);
+    }
+
+    /**
+     * 通过输入流下载文件
+     *
+     * @param inputStream
+     * @param fileName
+     * @param response
+     */
+    public static void downloadFile(InputStream inputStream, String fileName, HttpServletResponse response) {
+        try {
+            toFileResponse(response, fileName);
+            OutputStream outputStream = response.getOutputStream();
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void toExcelFileResponse(HttpServletResponse response, String fileName) {
