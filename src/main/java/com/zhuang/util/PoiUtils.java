@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * 注意：Workbook需要close释放
+ */
 public class PoiUtils {
 
     /**
@@ -28,9 +31,12 @@ public class PoiUtils {
         if (sheetNameList == null || sheetNameList.size() == 0) {
             return inputStream;
         }
-        Workbook workbook = WorkbookUtil.createBook(inputStream);
-        List<Integer> sheetIndexList = sheetNameList.stream().map(c -> workbook.getSheetIndex(c)).collect(Collectors.toList());
-        return hiddenSheetByIndexes(workbook, false, sheetIndexList);
+        try (Workbook workbook = WorkbookUtil.createBook(inputStream)) {
+            List<Integer> sheetIndexList = sheetNameList.stream().map(c -> workbook.getSheetIndex(c)).collect(Collectors.toList());
+            return hiddenSheetByIndexes(workbook, false, sheetIndexList);
+        } catch (IOException e) {
+            throw new RuntimeException("PoiUtils.hiddenSheetByNames fail!", e);
+        }
     }
 
     /**
@@ -44,8 +50,11 @@ public class PoiUtils {
         if (sheetIndexList == null || sheetIndexList.size() == 0) {
             return inputStream;
         }
-        Workbook workbook = WorkbookUtil.createBook(inputStream);
-        return hiddenSheetByIndexes(workbook, false, sheetIndexList);
+        try (Workbook workbook = WorkbookUtil.createBook(inputStream)) {
+            return hiddenSheetByIndexes(workbook, false, sheetIndexList);
+        } catch (IOException e) {
+            throw new RuntimeException("PoiUtils.hiddenSheetByIndexes fail!", e);
+        }
     }
 
     /**
@@ -59,9 +68,11 @@ public class PoiUtils {
         if (sheetNameList == null || sheetNameList.size() == 0) {
             return inputStream;
         }
-        Workbook workbook = WorkbookUtil.createBook(inputStream);
-
-        return removeSheetByNames(workbook, sheetNameList);
+        try (Workbook workbook = WorkbookUtil.createBook(inputStream)) {
+            return removeSheetByNames(workbook, sheetNameList);
+        } catch (IOException e) {
+            throw new RuntimeException("PoiUtils.removeSheetByNames fail!", e);
+        }
     }
 
     /**
@@ -75,9 +86,12 @@ public class PoiUtils {
         if (sheetIndexList == null || sheetIndexList.size() == 0) {
             return inputStream;
         }
-        Workbook workbook = WorkbookUtil.createBook(inputStream);
-        List<String> sheetNameList = sheetIndexList.stream().map(c -> workbook.getSheetAt(c).getSheetName()).collect(Collectors.toList());
-        return removeSheetByNames(workbook, sheetNameList);
+        try (Workbook workbook = WorkbookUtil.createBook(inputStream)) {
+            List<String> sheetNameList = sheetIndexList.stream().map(c -> workbook.getSheetAt(c).getSheetName()).collect(Collectors.toList());
+            return removeSheetByNames(workbook, sheetNameList);
+        } catch (IOException e) {
+            throw new RuntimeException("PoiUtils.removeSheetByIndexes fail!", e);
+        }
     }
 
     /**
