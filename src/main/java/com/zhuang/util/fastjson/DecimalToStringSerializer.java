@@ -2,11 +2,7 @@ package com.zhuang.util.fastjson;
 
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 
