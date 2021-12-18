@@ -30,7 +30,7 @@ public class ChartUtils {
                 }
                 BigDecimal d = BigDecimal.valueOf(Math.pow(10, n));
                 BigDecimal tempMax = BigDecimal.valueOf(Math.ceil(max.divide(d).doubleValue())).multiply(d);
-                BigDecimal tempMin = BigDecimal.valueOf(Math.floor(min.divide(d).doubleValue())).divide(d);
+                BigDecimal tempMin = BigDecimal.valueOf(Math.floor(min.divide(d).doubleValue())).multiply(d);
                 result.setMin(tempMin);
                 result.setScale(d.multiply(BigDecimal.valueOf(0.2)));
                 result.setMax(tempMax);
