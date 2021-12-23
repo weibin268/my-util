@@ -2,7 +2,7 @@ package com.zhuang.util;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.Map;
@@ -42,7 +42,10 @@ public class SqlUtils {
     }
 
     public static String escapeSql(String str) {
-        return StringEscapeUtils.escapeSql(str);
+        if (str == null) {
+            return null;
+        }
+        return StringUtils.replace(str, "'", "''");
     }
 
 }
