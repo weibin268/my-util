@@ -21,4 +21,10 @@ public class SqlUtilsTest {
         System.out.println(s);
     }
 
+    @Test
+    public void escapeSql() {
+        String s = SqlUtils.escapeSql("'update t set b=2'");
+        System.out.println(s);
+    }
+
 }

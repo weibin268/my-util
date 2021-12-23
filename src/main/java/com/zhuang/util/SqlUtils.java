@@ -41,7 +41,7 @@ public class SqlUtils {
         return sql;
     }
 
-    protected static String escapeSql(String str) {
+    public static String escapeSql(String str) {
         return StringEscapeUtils.escapeSql(str);
     }
 
