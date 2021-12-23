@@ -2,6 +2,7 @@ package com.zhuang.util;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import java.util.Date;
 import java.util.Map;
@@ -38,6 +39,10 @@ public class SqlUtils {
 
         }
         return sql;
+    }
+
+    protected static String escapeSql(String str) {
+        return StringEscapeUtils.escapeSql(str);
     }
 
 }
