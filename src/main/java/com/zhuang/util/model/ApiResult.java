@@ -8,29 +8,29 @@ public class ApiResult<T> implements Serializable {
     private String message;
     private T data;
 
-    public static ApiResult alert(String message) {
-        ApiResult result = new ApiResult();
+    public static ApiResult<Object> alert(String message) {
+        ApiResult<Object> result = new ApiResult<>();
         result.setCode(-1);
         result.setMessage(message);
         return result;
     }
 
-    public static ApiResult error(String message) {
-        ApiResult result = new ApiResult();
+    public static ApiResult<Object> error(String message) {
+        ApiResult<Object> result = new ApiResult<>();
         result.setCode(1);
         result.setMessage(message);
         return result;
     }
 
-    public static ApiResult error(int code, String message) {
-        ApiResult result = new ApiResult();
+    public static ApiResult<Object> error(int code, String message) {
+        ApiResult<Object> result = new ApiResult<>();
         result.setCode(code);
         result.setMessage(message);
         return result;
     }
 
     public static <T> ApiResult<T> error(String message, T data) {
-        ApiResult<T> result = new ApiResult();
+        ApiResult<T> result = new ApiResult<>();
         result.setCode(1);
         result.setMessage(message);
         result.setData(data);
@@ -38,19 +38,19 @@ public class ApiResult<T> implements Serializable {
     }
 
     public static <T> ApiResult<T> error(int code, String message, T data) {
-        ApiResult<T> result = new ApiResult();
+        ApiResult<T> result = new ApiResult<>();
         result.setCode(code);
         result.setMessage(message);
         result.setData(data);
         return result;
     }
 
-    public static ApiResult success() {
-        return new ApiResult();
+    public static ApiResult<Object> success() {
+        return new ApiResult<Object>();
     }
 
     public static <T> ApiResult<T> success(T data) {
-        ApiResult<T> result = new ApiResult();
+        ApiResult<T> result = new ApiResult<>();
         result.setData(data);
         return result;
     }
