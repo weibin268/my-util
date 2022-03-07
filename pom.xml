@@ -79,6 +79,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.openoffice.version>3.0.1</org.openoffice.version>
     </properties>
 
     <dependencies>
@@ -196,6 +197,39 @@
             <version>4.5.13</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--begin openoffice-->
+        <dependency>
+            <groupId>com.artofsolving</groupId>
+            <artifactId>jodconverter</artifactId>
+            <version>2.2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openoffice</groupId>
+            <artifactId>jurt</artifactId>
+            <version>${org.openoffice.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openoffice</groupId>
+            <artifactId>ridl</artifactId>
+            <version>${org.openoffice.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openoffice</groupId>
+            <artifactId>juh</artifactId>
+            <version>${org.openoffice.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openoffice</groupId>
+            <artifactId>unoil</artifactId>
+            <version>${org.openoffice.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--end openoffice-->
     </dependencies>
 
     <dependencyManagement>
