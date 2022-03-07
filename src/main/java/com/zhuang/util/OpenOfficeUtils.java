@@ -41,8 +41,8 @@ public class OpenOfficeUtils {
 
             BasicDocumentFormatRegistry documentFormatRegistry = new DefaultDocumentFormatRegistry();
             // 添加xlsx格式
-            DocumentFormat xls = new DocumentFormat("Microsoft Excel", DocumentFamily.SPREADSHEET, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "xlsx");
-            xls.setExportFilter(DocumentFamily.SPREADSHEET, "MS Excel 2003");
+            DocumentFormat xls = new DocumentFormat("Microsoft Excel 2007-2013 XML", DocumentFamily.SPREADSHEET, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "xlsx");
+            xls.setExportFilter(DocumentFamily.SPREADSHEET, "Calc MS Excel 2007 XML");
             documentFormatRegistry.addDocumentFormat(xls);
             // 获取Format
             DocumentFormat inputDocumentFormat = documentFormatRegistry.getFormatByFileExtension(inputFileExtension);
