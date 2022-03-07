@@ -20,16 +20,28 @@ netstat -ano|findstr "8100"
 */
 public class OpenOfficeUtils {
 
+    private static String host = SocketOpenOfficeConnection.DEFAULT_HOST;
+
+    private static Integer port = SocketOpenOfficeConnection.DEFAULT_PORT;
+
+    public static void setHost(String host) {
+        OpenOfficeUtils.host = host;
+    }
+
+    public static void setPort(Integer port) {
+        OpenOfficeUtils.port = port;
+    }
+
     public static void convert(InputStream inputStream, String inputFileExtension, OutputStream outputStream, String outputFileExtension) {
         try {
             // 打开连接
-            OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100);
+            OpenOfficeConnection connection = new SocketOpenOfficeConnection(host, port);
             connection.connect();
             DocumentConverter converter = new OpenOfficeDocumentConverter(connection);
 
             BasicDocumentFormatRegistry documentFormatRegistry = new DefaultDocumentFormatRegistry();
             // 添加xlsx格式
-            DocumentFormat xls = new DocumentFormat("Microsoft Excel", DocumentFamily.SPREADSHEET, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" , "xlsx");
+            DocumentFormat xls = new DocumentFormat("Microsoft Excel", DocumentFamily.SPREADSHEET, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "xlsx");
             xls.setExportFilter(DocumentFamily.SPREADSHEET, "MS Excel 2003");
             documentFormatRegistry.addDocumentFormat(xls);
             // 获取Format
