@@ -60,9 +60,9 @@ public class OpenOfficeUtils {
     }
 
     public static void convert(File inputFile, File outputFile) {
-        try {
-            convert(new FileInputStream(inputFile), getFileExtension(inputFile.getName()), new FileOutputStream(outputFile), getFileExtension(outputFile.getName()));
-        } catch (FileNotFoundException e) {
+        try (FileInputStream fileInputStream = new FileInputStream(inputFile); FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
+            convert(fileInputStream, getFileExtension(inputFile.getName()), fileOutputStream, getFileExtension(outputFile.getName()));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
