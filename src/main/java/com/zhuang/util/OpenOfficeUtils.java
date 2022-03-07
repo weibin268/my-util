@@ -33,9 +33,9 @@ public class OpenOfficeUtils {
     }
 
     public static void convert(InputStream inputStream, String inputFileExtension, OutputStream outputStream, String outputFileExtension) {
+        OpenOfficeConnection connection = new SocketOpenOfficeConnection(host, port);
         try {
             // 打开连接
-            OpenOfficeConnection connection = new SocketOpenOfficeConnection(host, port);
             connection.connect();
             DocumentConverter converter = new OpenOfficeDocumentConverter(connection);
 
@@ -49,8 +49,13 @@ public class OpenOfficeUtils {
             DocumentFormat outputDocumentFormat = documentFormatRegistry.getFormatByFileExtension(outputFileExtension);
             // 执行转换
             converter.convert(inputStream, inputDocumentFormat, outputStream, outputDocumentFormat);
+
         } catch (ConnectException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (connection.isConnected()) {
+                connection.disconnect();
+            }
         }
     }
 
