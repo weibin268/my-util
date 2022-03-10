@@ -9,6 +9,12 @@ import java.util.function.Consumer;
 
 public class DateUtils {
 
+    /**
+     *
+     * @param strBeginDate 格式：yyyy-MM-dd
+     * @param strEndDate 格式：yyyy-MM-dd
+     * @param handler
+     */
     public static void handleEachDate(String strBeginDate, String strEndDate, Consumer<String> handler) {
         Date beginDate = DateUtil.parseDate(strBeginDate);
         Date endDate = DateUtil.parseDate(strEndDate);
