@@ -10,6 +10,8 @@ import java.io.*;
 import java.net.ConnectException;
 
 /*
+
+-- begin Windows
 启动OpenOffice服务
 1、进入目录
 cd C:\Program Files (x86)\OpenOffice 4\program
@@ -17,6 +19,23 @@ cd C:\Program Files (x86)\OpenOffice 4\program
 soffice -headless -accept="socket,host=127.0.0.1,port=8100;urp;" -nofirststartwizard
 3、查看是否启动成功
 netstat -ano|findstr "8100"
+-- end Windows
+
+-- begin linux
+1、下载
+wget https://jaist.dl.sourceforge.net/project/openofficeorg.mirror/4.1.11/binaries/zh-CN/Apache_OpenOffice_4.1.11_Linux_x86-64_install-rpm_zh-CN.tar.gz
+2、解压
+tar -zxvf Apache_OpenOffice_4.1.11_Linux_x86-64_install-rpm_zh-CN.tar.gz
+3、安装
+cd 到 /zh-CN/RPMS/
+yum localinstall *.rpm
+cd 到 /zh-CN/RPMS/desktop-integration/
+yum localinstall openoffice4.1.11-redhat-menus-4.1.11-9808.noarch.rpm
+/opt/openoffice4/program/soffice -headless -accept="socket,host=0.0.0.0,port=8100;urp;" -nofirststartwizard
+4、问题解决
+yum install libXext.x86_64
+yum groupinstall "X Window System"
+-- end linux
 */
 public class OpenOfficeUtils {
 
