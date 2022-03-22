@@ -1,5 +1,6 @@
 package com.zhuang.util;
 
+import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 
 import java.util.ArrayList;
@@ -33,4 +34,21 @@ public class DateUtils {
         }
     }
 
+    public static void handleEachHour(String strBeginDateTime, String strEndDateTime, Consumer<String> handler) {
+        Date beginDateTime = DateUtil.parseDateTime(strBeginDateTime);
+        Date endDateTime = DateUtil.parseDateTime(strEndDateTime);
+        if (beginDateTime.compareTo(endDateTime) > 0) return;
+        if (beginDateTime.compareTo(endDateTime) == 0) {
+            handler.accept(DateUtil.formatDateTime(beginDateTime));
+            return;
+        }
+        List<Date> hourdateList = new ArrayList<>();
+        long diffHours = DateUtil.between(beginDateTime, endDateTime, DateUnit.HOUR);
+        for (int i = 0; i <= diffHours; i++) {
+            hourdateList.add(DateUtil.offsetHour(beginDateTime, i));
+        }
+        for (Date date : hourdateList) {
+            handler.accept(DateUtil.formatDateTime(date));
+        }
+    }
 }
