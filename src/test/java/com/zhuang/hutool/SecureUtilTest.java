@@ -8,6 +8,7 @@ import sun.security.rsa.RSAPrivateKeyImpl;
 import sun.security.rsa.RSAPublicKeyImpl;
 import sun.security.util.DerValue;
 
+import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -46,5 +47,11 @@ public class SecureUtilTest {
                 .setPrivateKey(privateKey);
         byte[] s = asymmetricCrypto.decrypt(Base64.getDecoder().decode("iGcaS+tD7PvaWi9qI71nqyHU72eVYwNK+tfKFALR7YLy7XBGLxvf3xloGngZLglFXINVC4RwMIpzbChM7ezHUA=="), KeyType.PrivateKey);
         System.out.println(new String(s));
+    }
+
+    @Test
+    public void generateKey() {
+        SecretKey aes = SecureUtil.generateKey("AES", 128);
+        System.out.println(Base64.getEncoder().encodeToString(aes.getEncoded()));
     }
 }
