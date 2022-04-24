@@ -9,7 +9,7 @@ import java.util.Map;
 @Component
 public class MemoryCache implements Cacheable {
 
-    private static Map<String, TimedCache> timedCacheMap = new HashMap<>();
+    private static Map<String, TimedCache> timedCacheMap = new HashMap<>(1);
 
     @Override
     public void set(String key, String value, int timeoutSeconds) {
