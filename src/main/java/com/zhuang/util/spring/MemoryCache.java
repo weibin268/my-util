@@ -5,11 +5,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class MemoryCache implements Cacheable {
 
-    private static Map<String, TimedCache> timedCacheMap = new HashMap<>(1);
+    private static Map<String, TimedCache> timedCacheMap = new ConcurrentHashMap<>(1);
 
     @Override
     public void set(String key, String value, int timeoutSeconds) {
