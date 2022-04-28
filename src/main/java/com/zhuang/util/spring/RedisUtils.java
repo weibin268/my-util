@@ -31,7 +31,7 @@ public class RedisUtils {
         _this.stringRedisTemplate.opsForValue().set(key, value);
     }
 
-    public static void set(String key, String value, long timeoutSeconds) {
+    public static void set(String key, String value, int timeoutSeconds) {
         set(key, value, timeoutSeconds, TimeUnit.SECONDS);
     }
 
