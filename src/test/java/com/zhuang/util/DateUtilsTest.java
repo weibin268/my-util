@@ -19,4 +19,11 @@ public class DateUtilsTest {
             System.out.println(strDate);
         });
     }
+
+    @Test
+    public void handleEachMonth() {
+        DateUtils.handleEachMonth("2022-01-01 00:00:00", "2022-02-01 00:00:00", strDate -> {
+            System.out.println(strDate);
+        });
+    }
 }

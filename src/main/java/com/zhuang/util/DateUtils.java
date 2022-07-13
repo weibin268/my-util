@@ -11,9 +11,32 @@ import java.util.function.Consumer;
 public class DateUtils {
 
     /**
-     *
      * @param strBeginDate 格式：yyyy-MM-dd
-     * @param strEndDate 格式：yyyy-MM-dd
+     * @param strEndDate   格式：yyyy-MM-dd
+     * @param handler
+     */
+    public static void handleEachMonth(String strBeginDate, String strEndDate, Consumer<String> handler) {
+        Date beginDate = DateUtil.parseDate(strBeginDate);
+        Date endDate = DateUtil.parseDate(strEndDate);
+        if (beginDate.compareTo(endDate) > 0) return;
+        if (beginDate.compareTo(endDate) == 0) {
+            handler.accept(DateUtil.format(beginDate, "yyyy-MM-01"));
+            return;
+        }
+        List<Date> dateList = new ArrayList<>();
+        long diffMonths = DateUtil.betweenMonth(beginDate, endDate, true);
+        for (int i = 0; i <= diffMonths; i++) {
+            dateList.add(DateUtil.offsetMonth(beginDate, i));
+        }
+        for (Date date : dateList) {
+            handler.accept(DateUtil.format(date, "yyyy-MM-01"));
+        }
+    }
+
+
+    /**
+     * @param strBeginDate 格式：yyyy-MM-dd
+     * @param strEndDate   格式：yyyy-MM-dd
      * @param handler
      */
     public static void handleEachDate(String strBeginDate, String strEndDate, Consumer<String> handler) {
