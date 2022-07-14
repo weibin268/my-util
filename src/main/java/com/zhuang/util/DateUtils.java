@@ -39,7 +39,7 @@ public class DateUtils {
      * @param strEndDate   格式：yyyy-MM-dd
      * @param handler
      */
-    public static void handleEachDate(String strBeginDate, String strEndDate, Consumer<String> handler) {
+    public static void handleEachDay(String strBeginDate, String strEndDate, Consumer<String> handler) {
         Date beginDate = DateUtil.parseDate(strBeginDate);
         Date endDate = DateUtil.parseDate(strEndDate);
         if (beginDate.compareTo(endDate) > 0) return;
@@ -73,5 +73,23 @@ public class DateUtils {
         for (Date date : hourdateList) {
             handler.accept(DateUtil.formatDateTime(date));
         }
+    }
+
+    public static List<String> getEachMonth(String strBeginDate, String strEndDate){
+        List<String> result=new ArrayList<>();
+        handleEachMonth(strBeginDate,strEndDate, result::add);
+        return result;
+    }
+
+    public static List<String> getEachDay(String strBeginDate, String strEndDate){
+        List<String> result=new ArrayList<>();
+        handleEachDay(strBeginDate,strEndDate, result::add);
+        return result;
+    }
+
+    public static List<String> getEachHour(String strBeginDate, String strEndDate){
+        List<String> result=new ArrayList<>();
+        handleEachHour(strBeginDate,strEndDate, result::add);
+        return result;
     }
 }
