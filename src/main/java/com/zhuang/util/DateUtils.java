@@ -2,11 +2,11 @@ package com.zhuang.util;
 
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class DateUtils {
 
@@ -113,6 +113,41 @@ public class DateUtils {
     public static List<String> getEachMinute(String strBeginDate, String strEndDate) {
         List<String> result = new ArrayList<>();
         handleEachMinute(strBeginDate, strEndDate, result::add);
+        return result;
+    }
+
+    public static List<String> parseTimesToList(String times) {
+        if (StrUtil.isEmpty(times)) return Collections.EMPTY_LIST;
+        List<String> timeList = Arrays.asList(times.split(","));
+        List<String> result = new ArrayList<>();
+        List<String> timeList4Point = timeList.stream().filter(c -> !c.contains("-")).collect(Collectors.toList());
+        timeList4Point = timeList4Point.stream().filter(c -> {
+            try {
+                DateUtil.parse(c, "HH:mm");
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }).collect(Collectors.toList());
+        result.addAll(timeList4Point);
+        List<String> timeList4Between = timeList.stream().filter(c -> c.contains("-")).collect(Collectors.toList());
+        for (String time4Between : timeList4Between) {
+            String[] timeArr = time4Between.split("-");
+            String beginTime = timeArr[0];
+            String endTime = timeArr[1];
+            Date beginDate;
+            Date endDate;
+            try {
+                beginDate = DateUtil.parseDateTime(StrUtil.format("2020-01-01 {}:00", beginTime));
+                endDate = DateUtil.parseDateTime(StrUtil.format("2020-01-01 {}:00", endTime));
+            } catch (Exception e) {
+                continue;
+            }
+            List<String> tempTimeList = DateUtils.getEachMinute(DateUtil.formatDateTime(beginDate), DateUtil.formatDateTime(endDate))
+                    .stream().map(c -> DateUtil.format(DateUtil.parseDateTime(c), "HH:mm")).collect(Collectors.toList());
+            result.addAll(tempTimeList);
+        }
+        result = result.stream().distinct().sorted().collect(Collectors.toList());
         return result;
     }
 }
