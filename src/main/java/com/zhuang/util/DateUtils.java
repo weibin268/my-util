@@ -33,7 +33,6 @@ public class DateUtils {
         }
     }
 
-
     /**
      * @param strBeginDate 格式：yyyy-MM-dd
      * @param strEndDate   格式：yyyy-MM-dd
@@ -65,31 +64,55 @@ public class DateUtils {
             handler.accept(DateUtil.formatDateTime(beginDateTime));
             return;
         }
-        List<Date> hourdateList = new ArrayList<>();
+        List<Date> hourDateList = new ArrayList<>();
         long diffHours = DateUtil.between(beginDateTime, endDateTime, DateUnit.HOUR);
         for (int i = 0; i <= diffHours; i++) {
-            hourdateList.add(DateUtil.offsetHour(beginDateTime, i));
+            hourDateList.add(DateUtil.offsetHour(beginDateTime, i));
         }
-        for (Date date : hourdateList) {
+        for (Date date : hourDateList) {
             handler.accept(DateUtil.formatDateTime(date));
         }
     }
 
-    public static List<String> getEachMonth(String strBeginDate, String strEndDate){
-        List<String> result=new ArrayList<>();
-        handleEachMonth(strBeginDate,strEndDate, result::add);
+    public static void handleEachMinute(String strBeginDateTime, String strEndDateTime, Consumer<String> handler) {
+        Date beginDateTime = DateUtil.parseDateTime(strBeginDateTime);
+        Date endDateTime = DateUtil.parseDateTime(strEndDateTime);
+        if (beginDateTime.compareTo(endDateTime) > 0) return;
+        if (beginDateTime.compareTo(endDateTime) == 0) {
+            handler.accept(DateUtil.formatDateTime(beginDateTime));
+            return;
+        }
+        List<Date> minuteDateList = new ArrayList<>();
+        long diffHours = DateUtil.between(beginDateTime, endDateTime, DateUnit.MINUTE);
+        for (int i = 0; i <= diffHours; i++) {
+            minuteDateList.add(DateUtil.offsetMinute(beginDateTime, i));
+        }
+        for (Date date : minuteDateList) {
+            handler.accept(DateUtil.formatDateTime(date));
+        }
+    }
+
+    public static List<String> getEachMonth(String strBeginDate, String strEndDate) {
+        List<String> result = new ArrayList<>();
+        handleEachMonth(strBeginDate, strEndDate, result::add);
         return result;
     }
 
-    public static List<String> getEachDay(String strBeginDate, String strEndDate){
-        List<String> result=new ArrayList<>();
-        handleEachDay(strBeginDate,strEndDate, result::add);
+    public static List<String> getEachDay(String strBeginDate, String strEndDate) {
+        List<String> result = new ArrayList<>();
+        handleEachDay(strBeginDate, strEndDate, result::add);
         return result;
     }
 
-    public static List<String> getEachHour(String strBeginDate, String strEndDate){
-        List<String> result=new ArrayList<>();
-        handleEachHour(strBeginDate,strEndDate, result::add);
+    public static List<String> getEachHour(String strBeginDate, String strEndDate) {
+        List<String> result = new ArrayList<>();
+        handleEachHour(strBeginDate, strEndDate, result::add);
+        return result;
+    }
+
+    public static List<String> getEachMinute(String strBeginDate, String strEndDate) {
+        List<String> result = new ArrayList<>();
+        handleEachMinute(strBeginDate, strEndDate, result::add);
         return result;
     }
 }
