@@ -43,7 +43,7 @@ public class DateUtilsTest {
 
     @Test
     public void parseTimesToList() {
-        List<String> eachMonthList = DateUtils.parseTimesToList("01:00-02:00,08:00,09:00,a-a,1a,1,3,ab,");
+        List<String> eachMonthList = DateUtils.parseTimesToList("8:0,01:00-02:00");
         System.out.println(eachMonthList);
     }
 }

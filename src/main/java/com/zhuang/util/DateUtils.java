@@ -1,5 +1,6 @@
 package com.zhuang.util;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
@@ -121,14 +122,14 @@ public class DateUtils {
         List<String> timeList = Arrays.asList(times.split(","));
         List<String> result = new ArrayList<>();
         List<String> timeList4Point = timeList.stream().filter(c -> !c.contains("-")).collect(Collectors.toList());
-        timeList4Point = timeList4Point.stream().filter(c -> {
+        timeList4Point = timeList4Point.stream().map(c -> {
             try {
-                DateUtil.parse(c, "HH:mm");
-                return true;
+                DateTime tempDate = DateUtil.parse(c, "HH:mm");
+                return DateUtil.format(tempDate, "HH:mm");
             } catch (Exception e) {
-                return false;
+                return null;
             }
-        }).collect(Collectors.toList());
+        }).filter(c->StrUtil.isNotEmpty(c)).collect(Collectors.toList());
         result.addAll(timeList4Point);
         List<String> timeList4Between = timeList.stream().filter(c -> c.contains("-")).collect(Collectors.toList());
         for (String time4Between : timeList4Between) {
