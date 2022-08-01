@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TreeUtils {
 
     public static <T extends TreeNode4Code> List<T> build4Code(List<T> treeCodeList) {
         List<T> oldList = treeCodeList;
         List<T> newList = new ArrayList<>();
-        LinkedList<T> queue = new LinkedList<>();
-        oldList.stream().sorted(Comparator.comparing(T::getNodeCode, Comparator.nullsLast(String::compareTo))).forEach(c -> queue.offer(c));
+        oldList = oldList.stream().sorted(Comparator.comparing(T::getNodeCode, Comparator.nullsLast(String::compareTo))).collect(Collectors.toList());
         for (int i = 0; i < oldList.size(); i++) {
-            T node = queue.poll();
+            T node = oldList.get(i);
             List<T> parentList = new ArrayList<>();
             recursiveFindParent4Code(newList, node, parentList);
             T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
@@ -32,10 +32,8 @@ public class TreeUtils {
     public static <T extends TreeNode4Id> List<T> build4Id(List<T> treeCodeList) {
         List<T> oldList = treeCodeList;
         List<T> newList = new ArrayList<>();
-        LinkedList<T> queue = new LinkedList<>();
-        queue.addAll(oldList);
         for (int i = 0; i < oldList.size(); i++) {
-            T node = queue.poll();
+            T node = oldList.get(i);
             List<T> parentList = new ArrayList<>();
             recursiveFindParent4Id(newList, node, parentList);
             T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
