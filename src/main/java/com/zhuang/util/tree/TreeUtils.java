@@ -11,39 +11,37 @@ import java.util.stream.Collectors;
 
 public class TreeUtils {
 
-    public static <T extends TreeNode4Code> List<T> build4Code(List<T> treeCodeList) {
-        List<T> oldList = treeCodeList;
-        List<T> newList = new ArrayList<>();
-        oldList = oldList.stream().sorted(Comparator.comparing(T::getNodeCode, Comparator.nullsLast(String::compareTo))).collect(Collectors.toList());
-        for (int i = 0; i < oldList.size(); i++) {
-            T node = oldList.get(i);
+    public static <T extends TreeNode4Code> List<T> build4Code(List<T> treeNodeList) {
+        List<T> oldNodeList = treeNodeList;
+        List<T> newNodeList = new ArrayList<>();
+        oldNodeList = oldNodeList.stream().sorted(Comparator.comparing(T::getNodeCode, Comparator.nullsLast(String::compareTo))).collect(Collectors.toList());
+        for (T node : oldNodeList) {
             List<T> parentList = new ArrayList<>();
-            recursiveFindParent4Code(newList, node, parentList);
+            recursiveFindParent4Code(newNodeList, node, parentList);
             T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
             if (parent != null) {
                 parent.getChildren().add(node);
             } else {
-                newList.add(node);
+                newNodeList.add(node);
             }
         }
-        return newList;
+        return newNodeList;
     }
 
-    public static <T extends TreeNode4Id> List<T> build4Id(List<T> treeCodeList) {
-        List<T> oldList = treeCodeList;
-        List<T> newList = new ArrayList<>();
-        for (int i = 0; i < oldList.size(); i++) {
-            T node = oldList.get(i);
+    public static <T extends TreeNode4Id> List<T> build4Id(List<T> treeNodeList) {
+        List<T> oldNodeList = treeNodeList;
+        List<T> newNodeList = new ArrayList<>();
+        for (T node : oldNodeList) {
             List<T> parentList = new ArrayList<>();
-            recursiveFindParent4Id(newList, node, parentList);
+            recursiveFindParent4Id(newNodeList, node, parentList);
             T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
             if (parent != null) {
                 parent.getChildren().add(node);
             } else {
-                newList.add(node);
+                newNodeList.add(node);
             }
         }
-        return newList;
+        return newNodeList;
     }
 
     private static <T extends TreeNode4Code> void recursiveFindParent4Code(List<T> tree, T item, List<T> result) {
