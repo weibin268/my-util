@@ -57,7 +57,7 @@ public class TreeUtils {
 
     private static <T extends TreeNode4Id> void recursiveFindParent4Id(List<T> tree, T item, List<T> result) {
         for (T parent : tree) {
-            if (item.getParentNodeId().equals(parent.getNodeId())) {
+            if (parent.getNodeId().equals(item.getParentNodeId())) {
                 result.add(parent);
             }
             if (!CollectionUtils.isEmpty(parent.getChildren())) {
