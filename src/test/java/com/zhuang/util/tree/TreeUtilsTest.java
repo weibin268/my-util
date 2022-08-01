@@ -65,7 +65,7 @@ public class TreeUtilsTest {
         Category c1 = new Category();
         c1.setCode("1");
         c1.setName("AA");
-        c1.setParentCode("");
+        c1.setParentCode(null);
         categoryList.add(c1);
 
         Category c2 = new Category();
