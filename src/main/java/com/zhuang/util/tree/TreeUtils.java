@@ -1,6 +1,7 @@
 package com.zhuang.util.tree;
 
 
+import cn.hutool.core.util.StrUtil;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -10,32 +11,62 @@ import java.util.List;
 
 public class TreeUtils {
 
-    public static <T extends TreeNode> List<T> buildByTreeCode(List<T> treeCodeList) {
+    public static <T extends TreeCodeNode> List<T> buildByTreeCode(List<T> treeCodeList) {
         List<T> oldList = treeCodeList;
         List<T> newList = new ArrayList<>();
         LinkedList<T> queue = new LinkedList<>();
         oldList.stream().sorted(Comparator.comparing(T::getTreeCode, Comparator.nullsLast(String::compareTo))).forEach(c -> queue.offer(c));
         for (int i = 0; i < oldList.size(); i++) {
-            T gisLayer = queue.poll();
+            T node = queue.poll();
             List<T> parentList = new ArrayList<>();
-            recursiveFindParentByTreeCode(newList, gisLayer, parentList);
+            recursiveFindParentByTreeCode(newList, node, parentList);
             T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
             if (parent != null) {
-                parent.getChildren().add(gisLayer);
+                parent.getChildren().add(node);
             } else {
-                newList.add(gisLayer);
+                newList.add(node);
             }
         }
         return newList;
     }
 
-    private static <T extends TreeNode> void recursiveFindParentByTreeCode(List<T> tree, T item, List<T> result) {
+    private static <T extends TreeCodeNode> void recursiveFindParentByTreeCode(List<T> tree, T item, List<T> result) {
         for (T parent : tree) {
             if (item.getTreeCode().startsWith(parent.getTreeCode()) && !item.getTreeCode().equals(parent.getTreeCode())) {
                 result.add(parent);
             }
             if (!CollectionUtils.isEmpty(parent.getChildren())) {
                 recursiveFindParentByTreeCode(parent.getChildren(), item, result);
+            }
+        }
+    }
+
+    public static <T extends ParentIdNode> List<T> buildByParentId(List<T> treeCodeList) {
+        List<T> oldList = treeCodeList;
+        List<T> newList = new ArrayList<>();
+        LinkedList<T> queue = new LinkedList<>();
+        queue.addAll(oldList);
+        for (int i = 0; i < oldList.size(); i++) {
+            T node = queue.poll();
+            List<T> parentList = new ArrayList<>();
+            recursiveFindParentByParentId(newList, node, parentList);
+            T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
+            if (parent != null) {
+                parent.getChildren().add(node);
+            } else {
+                newList.add(node);
+            }
+        }
+        return newList;
+    }
+
+    private static <T extends ParentIdNode> void recursiveFindParentByParentId(List<T> tree, T item, List<T> result) {
+        for (T parent : tree) {
+            if (item.getParentId().equals(parent.getId())) {
+                result.add(parent);
+            }
+            if (!CollectionUtils.isEmpty(parent.getChildren())) {
+                recursiveFindParentByParentId(parent.getChildren(), item, result);
             }
         }
     }
