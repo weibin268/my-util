@@ -30,17 +30,6 @@ public class TreeUtils {
         return newList;
     }
 
-    private static <T extends TreeCodeNode> void recursiveFindParentByTreeCode(List<T> tree, T item, List<T> result) {
-        for (T parent : tree) {
-            if (item.getTreeCode().startsWith(parent.getTreeCode()) && !item.getTreeCode().equals(parent.getTreeCode())) {
-                result.add(parent);
-            }
-            if (!CollectionUtils.isEmpty(parent.getChildren())) {
-                recursiveFindParentByTreeCode(parent.getChildren(), item, result);
-            }
-        }
-    }
-
     public static <T extends ParentIdNode> List<T> buildByParentId(List<T> treeCodeList) {
         List<T> oldList = treeCodeList;
         List<T> newList = new ArrayList<>();
@@ -58,6 +47,17 @@ public class TreeUtils {
             }
         }
         return newList;
+    }
+
+    private static <T extends TreeCodeNode> void recursiveFindParentByTreeCode(List<T> tree, T item, List<T> result) {
+        for (T parent : tree) {
+            if (item.getTreeCode().startsWith(parent.getTreeCode()) && !item.getTreeCode().equals(parent.getTreeCode())) {
+                result.add(parent);
+            }
+            if (!CollectionUtils.isEmpty(parent.getChildren())) {
+                recursiveFindParentByTreeCode(parent.getChildren(), item, result);
+            }
+        }
     }
 
     private static <T extends ParentIdNode> void recursiveFindParentByParentId(List<T> tree, T item, List<T> result) {
