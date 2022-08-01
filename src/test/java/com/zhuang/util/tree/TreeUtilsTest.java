@@ -27,7 +27,7 @@ public class TreeUtilsTest {
     }
 
     @Test
-    public void build() {
+    public void buildByTreeCode() {
         List<Category> categoryList = new ArrayList<>();
         Category c1 = new Category();
         c1.setCode("10");
@@ -44,7 +44,7 @@ public class TreeUtilsTest {
         c3.setName("AA100");
         categoryList.add(c3);
 
-        List<Category> categories = TreeUtils.build(categoryList);
+        List<Category> categories = TreeUtils.buildByTreeCode(categoryList);
         System.out.println(categories);
     }
 
