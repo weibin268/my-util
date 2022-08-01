@@ -38,7 +38,7 @@ public class TreeUtilsTest {
     }
 
     @Test
-    public void buildByTreeCode() {
+    public void build4Code() {
         List<Category> categoryList = new ArrayList<>();
         Category c1 = new Category();
         c1.setCode("10");
@@ -60,7 +60,7 @@ public class TreeUtilsTest {
     }
 
     @Test
-    public void buildByParentId() {
+    public void build4Id() {
         List<Category> categoryList = new ArrayList<>();
         Category c1 = new Category();
         c1.setCode("1");
