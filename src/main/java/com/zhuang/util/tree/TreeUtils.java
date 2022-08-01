@@ -10,15 +10,15 @@ import java.util.List;
 
 public class TreeUtils {
 
-    public static <T extends TreeCodeNode> List<T> buildByTreeCode(List<T> treeCodeList) {
+    public static <T extends TreeNode4Code> List<T> build4Code(List<T> treeCodeList) {
         List<T> oldList = treeCodeList;
         List<T> newList = new ArrayList<>();
         LinkedList<T> queue = new LinkedList<>();
-        oldList.stream().sorted(Comparator.comparing(T::getTreeCode, Comparator.nullsLast(String::compareTo))).forEach(c -> queue.offer(c));
+        oldList.stream().sorted(Comparator.comparing(T::getNodeCode, Comparator.nullsLast(String::compareTo))).forEach(c -> queue.offer(c));
         for (int i = 0; i < oldList.size(); i++) {
             T node = queue.poll();
             List<T> parentList = new ArrayList<>();
-            recursiveFindParentByTreeCode(newList, node, parentList);
+            recursiveFindParent4Code(newList, node, parentList);
             T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
             if (parent != null) {
                 parent.getChildren().add(node);
@@ -29,7 +29,7 @@ public class TreeUtils {
         return newList;
     }
 
-    public static <T extends ParentIdNode> List<T> buildByParentId(List<T> treeCodeList) {
+    public static <T extends TreeNode4Id> List<T> build4Id(List<T> treeCodeList) {
         List<T> oldList = treeCodeList;
         List<T> newList = new ArrayList<>();
         LinkedList<T> queue = new LinkedList<>();
@@ -37,7 +37,7 @@ public class TreeUtils {
         for (int i = 0; i < oldList.size(); i++) {
             T node = queue.poll();
             List<T> parentList = new ArrayList<>();
-            recursiveFindParentByParentId(newList, node, parentList);
+            recursiveFindParent4Id(newList, node, parentList);
             T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
             if (parent != null) {
                 parent.getChildren().add(node);
@@ -48,24 +48,24 @@ public class TreeUtils {
         return newList;
     }
 
-    private static <T extends TreeCodeNode> void recursiveFindParentByTreeCode(List<T> tree, T item, List<T> result) {
+    private static <T extends TreeNode4Code> void recursiveFindParent4Code(List<T> tree, T item, List<T> result) {
         for (T parent : tree) {
-            if (item.getTreeCode().startsWith(parent.getTreeCode()) && !item.getTreeCode().equals(parent.getTreeCode())) {
+            if (item.getNodeCode().startsWith(parent.getNodeCode()) && !item.getNodeCode().equals(parent.getNodeCode())) {
                 result.add(parent);
             }
             if (!CollectionUtils.isEmpty(parent.getChildren())) {
-                recursiveFindParentByTreeCode(parent.getChildren(), item, result);
+                recursiveFindParent4Code(parent.getChildren(), item, result);
             }
         }
     }
 
-    private static <T extends ParentIdNode> void recursiveFindParentByParentId(List<T> tree, T item, List<T> result) {
+    private static <T extends TreeNode4Id> void recursiveFindParent4Id(List<T> tree, T item, List<T> result) {
         for (T parent : tree) {
-            if (item.getParentId().equals(parent.getId())) {
+            if (item.getParentNodeId().equals(parent.getNodeId())) {
                 result.add(parent);
             }
             if (!CollectionUtils.isEmpty(parent.getChildren())) {
-                recursiveFindParentByParentId(parent.getChildren(), item, result);
+                recursiveFindParent4Id(parent.getChildren(), item, result);
             }
         }
     }

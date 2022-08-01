@@ -9,7 +9,7 @@ import java.util.List;
 public class TreeUtilsTest {
 
     @Data
-    public static class Category implements TreeCodeNode, ParentIdNode {
+    public static class Category implements TreeNode4Code, TreeNode4Id {
 
         private String code;
         private String name;
@@ -17,17 +17,17 @@ public class TreeUtilsTest {
         private List<Category> children = new ArrayList<>();
 
         @Override
-        public String getTreeCode() {
+        public String getNodeCode() {
             return code;
         }
 
         @Override
-        public String getParentId() {
+        public String getParentNodeId() {
             return parentCode;
         }
 
         @Override
-        public String getId() {
+        public String getNodeId() {
             return code;
         }
 
@@ -55,7 +55,7 @@ public class TreeUtilsTest {
         c3.setName("AA100");
         categoryList.add(c3);
 
-        List<Category> categories = TreeUtils.buildByTreeCode(categoryList);
+        List<Category> categories = TreeUtils.build4Code(categoryList);
         System.out.println(categories);
     }
 
@@ -80,7 +80,7 @@ public class TreeUtilsTest {
         c3.setParentCode("2");
         categoryList.add(c3);
 
-        List<Category> categories = TreeUtils.buildByParentId(categoryList);
+        List<Category> categories = TreeUtils.build4Id(categoryList);
         System.out.println(categories);
     }
 

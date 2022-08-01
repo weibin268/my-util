@@ -2,14 +2,14 @@ package com.zhuang.util.tree;
 
 import java.util.List;
 
-public interface TreeCodeNode {
+public interface TreeNode4Code {
 
     /**
      * 可构建树的编号（格式：10或1010或101010）
      *
      * @return
      */
-    String getTreeCode();
+    String getNodeCode();
 
     /**
      * 子节点的集合
@@ -17,6 +17,6 @@ public interface TreeCodeNode {
      * @param <T>
      * @return
      */
-    <T extends TreeCodeNode> List<T> getChildren();
+    <T extends TreeNode4Code> List<T> getChildren();
 
 }

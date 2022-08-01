@@ -2,21 +2,21 @@ package com.zhuang.util.tree;
 
 import java.util.List;
 
-public interface ParentIdNode {
+public interface TreeNode4Id {
 
     /**
      * 父节点的Id
      *
      * @return
      */
-    String getParentId();
+    String getParentNodeId();
 
     /**
      * 节点的Id
      *
      * @return
      */
-    String getId();
+    String getNodeId();
 
     /**
      * 子节点的集合
@@ -24,6 +24,6 @@ public interface ParentIdNode {
      * @param <T>
      * @return
      */
-    <T extends ParentIdNode> List<T> getChildren();
+    <T extends TreeNode4Id> List<T> getChildren();
 
 }
