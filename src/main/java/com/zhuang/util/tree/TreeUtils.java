@@ -25,13 +25,9 @@ public class TreeUtils {
     }
 
     public static <T extends TreeNode4Id> List<T> build4Id(List<T> nodeList) {
-        return build4Id(nodeList, 10);
-    }
-
-    public static <T extends TreeNode4Id> List<T> build4Id(List<T> nodeList, int maxDepth) {
         List<T> newNodeList = new ArrayList<>();
         for (T node : nodeList) {
-            T parent = recursiveFindParent4Id(nodeList, node, 1, maxDepth);
+            T parent = findParent4Id(nodeList, node);
             if (parent != null) {
                 parent.getChildren().add(node);
             } else {
@@ -41,28 +37,23 @@ public class TreeUtils {
         return newNodeList;
     }
 
-    private static <T extends TreeNode4Code> T recursiveFindParent4Code(List<T> tree, T item) {
+    private static <T extends TreeNode4Code> T recursiveFindParent4Code(List<T> tree, T node) {
         for (T parent : tree) {
-            if (item.getNodeCode().startsWith(parent.getNodeCode()) && !item.getNodeCode().equals(parent.getNodeCode())) {
+            if (node.getNodeCode().startsWith(parent.getNodeCode()) && !node.getNodeCode().equals(parent.getNodeCode())) {
                 return parent;
             }
             if (!CollectionUtils.isEmpty(parent.getChildren())) {
-                T p = recursiveFindParent4Code(parent.getChildren(), item);
+                T p = recursiveFindParent4Code(parent.getChildren(), node);
                 if (p != null) return p;
             }
         }
         return null;
     }
 
-    private static <T extends TreeNode4Id> T recursiveFindParent4Id(List<T> tree, T item, int depth, int maxDepth) {
-        if (depth > maxDepth) return null;
+    private static <T extends TreeNode4Id> T findParent4Id(List<T> tree, T node) {
         for (T parent : tree) {
-            if (parent.getNodeId().equals(item.getParentNodeId())) {
+            if (parent.getNodeId().equals(node.getParentNodeId())) {
                 return parent;
-            }
-            if (!CollectionUtils.isEmpty(parent.getChildren())) {
-                T p = recursiveFindParent4Id(parent.getChildren(), item, ++depth, maxDepth);
-                if (p != null) return p;
             }
         }
         return null;
