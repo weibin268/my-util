@@ -136,6 +136,12 @@
             <version>8.0.21</version>
             <scope>provided</scope>
         </dependency>
+        <!--mssql-->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>10.2.1.jre8</version>
+        </dependency>
         <!--mail-->
         <dependency>
             <groupId>javax.mail</groupId>
