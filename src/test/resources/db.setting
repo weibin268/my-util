@@ -1,6 +1,7 @@
-url = jdbc:mysql://weibin268.top:3306/upms
+#url = jdbc:sqlserver://127.0.0.1:1433;DatabaseName=upms;encrypt=false
+url = jdbc:mysql://127.0.0.1:3306/upms
 user = root
-pass = 2681645
+pass = 123456
 
 ## 可选配置
 # 是否在日志中显示执行的SQL
