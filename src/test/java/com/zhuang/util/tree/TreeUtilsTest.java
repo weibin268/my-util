@@ -40,6 +40,17 @@ public class TreeUtilsTest {
     @Test
     public void build4Code() {
         List<Category> categoryList = new ArrayList<>();
+
+        Category c4 = new Category();
+        c4.setCode("20");
+        c4.setName("BB");
+        categoryList.add(c4);
+
+        Category c5 = new Category();
+        c5.setCode("2010");
+        c5.setName("BB10");
+        categoryList.add(c5);
+
         Category c1 = new Category();
         c1.setCode("10");
         c1.setName("AA");
