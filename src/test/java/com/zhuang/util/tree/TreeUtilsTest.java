@@ -62,11 +62,6 @@ public class TreeUtilsTest {
     @Test
     public void build4Id() {
         List<Category> categoryList = new ArrayList<>();
-        Category c1 = new Category();
-        c1.setCode("1");
-        c1.setName("AA");
-        c1.setParentCode(null);
-        categoryList.add(c1);
 
         Category c2 = new Category();
         c2.setCode("2");
@@ -79,6 +74,25 @@ public class TreeUtilsTest {
         c3.setName("AA100");
         c3.setParentCode("2");
         categoryList.add(c3);
+
+        Category c1 = new Category();
+        c1.setCode("1");
+        c1.setName("AA");
+        c1.setParentCode("3");
+        categoryList.add(c1);
+
+
+        Category c4 = new Category();
+        c4.setCode("4");
+        c4.setName("AA100");
+        c4.setParentCode("");
+        categoryList.add(c4);
+
+        Category c5 = new Category();
+        c5.setCode("5");
+        c5.setName("AA100");
+        c5.setParentCode("4");
+        categoryList.add(c5);
 
         List<Category> categories = TreeUtils.build4Id(categoryList);
         System.out.println(categories);

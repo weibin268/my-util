@@ -14,9 +14,7 @@ public class TreeUtils {
         List<T> newNodeList = new ArrayList<>();
         nodeList = nodeList.stream().sorted(Comparator.comparing(T::getNodeCode, Comparator.nullsLast(String::compareTo))).collect(Collectors.toList());
         for (T node : nodeList) {
-            List<T> parentList = new ArrayList<>();
-            recursiveFindParent4Code(newNodeList, node, parentList);
-            T parent = CollectionUtils.isEmpty(parentList) ? null : parentList.get(parentList.size() - 1);
+            T parent = recursiveFindParent4Code(newNodeList, node);
             if (parent != null) {
                 parent.getChildren().add(node);
             } else {
@@ -43,15 +41,17 @@ public class TreeUtils {
         return newNodeList;
     }
 
-    private static <T extends TreeNode4Code> void recursiveFindParent4Code(List<T> tree, T item, List<T> result) {
+    private static <T extends TreeNode4Code> T recursiveFindParent4Code(List<T> tree, T item) {
         for (T parent : tree) {
             if (item.getNodeCode().startsWith(parent.getNodeCode()) && !item.getNodeCode().equals(parent.getNodeCode())) {
-                result.add(parent);
+                return parent;
             }
             if (!CollectionUtils.isEmpty(parent.getChildren())) {
-                recursiveFindParent4Code(parent.getChildren(), item, result);
+                T p = recursiveFindParent4Code(parent.getChildren(), item);
+                if (p != null) return p;
             }
         }
+        return null;
     }
 
     private static <T extends TreeNode4Id> T recursiveFindParent4Id(List<T> tree, T item, int depth, int maxDepth) {
