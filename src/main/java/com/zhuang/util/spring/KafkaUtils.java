@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import javax.annotation.PostConstruct;
+import java.util.UUID;
 
 @Component
 public class KafkaUtils {
@@ -21,7 +22,9 @@ public class KafkaUtils {
     }
 
     public static ListenableFuture<SendResult<String, Object>> send(String topic, Object data) {
-        return _this.kafkaTemplate.send(topic, data);
+        // 不指定key，集群多节点下会有问题
+        String key = UUID.randomUUID().toString();
+        return _this.kafkaTemplate.send(topic, key, data);
     }
 
 }
