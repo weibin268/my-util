@@ -25,8 +25,12 @@ public class DateUtilsTest {
 
     @Test
     public void handleEachMinute() {
-        DateUtils.handleEachMinute("2022-01-01 00:00:00", "2022-02-01 00:00:00", strDate -> {
+        DateUtils.handleEachMinute("2022-02-01 00:00:00", "2022-02-02 00:00:00", strDate -> {
             System.out.println(strDate);
+        });
+        System.out.println("----------------------------------------------------------------------------------------------------");
+        DateUtils.handleEachMinute(DateUtil.parseDateTime("2022-02-01 00:00:00"), DateUtil.parseDateTime("2022-02-02 00:00:00"), date -> {
+            System.out.println(date);
         });
     }
 
