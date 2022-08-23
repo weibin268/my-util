@@ -1,7 +1,9 @@
 package com.zhuang.util;
 
+import cn.hutool.core.date.DateUtil;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
 
 public class DateUtilsTest {
@@ -39,6 +41,9 @@ public class DateUtilsTest {
     public void getEachMonth() {
         List<String> eachMonthList = DateUtils.getEachMonth("2022-01-01", "2022-02-01");
         System.out.println(eachMonthList);
+
+        List<Date> eachMonthList2 = DateUtils.getEachMonth(DateUtil.parseDate("2022-01-01"), new Date());
+        System.out.println(eachMonthList2);
     }
 
     @Test

@@ -11,11 +11,7 @@ import java.util.stream.Collectors;
 
 public class DateUtils {
 
-    /**
-     * @param strBeginDate 格式：yyyy-MM-dd
-     * @param strEndDate   格式：yyyy-MM-dd
-     * @param handler
-     */
+
     public static void handleEachMonth(String strBeginDate, String strEndDate, Consumer<String> handler) {
         Date beginDate = DateUtil.parseDate(strBeginDate);
         Date endDate = DateUtil.parseDate(strEndDate);
@@ -34,11 +30,23 @@ public class DateUtils {
         }
     }
 
-    /**
-     * @param strBeginDate 格式：yyyy-MM-dd
-     * @param strEndDate   格式：yyyy-MM-dd
-     * @param handler
-     */
+    public static void handleEachMonth(Date beginDate, Date endDate, Consumer<Date> handler) {
+        handleEachMonth(DateUtil.formatDate(beginDate), DateUtil.formatDate(endDate), c -> {
+            handler.accept(DateUtil.parseDate(c));
+        });
+    }
+
+    public static List<String> getEachMonth(String strBeginDate, String strEndDate) {
+        List<String> result = new ArrayList<>();
+        handleEachMonth(strBeginDate, strEndDate, result::add);
+        return result;
+    }
+
+    public static List<Date> getEachMonth(Date beginDate, Date endDate) {
+        return getEachMonth(DateUtil.formatDate(beginDate), DateUtil.formatDate(endDate)).stream().map(DateUtil::parseDate).collect(Collectors.toList());
+    }
+
+
     public static void handleEachDay(String strBeginDate, String strEndDate, Consumer<String> handler) {
         Date beginDate = DateUtil.parseDate(strBeginDate);
         Date endDate = DateUtil.parseDate(strEndDate);
@@ -56,6 +64,23 @@ public class DateUtils {
             handler.accept(DateUtil.formatDate(date));
         }
     }
+
+    public static void handleEachDay(Date beginDate, Date endDate, Consumer<Date> handler) {
+        handleEachDay(DateUtil.formatDate(beginDate), DateUtil.formatDate(endDate), c -> {
+            handler.accept(DateUtil.parseDate(c));
+        });
+    }
+
+    public static List<String> getEachDay(String strBeginDate, String strEndDate) {
+        List<String> result = new ArrayList<>();
+        handleEachDay(strBeginDate, strEndDate, result::add);
+        return result;
+    }
+
+    public static List<Date> getEachDay(Date beginDate, Date endDate) {
+        return getEachDay(DateUtil.formatDate(beginDate), DateUtil.formatDate(endDate)).stream().map(DateUtil::parseDate).collect(Collectors.toList());
+    }
+
 
     public static void handleEachHour(String strBeginDateTime, String strEndDateTime, Consumer<String> handler) {
         Date beginDateTime = DateUtil.parseDateTime(strBeginDateTime);
@@ -75,6 +100,23 @@ public class DateUtils {
         }
     }
 
+    public static void handleEachHour(Date beginDateTime, Date endDateTime, Consumer<Date> handler) {
+        handleEachHour(DateUtil.formatDateTime(beginDateTime), DateUtil.formatDateTime(endDateTime), c -> {
+            handler.accept(DateUtil.parseDateTime(c));
+        });
+    }
+
+    public static List<String> getEachHour(String strBeginDateTime, String strEndDateTime) {
+        List<String> result = new ArrayList<>();
+        handleEachHour(strBeginDateTime, strEndDateTime, result::add);
+        return result;
+    }
+
+    public static List<Date> getEachHour(Date beginDateTime, Date endDateTime) {
+        return getEachHour(DateUtil.formatDateTime(beginDateTime), DateUtil.formatDateTime(endDateTime)).stream().map(DateUtil::parseDateTime).collect(Collectors.toList());
+    }
+
+
     public static void handleEachMinute(String strBeginDateTime, String strEndDateTime, Consumer<String> handler) {
         Date beginDateTime = DateUtil.parseDateTime(strBeginDateTime);
         Date endDateTime = DateUtil.parseDateTime(strEndDateTime);
@@ -93,29 +135,22 @@ public class DateUtils {
         }
     }
 
-    public static List<String> getEachMonth(String strBeginDate, String strEndDate) {
+    public static void handleEachMinute(Date beginDateTime, Date endDateTime, Consumer<Date> handler) {
+        handleEachMinute(DateUtil.formatDateTime(beginDateTime), DateUtil.formatDateTime(endDateTime), c -> {
+            handler.accept(DateUtil.parseDateTime(c));
+        });
+    }
+
+    public static List<String> getEachMinute(String strBeginDateTime, String strEndDateTime) {
         List<String> result = new ArrayList<>();
-        handleEachMonth(strBeginDate, strEndDate, result::add);
+        handleEachMinute(strBeginDateTime, strEndDateTime, result::add);
         return result;
     }
 
-    public static List<String> getEachDay(String strBeginDate, String strEndDate) {
-        List<String> result = new ArrayList<>();
-        handleEachDay(strBeginDate, strEndDate, result::add);
-        return result;
+    public static List<Date> getEachMinute(Date beginDateTime, Date endDateTime) {
+        return getEachMinute(DateUtil.formatDateTime(beginDateTime), DateUtil.formatDateTime(endDateTime)).stream().map(DateUtil::parseDateTime).collect(Collectors.toList());
     }
 
-    public static List<String> getEachHour(String strBeginDate, String strEndDate) {
-        List<String> result = new ArrayList<>();
-        handleEachHour(strBeginDate, strEndDate, result::add);
-        return result;
-    }
-
-    public static List<String> getEachMinute(String strBeginDate, String strEndDate) {
-        List<String> result = new ArrayList<>();
-        handleEachMinute(strBeginDate, strEndDate, result::add);
-        return result;
-    }
 
     public static List<String> parseTimesToList(String times) {
         if (StrUtil.isEmpty(times)) return Collections.EMPTY_LIST;
@@ -129,7 +164,7 @@ public class DateUtils {
             } catch (Exception e) {
                 return null;
             }
-        }).filter(c->StrUtil.isNotEmpty(c)).collect(Collectors.toList());
+        }).filter(c -> StrUtil.isNotEmpty(c)).collect(Collectors.toList());
         result.addAll(timeList4Point);
         List<String> timeList4Between = timeList.stream().filter(c -> c.contains("-")).collect(Collectors.toList());
         for (String time4Between : timeList4Between) {
