@@ -22,13 +22,10 @@ public class JwtUtils {
      * @param claims 数据声明
      * @return 令牌
      */
-    public static String createToken(Map<String, Object> claims, Long ttlMillis) {
+    public static String createToken(Map<String, Object> claims, Date expiration) {
         JwtBuilder jwtBuilder = Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret);
-        if (ttlMillis != null && ttlMillis >= 0) {
-            long nowMillis = System.currentTimeMillis();
-            long expMillis = nowMillis + ttlMillis;
-            Date exp = new Date(expMillis);
-            jwtBuilder.setExpiration(exp);
+        if (expiration != null) {
+            jwtBuilder.setExpiration(expiration);
         }
         return jwtBuilder.compact();
     }
