@@ -28,7 +28,7 @@ public class JwtUtilsTest {
             Claims claims = JwtUtils.parseToken(token);
             System.out.println(claims);
         } catch (SignatureException signatureException) {
-            System.out.println("token 签名异常");
+            System.out.println("token 无效！");
         } catch (ExpiredJwtException expiredJwtException) {
             System.out.println("token 过期！");
         }
