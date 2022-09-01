@@ -13,7 +13,7 @@ public class SqlUtils {
 
     public static String fillSqlParams(String sql, Map<String, Object> params) {
         if (params != null && params.size() > 0) {
-            Pattern pattern = Pattern.compile("#\\{(?<g0>.+?)\\}");
+            Pattern pattern = Pattern.compile("[#,$]\\{(?<g0>.+?)\\}");
             Matcher matcher = pattern.matcher(sql);
             StringBuffer sbResult = new StringBuffer();
             while (matcher.find()) {
