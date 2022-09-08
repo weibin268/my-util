@@ -151,7 +151,6 @@ public class DateUtils {
         return getEachMinute(DateUtil.formatDateTime(beginDateTime), DateUtil.formatDateTime(endDateTime)).stream().map(DateUtil::parseDateTime).collect(Collectors.toList());
     }
 
-
     public static List<String> parseTimesToList(String times) {
         if (StrUtil.isEmpty(times)) return Collections.EMPTY_LIST;
         List<String> timeList = Arrays.asList(times.split(","));
@@ -186,4 +185,12 @@ public class DateUtils {
         result = result.stream().distinct().sorted().collect(Collectors.toList());
         return result;
     }
+
+    public static Date add(Date date, int field, int amount) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(field, amount);
+        return calendar.getTime();
+    }
+
 }

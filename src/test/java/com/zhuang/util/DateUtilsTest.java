@@ -3,6 +3,7 @@ package com.zhuang.util;
 import cn.hutool.core.date.DateUtil;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -54,5 +55,10 @@ public class DateUtilsTest {
     public void parseTimesToList() {
         List<String> eachMonthList = DateUtils.parseTimesToList("8:0,01:00-02:00");
         System.out.println(eachMonthList);
+    }
+
+    @Test
+    public void add() {
+        System.out.println(DateUtils.add(new Date(), Calendar.DAY_OF_MONTH, -1));
     }
 }
