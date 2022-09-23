@@ -43,8 +43,8 @@ public class CRC16Utils {
 
     public static int getValue(byte[] data) {
         int crc = 0xFFFF;
-        for (int datum : data) {
-            crc = ((crc >> 8) ^ crcTable[(crc ^ datum) & 0xFF]);
+        for (byte b : data) {
+            crc = ((crc >> 8) ^ crcTable[(crc ^ b) & 0xFF]);
         }
         return crc;
     }
