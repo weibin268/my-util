@@ -38,4 +38,13 @@ public class PoiUtilsTest {
         FileUtil.writeFromStream(inputStream, new File("D:\\temp\\test-out.docx"));
     }
 
+
+    @Test
+    public void merge() {
+        InputStream inputStream1 = getClass().getResourceAsStream("/excel/test_merge_1.xlsx");
+        InputStream inputStream2 = getClass().getResourceAsStream("/excel/test_merge_2.xlsx");
+        InputStream inputStream = PoiUtils.merge(inputStream1, inputStream2, 1);
+        FileUtil.writeFromStream(inputStream, new File("/Users/zhuang/Documents/temp/test_merge.xlsx"));
+    }
+
 }

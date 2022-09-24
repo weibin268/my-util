@@ -1,9 +1,10 @@
 package com.zhuang.util;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.RowUtil;
 import cn.hutool.poi.excel.WorkbookUtil;
-import org.apache.poi.ss.usermodel.SheetVisibility;
-import org.apache.poi.ss.usermodel.Workbook;
+import cn.hutool.poi.excel.cell.CellUtil;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.ByteArrayInputStream;
@@ -19,6 +20,36 @@ import java.util.stream.Collectors;
  * 注意：Workbook需要close释放
  */
 public class PoiUtils {
+
+    /**
+     * 合并两个excel的数据
+     *
+     * @param inputStreamA
+     * @param inputStreamB
+     * @param headerRowCount
+     * @return
+     */
+    public static InputStream merge(InputStream inputStreamA, InputStream inputStreamB, int headerRowCount) {
+        try (Workbook workbookA = WorkbookUtil.createBook(inputStreamA); Workbook workbookB = WorkbookUtil.createBook(inputStreamB)) {
+            for (Sheet sheetA : workbookA) {
+                Sheet sheetB = workbookB.getSheet(sheetA.getSheetName());
+                int lastRowIndexA = sheetA.getLastRowNum();
+                int totalRowCountB = sheetB.getLastRowNum() + 1;
+                for (int i = headerRowCount; i < totalRowCountB; i++) {
+                    Row rowA = RowUtil.getOrCreateRow(sheetA, ++lastRowIndexA);
+                    Row rowB = sheetB.getRow(i);
+                    for (Cell cellB : rowB) {
+                        Cell cellA = CellUtil.getOrCreateCell(rowA, cellB.getColumnIndex());
+                        CellUtil.setCellValue(cellA, CellUtil.getCellValue(cellB), cellA.getCellStyle());
+                    }
+                }
+            }
+            return workbookToInputStream(workbookA);
+        } catch (IOException e) {
+            throw new RuntimeException("PoiUtils.merge fail!", e);
+        }
+    }
+
 
     /**
      * 根据工作表名称隐藏工作表
