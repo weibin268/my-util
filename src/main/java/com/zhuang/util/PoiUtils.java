@@ -35,12 +35,22 @@ public class PoiUtils {
                 Sheet sheetB = workbookB.getSheet(sheetA.getSheetName());
                 int lastRowIndexA = sheetA.getLastRowNum();
                 int totalRowCountB = sheetB.getLastRowNum() + 1;
+                Row templateRowA = null;
+                if (lastRowIndexA > headerRowCount) {
+                    templateRowA = sheetA.getRow(lastRowIndexA);
+                }
                 for (int i = headerRowCount; i < totalRowCountB; i++) {
                     Row rowA = RowUtil.getOrCreateRow(sheetA, ++lastRowIndexA);
                     Row rowB = sheetB.getRow(i);
                     for (Cell cellB : rowB) {
                         Cell cellA = CellUtil.getOrCreateCell(rowA, cellB.getColumnIndex());
-                        CellUtil.setCellValue(cellA, CellUtil.getCellValue(cellB), cellA.getCellStyle());
+                        CellStyle cellStyle;
+                        if (templateRowA != null) {
+                            cellStyle = CellUtil.getOrCreateCell(templateRowA, cellB.getColumnIndex()).getCellStyle();
+                        } else {
+                            cellStyle = cellA.getCellStyle();
+                        }
+                        CellUtil.setCellValue(cellA, CellUtil.getCellValue(cellB), cellStyle);
                     }
                 }
             }
