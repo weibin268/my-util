@@ -20,11 +20,10 @@ public class PoiUtils {
 
     /**
      * 合并两个excel的数据
-     *
      * @param inputStreamA
      * @param inputStreamB
+     * @param outputStream
      * @param headerRowCount
-     * @return
      */
     public static void merge(InputStream inputStreamA, InputStream inputStreamB, OutputStream outputStream, int headerRowCount) {
         try (Workbook workbookA = WorkbookUtil.createBook(inputStreamA); Workbook workbookB = WorkbookUtil.createBook(inputStreamB)) {
