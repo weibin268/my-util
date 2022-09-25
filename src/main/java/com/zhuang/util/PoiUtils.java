@@ -20,10 +20,23 @@ import java.util.stream.Collectors;
  */
 public class PoiUtils {
 
+    /**
+     * 合并两个excel的数据
+     * @param inputFileNameList
+     * @param outputFileName
+     * @param headerRowCount
+     */
     public static void merge(List<String> inputFileNameList, String outputFileName, int headerRowCount) {
         merge(inputFileNameList, outputFileName, headerRowCount, false);
     }
 
+    /**
+     * 合并两个excel的数据
+     * @param inputFileNameList
+     * @param outputFileName
+     * @param headerRowCount
+     * @param deleteOldFiles
+     */
     public static void merge(List<String> inputFileNameList, String outputFileName, int headerRowCount, boolean deleteOldFiles) {
         String tempOutputFileName = outputFileName + ".temp";
         if (CollectionUtils.isEmpty(inputFileNameList)) return;
@@ -128,6 +141,7 @@ public class PoiUtils {
         }
     }
 
+
     /**
      * 根据工作表名称删除工作表
      *
@@ -164,6 +178,7 @@ public class PoiUtils {
             throw new RuntimeException("PoiUtils.removeSheetByIndexes fail!", e);
         }
     }
+
 
     /**
      * 将工作簿转为输入流
