@@ -4,6 +4,8 @@ import cn.hutool.core.io.FileUtil;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,11 +42,11 @@ public class PoiUtilsTest {
 
 
     @Test
-    public void merge() {
+    public void merge() throws FileNotFoundException {
         InputStream inputStream1 = getClass().getResourceAsStream("/excel/test_merge_1.xlsx");
         InputStream inputStream2 = getClass().getResourceAsStream("/excel/test_merge_2.xlsx");
-        InputStream inputStream = PoiUtils.merge(inputStream1, inputStream2, 1);
-        FileUtil.writeFromStream(inputStream, new File("/Users/zhuang/Documents/temp/test_merge.xlsx"));
+        FileOutputStream outputStream = new FileOutputStream("/Users/zhuang/Documents/temp/test_merge.xlsx");
+        PoiUtils.merge(inputStream1, inputStream2, outputStream, 1);
     }
 
 }

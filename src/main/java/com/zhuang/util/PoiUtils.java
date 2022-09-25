@@ -7,10 +7,7 @@ import cn.hutool.poi.excel.cell.CellUtil;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +26,7 @@ public class PoiUtils {
      * @param headerRowCount
      * @return
      */
-    public static InputStream merge(InputStream inputStreamA, InputStream inputStreamB, int headerRowCount) {
+    public static void merge(InputStream inputStreamA, InputStream inputStreamB, OutputStream outputStream, int headerRowCount) {
         try (Workbook workbookA = WorkbookUtil.createBook(inputStreamA); Workbook workbookB = WorkbookUtil.createBook(inputStreamB)) {
             for (Sheet sheetA : workbookA) {
                 Sheet sheetB = workbookB.getSheet(sheetA.getSheetName());
@@ -54,7 +51,7 @@ public class PoiUtils {
                     }
                 }
             }
-            return workbookToInputStream(workbookA);
+            writeWorkbookToOutputStream(workbookA, outputStream);
         } catch (IOException e) {
             throw new RuntimeException("PoiUtils.merge fail!", e);
         }
@@ -150,6 +147,14 @@ public class PoiUtils {
         }
         ByteArrayInputStream result = IoUtil.toStream(byteArrayOutputStream.toByteArray());
         return result;
+    }
+
+    public static void writeWorkbookToOutputStream(Workbook workbook, OutputStream outputStream) {
+        try {
+            workbook.write(outputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
