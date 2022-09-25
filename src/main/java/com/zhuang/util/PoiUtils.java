@@ -1,11 +1,13 @@
 package com.zhuang.util;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.RowUtil;
 import cn.hutool.poi.excel.WorkbookUtil;
 import cn.hutool.poi.excel.cell.CellUtil;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
+import org.springframework.util.CollectionUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,8 +20,40 @@ import java.util.stream.Collectors;
  */
 public class PoiUtils {
 
+    public static void merge(List<String> inputFileNameList, String outputFileName, int headerRowCount) {
+        merge(inputFileNameList, outputFileName, headerRowCount, false);
+    }
+
+    public static void merge(List<String> inputFileNameList, String outputFileName, int headerRowCount, boolean deleteOldFiles) {
+        String tempOutputFileName = outputFileName + ".temp";
+        if (CollectionUtils.isEmpty(inputFileNameList)) return;
+        if (inputFileNameList.size() == 1) {
+            if (deleteOldFiles) {
+                FileUtil.move(new File(inputFileNameList.get(0)), new File(outputFileName), true);
+            } else {
+                FileUtil.copy(new File(inputFileNameList.get(0)), new File(outputFileName), true);
+            }
+            return;
+        }
+        FileUtil.copy(new File(inputFileNameList.get(0)), new File(tempOutputFileName), true);
+        for (int i = 1; i < inputFileNameList.size(); i++) {
+            String inputFileNameB = inputFileNameList.get(i);
+            try (InputStream inputStreamA = new FileInputStream(tempOutputFileName); InputStream inputStreamB = new FileInputStream(inputFileNameB); OutputStream outputStream = new FileOutputStream(outputFileName)) {
+                merge(inputStreamA, inputStreamB, outputStream, headerRowCount);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            FileUtil.copy(outputFileName, tempOutputFileName, true);
+        }
+        if (deleteOldFiles) {
+            inputFileNameList.forEach(fileName -> FileUtil.del(new File(fileName)));
+        }
+        FileUtil.del(new File(tempOutputFileName));
+    }
+
     /**
      * 合并两个excel的数据
+     *
      * @param inputStreamA
      * @param inputStreamB
      * @param outputStream

@@ -7,9 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PoiUtilsTest {
 
@@ -42,11 +40,13 @@ public class PoiUtilsTest {
 
 
     @Test
-    public void merge() throws FileNotFoundException {
-        InputStream inputStream1 = getClass().getResourceAsStream("/excel/test_merge_1.xlsx");
-        InputStream inputStream2 = getClass().getResourceAsStream("/excel/test_merge_2.xlsx");
-        FileOutputStream outputStream = new FileOutputStream("/Users/zhuang/Documents/temp/test_merge.xlsx");
-        PoiUtils.merge(inputStream1, inputStream2, outputStream, 1);
+    public void merge() {
+        List<String> inputFileNameList = new ArrayList<>();
+        inputFileNameList.add(getClass().getResource("/excel/test_merge_1.xlsx").getPath());
+        inputFileNameList.add(getClass().getResource("/excel/test_merge_2.xlsx").getPath());
+        inputFileNameList.add(getClass().getResource("/excel/test_merge_3.xlsx").getPath());
+        String outputFileName = "/Users/zhuang/Documents/temp/test_merge.xlsx";
+        PoiUtils.merge(inputFileNameList, outputFileName, 1);
     }
 
 }
