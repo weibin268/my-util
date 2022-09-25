@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class PoiUtils {
 
     /**
-     * 合并两个excel的数据
+     * 合并多个个excel的数据
      * @param inputFileNameList
      * @param outputFileName
      * @param headerRowCount
@@ -31,7 +31,7 @@ public class PoiUtils {
     }
 
     /**
-     * 合并两个excel的数据
+     * 合并多个excel的数据
      * @param inputFileNameList
      * @param outputFileName
      * @param headerRowCount
