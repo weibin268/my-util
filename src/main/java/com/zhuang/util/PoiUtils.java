@@ -22,6 +22,7 @@ public class PoiUtils {
 
     /**
      * 合并多个个excel的数据
+     *
      * @param inputFileNameList
      * @param outputFileName
      * @param headerRowCount
@@ -32,6 +33,7 @@ public class PoiUtils {
 
     /**
      * 合并多个excel的数据
+     *
      * @param inputFileNameList
      * @param outputFileName
      * @param headerRowCount
@@ -40,6 +42,7 @@ public class PoiUtils {
     public static void merge(List<String> inputFileNameList, String outputFileName, int headerRowCount, boolean deleteOldFiles) {
         String tempOutputFileName = outputFileName + ".temp";
         if (CollectionUtils.isEmpty(inputFileNameList)) return;
+        inputFileNameList = inputFileNameList.stream().filter(FileUtil::exist).collect(Collectors.toList());
         if (inputFileNameList.size() == 1) {
             if (deleteOldFiles) {
                 FileUtil.move(new File(inputFileNameList.get(0)), new File(outputFileName), true);
