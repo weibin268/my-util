@@ -14,17 +14,28 @@ public class MemoryCache implements Cacheable {
 
     @Override
     public void set(String key, String value, int timeoutSeconds) {
-        getTimedCache(key, timeoutSeconds).put(key, value);
+        TimedCache timedCache = getTimedCache(key, timeoutSeconds);
+        if (timedCache != null) {
+            getTimedCache(key, timeoutSeconds).put(key, value);
+        }
     }
 
     @Override
     public String get(String key) {
-        return getTimedCache(key, null).get(key).toString();
+        TimedCache timedCache = getTimedCache(key, null);
+        if (timedCache != null) {
+            return timedCache.get(key).toString();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void delete(String key) {
-        getTimedCache(key, null).remove(key);
+        TimedCache timedCache = getTimedCache(key, null);
+        if (timedCache != null) {
+            timedCache.remove(key);
+        }
     }
 
     @Override
@@ -37,6 +48,9 @@ public class MemoryCache implements Cacheable {
         if (timedCacheMap.containsKey(key)) {
             timedCache = timedCacheMap.get(key);
         } else {
+            if (timeoutSeconds == null) {
+                return null;
+            }
             timedCache = new TimedCache(timeoutSeconds);
             timedCacheMap.put(key, timedCache);
         }
