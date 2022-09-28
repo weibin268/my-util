@@ -24,7 +24,8 @@ public class MemoryCache implements Cacheable {
     public String get(String key) {
         TimedCache timedCache = getTimedCache(key, null);
         if (timedCache != null) {
-            return timedCache.get(key).toString();
+            Object oValue = timedCache.get(key);
+            return oValue == null ? null : oValue.toString();
         } else {
             return null;
         }
