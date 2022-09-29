@@ -1,5 +1,6 @@
-package com.zhuang.util.spring;
+package com.zhuang.util.spring.cache;
 
+import com.zhuang.util.spring.cache.CacheUtils;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;

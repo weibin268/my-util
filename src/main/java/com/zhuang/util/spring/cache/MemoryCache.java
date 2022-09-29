@@ -1,10 +1,8 @@
-package com.zhuang.util.spring;
+package com.zhuang.util.spring.cache;
 
 import cn.hutool.cache.impl.TimedCache;
-import org.checkerframework.checker.units.qual.K;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

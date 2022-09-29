@@ -1,9 +1,8 @@
-package com.zhuang.util.spring;
+package com.zhuang.util.spring.cache;
 
 import cn.hutool.core.thread.ThreadUtil;
+import com.zhuang.util.spring.cache.MemoryCache;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class MemoryCacheTest {
 
@@ -11,7 +10,7 @@ public class MemoryCacheTest {
     public void test() {
 
         MemoryCache memoryCache = new MemoryCache();
-        memoryCache.set("test", "test", 2);
+        memoryCache.set("test", "test", 1);
         System.out.println(memoryCache.get("test"));
         ThreadUtil.sleep(1000);
         System.out.println(memoryCache.get("test"));

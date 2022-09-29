@@ -1,4 +1,4 @@
-package com.zhuang.util.spring;
+package com.zhuang.util.spring.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
