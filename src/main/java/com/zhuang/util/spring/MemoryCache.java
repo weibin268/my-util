@@ -1,6 +1,7 @@
 package com.zhuang.util.spring;
 
 import cn.hutool.cache.impl.TimedCache;
+import org.checkerframework.checker.units.qual.K;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -10,11 +11,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class MemoryCache implements Cacheable {
 
-    private static Map<String, TimedCache> timedCacheMap = new ConcurrentHashMap<>(1);
+    private static Map<String, MyTimedCache> timedCacheMap = new ConcurrentHashMap<>(1);
 
     @Override
     public void set(String key, String value, int timeoutSeconds) {
-        TimedCache timedCache = getTimedCache(key, timeoutSeconds);
+        MyTimedCache timedCache = getTimedCache(key, timeoutSeconds);
         if (timedCache != null) {
             getTimedCache(key, timeoutSeconds).put(key, value);
         }
@@ -22,7 +23,7 @@ public class MemoryCache implements Cacheable {
 
     @Override
     public String get(String key) {
-        TimedCache timedCache = getTimedCache(key, null);
+        MyTimedCache timedCache = getTimedCache(key, null);
         if (timedCache != null) {
             Object oValue = timedCache.get(key);
             return oValue == null ? null : oValue.toString();
@@ -33,7 +34,7 @@ public class MemoryCache implements Cacheable {
 
     @Override
     public void delete(String key) {
-        TimedCache timedCache = getTimedCache(key, null);
+        MyTimedCache timedCache = getTimedCache(key, null);
         if (timedCache != null) {
             timedCache.remove(key);
         }
@@ -44,18 +45,33 @@ public class MemoryCache implements Cacheable {
         return "memory";
     }
 
-    private TimedCache getTimedCache(String key, Integer timeoutSeconds) {
-        TimedCache timedCache;
+    private MyTimedCache getTimedCache(String key, Integer timeoutSeconds) {
+        MyTimedCache timedCache;
         if (timedCacheMap.containsKey(key)) {
             timedCache = timedCacheMap.get(key);
         } else {
             if (timeoutSeconds == null) {
                 return null;
             }
-            timedCache = new TimedCache(timeoutSeconds);
+            timedCache = new MyTimedCache(timeoutSeconds, timedCacheMap);
             timedCacheMap.put(key, timedCache);
         }
         return timedCache;
+    }
+
+    public static class MyTimedCache<K, V> extends TimedCache<K, V> {
+
+        private Map<String, MyTimedCache> map;
+
+        public MyTimedCache(int timeoutSeconds, Map<String, MyTimedCache> map) {
+            super(timeoutSeconds * 1000L);
+            this.map = map;
+        }
+
+        @Override
+        public void onRemove(K key, V cachedObject) {
+            this.map.remove(key);
+        }
     }
 
 }
