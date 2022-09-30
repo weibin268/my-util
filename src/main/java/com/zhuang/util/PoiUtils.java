@@ -94,7 +94,7 @@ public class PoiUtils {
                     String[] sheetNameArr = sheetAOldName.split("\\_");
                     sheetANewName = sheetNameArr[0];
 
-                    headerRowCount = Integer.parseInt(sheetNameArr[1]);
+                    headerRowCount = Integer.parseInt(sheetNameArr[1].trim());
                 }
                 sheetANewNameMap.put(workbookA.getSheetIndex(sheetA), sheetANewName);
                 Sheet sheetB = workbookB.getSheetAt(sheetAIndex);
