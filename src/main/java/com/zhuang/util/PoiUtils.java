@@ -58,8 +58,12 @@ public class PoiUtils {
         FileUtil.copy(new File(inputFileNameList.get(0)), new File(tempOutputFileName), true);
         for (int i = 1; i < inputFileNameList.size(); i++) {
             String inputFileNameB = inputFileNameList.get(i);
+            boolean renameSheetName = false;
+            if (i == (inputFileNameList.size() - 1)) {
+                renameSheetName = true;
+            }
             try (InputStream inputStreamA = new FileInputStream(tempOutputFileName); InputStream inputStreamB = new FileInputStream(inputFileNameB); OutputStream outputStream = new FileOutputStream(outputFileName)) {
-                merge(inputStreamA, inputStreamB, outputStream, headerRowCount);
+                merge(inputStreamA, inputStreamB, outputStream, headerRowCount, renameSheetName);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -79,7 +83,7 @@ public class PoiUtils {
      * @param outputStream
      * @param headerRowCount
      */
-    public static void merge(InputStream inputStreamA, InputStream inputStreamB, OutputStream outputStream, int headerRowCount) {
+    public static void merge(InputStream inputStreamA, InputStream inputStreamB, OutputStream outputStream, int headerRowCount, boolean renameSheetName) {
         try (Workbook workbookA = WorkbookUtil.createBook(inputStreamA); Workbook workbookB = WorkbookUtil.createBook(inputStreamB)) {
             Map<Integer, String> sheetANewNameMap = new HashMap<>();
             for (Sheet sheetA : workbookA) {
@@ -115,10 +119,12 @@ public class PoiUtils {
                     }
                 }
             }
-            for (Sheet sheetA : workbookA) {
-                Integer sheetAIndex = workbookA.getSheetIndex(sheetA);
-                String sheetANewName = sheetANewNameMap.get(sheetAIndex);
-                workbookA.setSheetName(sheetAIndex, sheetANewName);
+            if (renameSheetName) {
+                for (Sheet sheetA : workbookA) {
+                    Integer sheetAIndex = workbookA.getSheetIndex(sheetA);
+                    String sheetANewName = sheetANewNameMap.get(sheetAIndex);
+                    workbookA.setSheetName(sheetAIndex, sheetANewName);
+                }
             }
             writeWorkbookToOutputStream(workbookA, outputStream);
         } catch (IOException e) {
