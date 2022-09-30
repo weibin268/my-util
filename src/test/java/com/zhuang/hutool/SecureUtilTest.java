@@ -14,6 +14,7 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Base64;
+import java.util.UUID;
 
 public class SecureUtilTest {
 
@@ -47,6 +48,18 @@ public class SecureUtilTest {
                 .setPrivateKey(privateKey);
         byte[] s = asymmetricCrypto.decrypt(Base64.getDecoder().decode("iGcaS+tD7PvaWi9qI71nqyHU72eVYwNK+tfKFALR7YLy7XBGLxvf3xloGngZLglFXINVC4RwMIpzbChM7ezHUA=="), KeyType.PrivateKey);
         System.out.println(new String(s));
+    }
+
+    @Test
+    public void sha256() {
+        String timestamp = new Long(System.currentTimeMillis() / 1000).toString();
+        System.out.println(timestamp);
+        String secret = "Ruo2PCUmII8mi8f83eqCcg7OeWdLxVgR";
+        String nonce= UUID.randomUUID().toString();
+        System.out.println(nonce);
+        String rawData = timestamp + secret + nonce + timestamp;
+        String s = SecureUtil.sha256(rawData).toUpperCase();
+        System.out.println(s);
     }
 
     @Test
