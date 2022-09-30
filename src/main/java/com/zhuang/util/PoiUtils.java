@@ -82,7 +82,7 @@ public class PoiUtils {
         try (Workbook workbookA = WorkbookUtil.createBook(inputStreamA); Workbook workbookB = WorkbookUtil.createBook(inputStreamB)) {
             for (Sheet sheetA : workbookA) {
                 if (sheetA.getSheetName().contains("_")) {
-                    String[] sheetNameArr = sheetA.getSheetName().split("\\-");
+                    String[] sheetNameArr = sheetA.getSheetName().split("\\_");
                     String sheetName = sheetNameArr[0];
                     headerRowCount = Integer.parseInt(sheetNameArr[1]);
                     workbookA.setSheetName(workbookA.getSheetIndex(sheetA.getSheetName()), sheetName);
