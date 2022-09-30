@@ -2,9 +2,11 @@ package com.zhuang.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.poi.excel.RowUtil;
 import cn.hutool.poi.excel.WorkbookUtil;
 import cn.hutool.poi.excel.cell.CellUtil;
+import lombok.Data;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.util.CollectionUtils;
@@ -79,6 +81,12 @@ public class PoiUtils {
     public static void merge(InputStream inputStreamA, InputStream inputStreamB, OutputStream outputStream, int headerRowCount) {
         try (Workbook workbookA = WorkbookUtil.createBook(inputStreamA); Workbook workbookB = WorkbookUtil.createBook(inputStreamB)) {
             for (Sheet sheetA : workbookA) {
+                if (sheetA.getSheetName().contains("_")) {
+                    String[] sheetNameArr = sheetA.getSheetName().split("\\-");
+                    String sheetName = sheetNameArr[0];
+                    headerRowCount = Integer.parseInt(sheetNameArr[1]);
+                    workbookA.setSheetName(workbookA.getSheetIndex(sheetA.getSheetName()), sheetName);
+                }
                 Sheet sheetB = workbookB.getSheet(sheetA.getSheetName());
                 int lastRowIndexA = sheetA.getLastRowNum();
                 int totalRowCountB = sheetB.getLastRowNum() + 1;
@@ -286,4 +294,5 @@ public class PoiUtils {
             }
         }
     }
+
 }
