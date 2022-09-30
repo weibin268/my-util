@@ -3,9 +3,7 @@ package com.zhuang.util;
 import cn.hutool.core.date.DateUtil;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class DateUtilsTest {
 
@@ -60,5 +58,13 @@ public class DateUtilsTest {
     @Test
     public void add() {
         System.out.println(DateUtils.add(new Date(), Calendar.DAY_OF_MONTH, -1));
+    }
+
+    @Test
+    public void getBetweenDateGroupByMonth() {
+        Date beginDate = DateUtil.parseDateTime("2022-01-01 22:00:00");
+        Date endDate = DateUtil.parseDateTime("2022-09-01 2:00:00");
+        Map<Date, List<Date>> dateMap = DateUtils.getBetweenDateGroupByMonth(beginDate, endDate);
+        System.out.println(dateMap);
     }
 }

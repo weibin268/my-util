@@ -193,4 +193,26 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+
+    public static Map<Date, List<Date>> getBetweenDateGroupByMonth(Date beginDateTime, Date endDateTime) {
+        String dateMonthFormat = "yyyy-MM";
+        List<Date> eachMonth = DateUtils.getEachMonth(beginDateTime, endDateTime);
+        Map<Date, List<Date>> dateMap = new LinkedHashMap<>();
+        for (Date date : eachMonth) {
+            List<Date> tempDateList = new ArrayList<>();
+            if (DateUtil.format(date, dateMonthFormat).equals(DateUtil.format(beginDateTime, dateMonthFormat))) {
+                tempDateList.add(beginDateTime);
+            } else {
+                tempDateList.add(DateUtil.beginOfMonth(date));
+            }
+            if (DateUtil.format(date, dateMonthFormat).equals(DateUtil.format(endDateTime, dateMonthFormat))) {
+                tempDateList.add(endDateTime);
+            } else {
+                tempDateList.add(DateUtil.endOfMonth(date));
+            }
+            dateMap.put(date, tempDateList);
+        }
+        return dateMap;
+    }
+
 }
