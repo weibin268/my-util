@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -80,14 +81,19 @@ public class PoiUtils {
      */
     public static void merge(InputStream inputStreamA, InputStream inputStreamB, OutputStream outputStream, int headerRowCount) {
         try (Workbook workbookA = WorkbookUtil.createBook(inputStreamA); Workbook workbookB = WorkbookUtil.createBook(inputStreamB)) {
+            Map<Integer, String> sheetANewNameMap = new HashMap<>();
             for (Sheet sheetA : workbookA) {
-                if (sheetA.getSheetName().contains("_")) {
-                    String[] sheetNameArr = sheetA.getSheetName().split("\\_");
-                    String sheetName = sheetNameArr[0];
+                int sheetAIndex = workbookA.getSheetIndex(sheetA);
+                String sheetAOldName = sheetA.getSheetName();
+                String sheetANewName = sheetA.getSheetName();
+                if (sheetAOldName.contains("_")) {
+                    String[] sheetNameArr = sheetAOldName.split("\\_");
+                    sheetANewName = sheetNameArr[0];
+
                     headerRowCount = Integer.parseInt(sheetNameArr[1]);
-                    workbookA.setSheetName(workbookA.getSheetIndex(sheetA.getSheetName()), sheetName);
                 }
-                Sheet sheetB = workbookB.getSheet(sheetA.getSheetName());
+                sheetANewNameMap.put(workbookA.getSheetIndex(sheetA), sheetANewName);
+                Sheet sheetB = workbookB.getSheetAt(sheetAIndex);
                 int lastRowIndexA = sheetA.getLastRowNum();
                 int totalRowCountB = sheetB.getLastRowNum() + 1;
                 Row templateRowA = null;
@@ -108,6 +114,11 @@ public class PoiUtils {
                         CellUtil.setCellValue(cellA, CellUtil.getCellValue(cellB), cellStyle);
                     }
                 }
+            }
+            for (Sheet sheetA : workbookA) {
+                Integer sheetAIndex = workbookA.getSheetIndex(sheetA);
+                String sheetANewName = sheetANewNameMap.get(sheetAIndex);
+                workbookA.setSheetName(sheetAIndex, sheetANewName);
             }
             writeWorkbookToOutputStream(workbookA, outputStream);
         } catch (IOException e) {
