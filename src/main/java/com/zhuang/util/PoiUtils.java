@@ -9,6 +9,7 @@ import cn.hutool.poi.excel.cell.CellUtil;
 import lombok.Data;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.util.CollectionUtils;
 
 import java.io.*;
@@ -46,14 +47,28 @@ public class PoiUtils {
         String tempOutputFileName = outputFileName + ".temp";
         if (CollectionUtils.isEmpty(inputFileNameList)) return;
         inputFileNameList = inputFileNameList.stream().filter(FileUtil::exist).collect(Collectors.toList());
+        // 只有一个文件时的处理
         if (inputFileNameList.size() == 1) {
+            String inputFileName = inputFileNameList.get(0);
+            try (InputStream fileInputStream = new FileInputStream(inputFileName); Workbook workbook = WorkbookUtil.createBook(fileInputStream)) {
+                for (Sheet sheet : workbook) {
+                    int sheetIndex = workbook.getSheetIndex(sheet);
+                    if (sheet.getSheetName().contains("_")) {
+                        String[] sheetNameArr = sheet.getSheetName().split("\\_");
+                        String sheetNewName = sheetNameArr[0];
+                        workbook.setSheetName(sheetIndex, sheetNewName);
+                    }
+                }
+                writeWorkbookToOutputStream(workbook, new FileOutputStream(outputFileName));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             if (deleteOldFiles) {
-                FileUtil.move(new File(inputFileNameList.get(0)), new File(outputFileName), true);
-            } else {
-                FileUtil.copy(new File(inputFileNameList.get(0)), new File(outputFileName), true);
+                FileUtil.del(inputFileName);
             }
             return;
         }
+        // 有多个文件多处理
         if (CollectionUtils.isEmpty(inputFileNameList)) return;
         FileUtil.copy(new File(inputFileNameList.get(0)), new File(tempOutputFileName), true);
         for (int i = 1; i < inputFileNameList.size(); i++) {

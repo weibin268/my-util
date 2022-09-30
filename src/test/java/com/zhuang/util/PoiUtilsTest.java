@@ -45,7 +45,7 @@ public class PoiUtilsTest {
         inputFileNameList.add(getClass().getResource("/excel/test_merge_1.xlsx").getPath());
         inputFileNameList.add(getClass().getResource("/excel/test_merge_2.xlsx").getPath());
         inputFileNameList.add(getClass().getResource("/excel/test_merge_3.xlsx").getPath());
-        String outputFileName = "d:/temp/test_merge.xlsx";
+        String outputFileName = "/Users/zhuang/Documents/test_merge.xlsx";
         PoiUtils.merge(inputFileNameList, outputFileName, 1);
     }
 
