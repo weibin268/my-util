@@ -51,6 +51,7 @@ public class PoiUtils {
             }
             return;
         }
+        if (CollectionUtils.isEmpty(inputFileNameList)) return;
         FileUtil.copy(new File(inputFileNameList.get(0)), new File(tempOutputFileName), true);
         for (int i = 1; i < inputFileNameList.size(); i++) {
             String inputFileNameB = inputFileNameList.get(i);
