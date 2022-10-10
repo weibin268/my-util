@@ -32,4 +32,9 @@ public class FileUtilTest {
             }
         });
     }
+
+    @Test
+    public void mkParentDirs(){
+        FileUtil.mkParentDirs("/Users/zhuang/Documents/temp/a/b/test.txt");
+    }
 }
