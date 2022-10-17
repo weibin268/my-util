@@ -6,11 +6,19 @@ import java.nio.ByteOrder;
 public class ByteUtils {
 
     public static float getFloat(byte[] bytes) {
-        return ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN).getFloat();
+        return getFloat(bytes, ByteOrder.BIG_ENDIAN);
+    }
+
+    public static float getFloat(byte[] bytes, ByteOrder bo) {
+        return ByteBuffer.wrap(bytes).order(bo).getFloat();
+    }
+
+    public static byte[] getBytes(float value, ByteOrder bo) {
+        return ByteBuffer.allocate(4).order(bo).putFloat(value).array();
     }
 
     public static byte[] getBytes(float value) {
-        return ByteBuffer.allocate(4).order(ByteOrder.BIG_ENDIAN).putFloat(value).array();
+        return getBytes(value, ByteOrder.BIG_ENDIAN);
     }
 
 }
