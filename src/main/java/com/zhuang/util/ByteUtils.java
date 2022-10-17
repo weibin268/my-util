@@ -13,12 +13,12 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getFloat();
     }
 
-    public static byte[] getBytes(float value, ByteOrder bo) {
-        return ByteBuffer.allocate(4).order(bo).putFloat(value).array();
-    }
-
     public static byte[] getBytes(float value) {
         return getBytes(value, ByteOrder.BIG_ENDIAN);
+    }
+
+    public static byte[] getBytes(float value, ByteOrder bo) {
+        return ByteBuffer.allocate(4).order(bo).putFloat(value).array();
     }
 
 }
