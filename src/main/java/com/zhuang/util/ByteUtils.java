@@ -18,7 +18,7 @@ public class ByteUtils {
     }
 
     public static byte[] getBytes(float value, ByteOrder bo) {
-        return ByteBuffer.allocate(4).order(bo).putFloat(value).array();
+        return ByteBuffer.allocate(Float.BYTES).order(bo).putFloat(value).array();
     }
 
 }
