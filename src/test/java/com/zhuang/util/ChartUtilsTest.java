@@ -14,4 +14,15 @@ public class ChartUtilsTest {
         System.out.println(scaleInfo);
     }
 
+    @Test
+    public void getIntervalValue() {
+        System.out.println(ChartUtils.getIntervalValue(333));
+    }
+
+
+    @Test
+    public void getXMaxValue() {
+        System.out.println(ChartUtils.getXMaxValue(333.132, 3.5));
+    }
+
 }

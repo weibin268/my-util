@@ -71,6 +71,32 @@ public class ChartUtils {
         return result;
     }
 
+    public static double getIntervalValue(double max) {
+        int index = ((Double) Math.floor(Math.log10(max))).intValue();
+        if (max >= (5 * Math.pow(10, index))) {
+            return 1 * Math.pow(10, index - 1);
+        } else if (max >= (2.5 * Math.pow(10, index)) && max < (5 * Math.pow(10, index))) {
+            return 5 * Math.pow(10, index - 2);
+        } else {
+            return 2 * Math.pow(10, index - 2);
+        }
+    }
+
+    public static BigDecimal getIntervalValue(BigDecimal max) {
+        double intervalValue = getIntervalValue(max.doubleValue());
+        return new BigDecimal(intervalValue);
+    }
+
+    public static BigDecimal getXMaxValue(BigDecimal max, BigDecimal intervalValue) {
+        double xMaxValue = getXMaxValue(max.doubleValue(), intervalValue.doubleValue());
+        return new BigDecimal(xMaxValue);
+    }
+
+    public static double getXMaxValue(double max, double intervalValue) {
+        //ceil（信号最大值/区间间隔）*区间间隔
+        return Math.ceil((max / intervalValue) * intervalValue);
+    }
+
     @Data
     public static class ScaleInfo {
         private BigDecimal min;
