@@ -24,4 +24,12 @@ public class ByteUtilsTest {
         }
     }
 
+    @Test
+    public void getBytes() {
+        float v = 1.12345f;
+        byte[] bytes = ByteUtils.getBytes(v);
+        float f = ByteUtils.getFloat(bytes);
+        System.out.println(f);
+    }
+
 }

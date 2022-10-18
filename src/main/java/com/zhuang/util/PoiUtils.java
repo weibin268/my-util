@@ -47,6 +47,7 @@ public class PoiUtils {
         String tempOutputFileName = outputFileName + ".temp";
         if (CollectionUtils.isEmpty(inputFileNameList)) return;
         inputFileNameList = inputFileNameList.stream().filter(FileUtil::exist).collect(Collectors.toList());
+        FileUtil.mkParentDirs(outputFileName);
         // 只有一个文件时的处理
         if (inputFileNameList.size() == 1) {
             String inputFileName = inputFileNameList.get(0);
@@ -59,7 +60,9 @@ public class PoiUtils {
                         workbook.setSheetName(sheetIndex, sheetNewName);
                     }
                 }
-                writeWorkbookToOutputStream(workbook, new FileOutputStream(outputFileName));
+                try (OutputStream outputStream = new FileOutputStream(outputFileName)) {
+                    writeWorkbookToOutputStream(workbook, outputStream);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
