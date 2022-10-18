@@ -87,12 +87,12 @@ public class ChartUtils {
         return new BigDecimal(intervalValue);
     }
 
-    public static BigDecimal getXMaxValue(BigDecimal max, BigDecimal intervalValue) {
-        double xMaxValue = getXMaxValue(max.doubleValue(), intervalValue.doubleValue());
+    public static BigDecimal getMaxXValue(BigDecimal max, BigDecimal intervalValue) {
+        double xMaxValue = getMaxXValue(max.doubleValue(), intervalValue.doubleValue());
         return new BigDecimal(xMaxValue);
     }
 
-    public static double getXMaxValue(double max, double intervalValue) {
+    public static double getMaxXValue(double max, double intervalValue) {
         //ceil（信号最大值/区间间隔）*区间间隔
         return Math.ceil((max / intervalValue) * intervalValue);
     }

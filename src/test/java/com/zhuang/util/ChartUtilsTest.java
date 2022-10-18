@@ -4,8 +4,6 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.*;
-
 public class ChartUtilsTest {
 
     @Test
@@ -21,8 +19,8 @@ public class ChartUtilsTest {
 
 
     @Test
-    public void getXMaxValue() {
-        System.out.println(ChartUtils.getXMaxValue(333.132, 3.5));
+    public void getMaxXValue() {
+        System.out.println(ChartUtils.getMaxXValue(333.132, 3.5));
     }
 
 }
