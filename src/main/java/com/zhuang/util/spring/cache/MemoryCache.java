@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 public class MemoryCache extends TimedCache<String, String> implements Cacheable {
 
     public MemoryCache() {
-        super(1000 * 10);
+        super(10 * 1000L);
         //注意：这里需要设置自动清理，不然就算缓存过期，内存也不会被回收
-        schedulePrune(3000L);
+        schedulePrune(10 * 1000L);
     }
 
     @Override
