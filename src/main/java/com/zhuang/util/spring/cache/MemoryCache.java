@@ -1,12 +1,12 @@
 package com.zhuang.util.spring.cache;
 
 import cn.hutool.cache.impl.TimedCache;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-// 注意：hutool的TimedCache有内存泄漏问题
-//@Component
+@Component
 public class MemoryCache implements Cacheable {
 
     private static Map<String, MyTimedCache> timedCacheMap = new ConcurrentHashMap<>(1);
@@ -63,6 +63,8 @@ public class MemoryCache implements Cacheable {
 
         public MyTimedCache(int timeoutSeconds, Map<String, MyTimedCache> map) {
             super(timeoutSeconds * 1000L);
+            // 注意：要调用自定清理，不然内存不会释放
+            super.schedulePrune(timeoutSeconds * 1000L);
             this.map = map;
         }
 
