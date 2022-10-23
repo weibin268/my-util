@@ -3,75 +3,33 @@ package com.zhuang.util.spring.cache;
 import cn.hutool.cache.impl.TimedCache;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 @Component
-public class MemoryCache implements Cacheable {
+public class MemoryCache extends TimedCache<String, String> implements Cacheable {
 
-    private static Map<String, MyTimedCache> timedCacheMap = new ConcurrentHashMap<>(1);
+    public MemoryCache() {
+        super(1000 * 10);
+        //注意：这里需要设置自动清理，不然就算缓存过期，内存也不会被回收
+        schedulePrune(3000L);
+    }
 
     @Override
     public void set(String key, String value, int timeoutSeconds) {
-        MyTimedCache timedCache = getTimedCache(key, timeoutSeconds);
-        if (timedCache != null) {
-            getTimedCache(key, timeoutSeconds).put(key, value);
-        }
+        super.put(key, value, timeoutSeconds * 1000L);
     }
 
     @Override
     public String get(String key) {
-        MyTimedCache timedCache = getTimedCache(key, null);
-        if (timedCache != null) {
-            Object oValue = timedCache.get(key);
-            return oValue == null ? null : oValue.toString();
-        } else {
-            return null;
-        }
+        return super.get(key);
     }
 
     @Override
     public void delete(String key) {
-        MyTimedCache timedCache = getTimedCache(key, null);
-        if (timedCache != null) {
-            timedCache.remove(key);
-        }
+        super.remove(key);
     }
 
     @Override
     public String getType() {
         return "memory";
-    }
-
-    private MyTimedCache getTimedCache(String key, Integer timeoutSeconds) {
-        MyTimedCache timedCache;
-        if (timedCacheMap.containsKey(key)) {
-            timedCache = timedCacheMap.get(key);
-        } else {
-            if (timeoutSeconds == null) {
-                return null;
-            }
-            timedCache = new MyTimedCache(timeoutSeconds, timedCacheMap);
-            timedCacheMap.put(key, timedCache);
-        }
-        return timedCache;
-    }
-
-    public static class MyTimedCache<K, V> extends TimedCache<K, V> {
-
-        private Map<String, MyTimedCache> map;
-
-        public MyTimedCache(int timeoutSeconds, Map<String, MyTimedCache> map) {
-            super(timeoutSeconds * 1000L);
-            // 注意：要调用自定清理，不然内存不会释放
-            super.schedulePrune(timeoutSeconds * 1000L);
-            this.map = map;
-        }
-
-        @Override
-        public void onRemove(K key, V cachedObject) {
-            this.map.remove(key);
-        }
     }
 
 }
