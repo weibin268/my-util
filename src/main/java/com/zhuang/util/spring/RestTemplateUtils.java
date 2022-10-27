@@ -8,15 +8,21 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
+import java.nio.charset.StandardCharsets;
 
 
 public class RestTemplateUtils {
 
     public static RestTemplate getRestTemplate() {
         return new RestTemplate(generateHttpsRequestFactory());
+    }
+
+    public static void setStringHttpMessageConverterAsUtf8(RestTemplate restTemplate) {
+        restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
     }
 
     private static HttpComponentsClientHttpRequestFactory generateHttpsRequestFactory() {
