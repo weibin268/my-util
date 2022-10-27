@@ -18,14 +18,14 @@ import java.nio.charset.StandardCharsets;
 public class RestTemplateUtils {
 
     public static RestTemplate getRestTemplate() {
-        return new RestTemplate(generateHttpsRequestFactory());
+        return new RestTemplate(getHttpsRequestFactory());
     }
 
     public static void setStringHttpMessageConverterAsUtf8(RestTemplate restTemplate) {
         restTemplate.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
     }
 
-    private static HttpComponentsClientHttpRequestFactory generateHttpsRequestFactory() {
+    private static HttpComponentsClientHttpRequestFactory getHttpsRequestFactory() {
         try {
             TrustStrategy acceptingTrustStrategy = (x509Certificates, authType) -> true;
             SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
@@ -39,7 +39,7 @@ public class RestTemplateUtils {
             factory.setReadTimeout(10 * 60 * 1000);
             return factory;
         } catch (Exception e) {
-            throw new RuntimeException("创建HttpsRestTemplate失败", e);
+            throw new RuntimeException("getHttpsRequestFactory fail!", e);
         }
     }
 }
