@@ -1,6 +1,7 @@
 package com.zhuang.util;
 
 import cn.hutool.core.io.FileUtil;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.junit.Test;
 
@@ -54,8 +55,24 @@ public class PoiUtilsTest {
         OutputStream outputStream = new FileOutputStream("d:\\temp\\test-out.xlsx");
         PoiUtils.handleEachCell(resourceAsStream, outputStream, c -> {
             if (c.getCell().getCellType().equals(CellType.NUMERIC)) {
-                System.out.println(c.getCell().getNumericCellValue());
-                c.getCell().getCellStyle().setDataFormat(c.getWorkbook().createDataFormat().getFormat("#0.000"));
+                double cellValue = Math.abs(c.getCell().getNumericCellValue());
+                short format0 = c.getWorkbook().createDataFormat().getFormat("#0.000");
+                short format1 = c.getWorkbook().createDataFormat().getFormat("#0.00");
+                short format2 = c.getWorkbook().createDataFormat().getFormat("#0.0");
+                short format3 = c.getWorkbook().createDataFormat().getFormat("#0");
+                CellStyle oldCellStyle = c.getCell().getCellStyle();
+                CellStyle newCellStyle = c.getWorkbook().createCellStyle();
+                newCellStyle.cloneStyleFrom(oldCellStyle);
+                c.getCell().setCellStyle(newCellStyle);
+                if (cellValue < 1) {
+                    c.getCell().getCellStyle().setDataFormat(format0);
+                } else if (cellValue < 10) {
+                    c.getCell().getCellStyle().setDataFormat(format1);
+                } else if (cellValue < 100) {
+                    c.getCell().getCellStyle().setDataFormat(format2);
+                } else {
+                    c.getCell().getCellStyle().setDataFormat(format3);
+                }
             }
         });
     }
