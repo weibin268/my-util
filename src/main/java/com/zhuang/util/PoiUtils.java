@@ -2,21 +2,19 @@ package com.zhuang.util;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.json.JSONUtil;
 import cn.hutool.poi.excel.RowUtil;
 import cn.hutool.poi.excel.WorkbookUtil;
 import cn.hutool.poi.excel.cell.CellUtil;
 import lombok.Data;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xwpf.usermodel.*;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.util.CollectionUtils;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -288,6 +286,45 @@ public class PoiUtils {
         }
     }
 
+
+    public static void handleEachCell(String inputFileName, String outputFileName, Consumer<CellContext> cellHandler) {
+        try (InputStream inputStream = new FileInputStream(inputFileName); OutputStream outputStream = new FileOutputStream(outputFileName)) {
+            handleEachCell(inputStream, outputStream, cellHandler);
+        } catch (IOException e) {
+            throw new RuntimeException("PoiUtils.handleEachCells fail!", e);
+        }
+    }
+
+    public static void handleEachCell(InputStream inputStream, OutputStream outputStream, Consumer<CellContext> cellHandler) {
+        try (Workbook workbook = WorkbookUtil.createBook(inputStream)) {
+            handleEachCell(workbook, cellHandler);
+            workbook.write(outputStream);
+        } catch (IOException e) {
+            throw new RuntimeException("PoiUtils.handleEachCells fail!", e);
+        }
+    }
+
+    /**
+     * 对每个单元格进行处理
+     *
+     * @param workbook
+     * @param cellHandler
+     */
+    public static void handleEachCell(Workbook workbook, Consumer<CellContext> cellHandler) {
+        for (Sheet sheet : workbook) {
+            for (Row row : sheet) {
+                for (Cell cell : row) {
+                    CellContext cellContext = new CellContext();
+                    cellContext.setCell(cell);
+                    cellContext.setRow(row);
+                    cellContext.setSheet(sheet);
+                    cellContext.setWorkbook(workbook);
+                    cellHandler.accept(cellContext);
+                }
+            }
+        }
+    }
+
     private static InputStream hiddenSheetByIndexes(Workbook workbook, boolean veryHidden, List<Integer> sheetIndexList) {
         sheetIndexList.sort(Integer::compareTo);
         sheetIndexList.forEach(index -> {
@@ -330,4 +367,11 @@ public class PoiUtils {
         }
     }
 
+    @Data
+    public static class CellContext {
+        private Cell cell;
+        private Row row;
+        private Sheet sheet;
+        private Workbook workbook;
+    }
 }

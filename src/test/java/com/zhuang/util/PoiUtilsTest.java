@@ -1,12 +1,10 @@
 package com.zhuang.util;
 
 import cn.hutool.core.io.FileUtil;
+import org.apache.poi.ss.usermodel.CellType;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 public class PoiUtilsTest {
@@ -47,6 +45,19 @@ public class PoiUtilsTest {
         inputFileNameList.add(getClass().getResource("/excel/test_merge_3.xlsx").getPath());
         String outputFileName = "/Users/zhuang/Documents/test_merge.xlsx";
         PoiUtils.merge(inputFileNameList, outputFileName, 1);
+    }
+
+
+    @Test
+    public void handleEachCell() throws FileNotFoundException {
+        InputStream resourceAsStream = getClass().getResourceAsStream("/excel/test.xlsx");
+        OutputStream outputStream = new FileOutputStream("d:\\temp\\test-out.xlsx");
+        PoiUtils.handleEachCell(resourceAsStream, outputStream, c -> {
+            if (c.getCell().getCellType().equals(CellType.NUMERIC)) {
+                System.out.println(c.getCell().getNumericCellValue());
+                c.getCell().getCellStyle().setDataFormat(c.getWorkbook().createDataFormat().getFormat("#0.000"));
+            }
+        });
     }
 
 }
