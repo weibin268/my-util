@@ -19,7 +19,7 @@ public class MemoryCache extends TimedCache<String, String> implements Cacheable
 
     @Override
     public String get(String key) {
-        return super.get(key);
+        return super.get(key, false);
     }
 
     @Override
