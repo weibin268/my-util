@@ -32,7 +32,7 @@ public class WaterMeasureUtilsTest {
         dataList.add(new MyWaterData(DateUtil.parseDateTime("2022-11-01 00:25:00"), new BigDecimal("9")));
         dataList.add(new MyWaterData(DateUtil.parseDateTime("2022-11-01 00:30:00"), new BigDecimal("8")));
         dataList.add(new MyWaterData(DateUtil.parseDateTime("2022-11-01 00:35:00"), new BigDecimal("7")));
-
+        System.out.println(WaterMeasureUtils.isMissingData(dataList));
         System.out.println(WaterMeasureUtils.calcAvg4Water(dataList));
         System.out.println(WaterMeasureUtils.calcAvg4Normal(dataList));
 
