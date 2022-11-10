@@ -47,6 +47,16 @@ public class WaterMeasureUtils {
             result = sumArea.divide(sumMinutes, 5, RoundingMode.HALF_UP);
         } else {
             // 没有缺数据
+            if (dataList.size() < 3) {
+                return dataList.stream().map(WaterData::getDataValue).reduce(BigDecimal.ZERO, BigDecimal::add).divide(BigDecimal.valueOf(dataList.size()), 5, RoundingMode.HALF_UP);
+            }
+            WaterData firstWaterData = dataList.get(0);
+            WaterData lastWaterData = dataList.get(dataList.size() - 1);
+            List<WaterData> middleWaterDataList = dataList.stream().filter(c -> !c.equals(firstWaterData) && !c.equals(lastWaterData)).collect(Collectors.toList());
+            BigDecimal sumMiddle = middleWaterDataList.stream().map(WaterData::getDataValue).reduce(BigDecimal.ZERO, BigDecimal::add);
+            result = sumMiddle.add(firstWaterData.getDataValue().divide(new BigDecimal("2"), 5, RoundingMode.HALF_UP))
+                    .add(lastWaterData.getDataValue().divide(new BigDecimal("2"), 5, RoundingMode.HALF_UP))
+                    .divide(BigDecimal.valueOf(dataList.size() - 1), 5, RoundingMode.HALF_UP);
         }
 
         return result;
