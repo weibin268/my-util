@@ -2,6 +2,7 @@ package com.zhuang.util;
 
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import lombok.Data;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  */
 public class WaterMeasureUtils {
 
-    public static BigDecimal calcAvg4Water(List<WaterData> dataList) {
+    public static BigDecimal calcAvg4Water(List<? extends WaterData> dataList) {
 
         dataList = dataList.stream()
                 .filter(c -> c.getDataTime() != null && c.getDataValue() != null)
@@ -63,7 +64,7 @@ public class WaterMeasureUtils {
     }
 
 
-    public static BigDecimal calcAvg4Normal(List<WaterData> dataList) {
+    public static BigDecimal calcAvg4Normal(List<? extends WaterData> dataList) {
         dataList = dataList.stream()
                 .filter(c -> c.getDataTime() != null && c.getDataValue() != null)
                 .sorted(Comparator.comparing(WaterData::getDataTime))
@@ -72,7 +73,7 @@ public class WaterMeasureUtils {
         return dataList.stream().map(WaterData::getDataValue).reduce(BigDecimal.ZERO, BigDecimal::add).divide(BigDecimal.valueOf(dataList.size()), 5, RoundingMode.HALF_UP);
     }
 
-    public static boolean isMissingData(List<WaterData> dataList) {
+    public static boolean isMissingData(List<? extends WaterData> dataList) {
         if (CollectionUtils.isEmpty(dataList) || dataList.size() < 3) return false;
         Long preMinutes = null;
         for (int i = 0; i < dataList.size(); i++) {
@@ -95,6 +96,18 @@ public class WaterMeasureUtils {
         Date getDataTime();
 
         BigDecimal getDataValue();
+    }
+
+    @Data
+    public static class DefaultWaterData implements WaterData {
+
+        private Date dataTime;
+        private BigDecimal dataValue;
+
+        public DefaultWaterData(Date dataTime, BigDecimal dataValue) {
+            this.dataTime = dataTime;
+            this.dataValue = dataValue;
+        }
     }
 
 }
