@@ -193,12 +193,27 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    public static Map<Date, List<Date>> getBetweenDateGroupByDay(Date beginDateTime, Date endDateTime) {
+        String dateMonthFormat = "yyyy-MM-dd";
+        return getBetweenDateGroup(beginDateTime, endDateTime, dateMonthFormat);
+    }
 
     public static Map<Date, List<Date>> getBetweenDateGroupByMonth(Date beginDateTime, Date endDateTime) {
         String dateMonthFormat = "yyyy-MM";
-        List<Date> eachMonth = DateUtils.getEachMonth(beginDateTime, endDateTime);
+        return getBetweenDateGroup(beginDateTime, endDateTime, dateMonthFormat);
+    }
+
+    public static Map<Date, List<Date>> getBetweenDateGroup(Date beginDateTime, Date endDateTime, String dateMonthFormat) {
+        List<Date> eachDate;
+        if ("yyyy-MM".equals(dateMonthFormat)) {
+            eachDate = DateUtils.getEachMonth(beginDateTime, endDateTime);
+        } else if ("yyyy-MM-dd".equals(dateMonthFormat)) {
+            eachDate = DateUtils.getEachDay(beginDateTime, endDateTime);
+        } else {
+            return null;
+        }
         Map<Date, List<Date>> dateMap = new LinkedHashMap<>();
-        for (Date date : eachMonth) {
+        for (Date date : eachDate) {
             List<Date> tempDateList = new ArrayList<>();
             if (DateUtil.format(date, dateMonthFormat).equals(DateUtil.format(beginDateTime, dateMonthFormat))) {
                 tempDateList.add(beginDateTime);
