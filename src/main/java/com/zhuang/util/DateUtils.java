@@ -203,11 +203,11 @@ public class DateUtils {
         return getBetweenDateGroup(beginDateTime, endDateTime, dateMonthFormat);
     }
 
-    public static Map<Date, List<Date>> getBetweenDateGroup(Date beginDateTime, Date endDateTime, String dateMonthFormat) {
+    public static Map<Date, List<Date>> getBetweenDateGroup(Date beginDateTime, Date endDateTime, String dateFormat) {
         List<Date> eachDate;
-        if ("yyyy-MM".equals(dateMonthFormat)) {
+        if ("yyyy-MM".equals(dateFormat)) {
             eachDate = DateUtils.getEachMonth(beginDateTime, endDateTime);
-        } else if ("yyyy-MM-dd".equals(dateMonthFormat)) {
+        } else if ("yyyy-MM-dd".equals(dateFormat)) {
             eachDate = DateUtils.getEachDay(beginDateTime, endDateTime);
         } else {
             return null;
@@ -215,15 +215,23 @@ public class DateUtils {
         Map<Date, List<Date>> dateMap = new LinkedHashMap<>();
         for (Date date : eachDate) {
             List<Date> tempDateList = new ArrayList<>();
-            if (DateUtil.format(date, dateMonthFormat).equals(DateUtil.format(beginDateTime, dateMonthFormat))) {
+            if (DateUtil.format(date, dateFormat).equals(DateUtil.format(beginDateTime, dateFormat))) {
                 tempDateList.add(beginDateTime);
             } else {
-                tempDateList.add(DateUtil.beginOfMonth(date));
+                if ("yyyy-MM".equals(dateFormat)) {
+                    tempDateList.add(DateUtil.beginOfMonth(date));
+                } else if ("yyyy-MM-dd".equals(dateFormat)) {
+                    tempDateList.add(DateUtil.beginOfDay(date));
+                }
             }
-            if (DateUtil.format(date, dateMonthFormat).equals(DateUtil.format(endDateTime, dateMonthFormat))) {
+            if (DateUtil.format(date, dateFormat).equals(DateUtil.format(endDateTime, dateFormat))) {
                 tempDateList.add(endDateTime);
             } else {
-                tempDateList.add(DateUtil.endOfMonth(date));
+                if ("yyyy-MM".equals(dateFormat)) {
+                    tempDateList.add(DateUtil.endOfMonth(date));
+                } else if ("yyyy-MM-dd".equals(dateFormat)) {
+                    tempDateList.add(DateUtil.endOfDay(date));
+                }
             }
             dateMap.put(date, tempDateList);
         }
