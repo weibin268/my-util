@@ -30,11 +30,11 @@ public class CacheUtils {
         _this.getCacheable().set(key, value, timeoutSeconds);
     }
 
-    public String get(String key) {
+    public static String get(String key) {
         return _this.getCacheable().get(key);
     }
 
-    public void delete(String key) {
+    public static void delete(String key) {
         _this.getCacheable().delete(key);
     }
 

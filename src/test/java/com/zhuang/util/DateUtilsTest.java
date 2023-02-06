@@ -67,4 +67,12 @@ public class DateUtilsTest {
         Map<Date, List<Date>> dateMap = DateUtils.getBetweenDateGroupByMonth(beginDate, endDate);
         System.out.println(dateMap);
     }
+
+    @Test
+    public void getBetweenDateGroupByDay() {
+        Date beginDate = DateUtil.parseDateTime("2022-01-01 22:00:00");
+        Date endDate = DateUtil.parseDateTime("2022-01-03 2:00:00");
+        Map<Date, List<Date>> dateMap = DateUtils.getBetweenDateGroupByDay(beginDate, endDate);
+        System.out.println(dateMap);
+    }
 }

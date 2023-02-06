@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 public class DateUtils {
 
+    private static final String DATE_MONTH_PATTERN = "yyyy-MM";
+    private static final String DATE_DAY_PATTERN = "yyyy-MM-dd";
 
     public static void handleEachMonth(String strBeginDate, String strEndDate, Consumer<String> handler) {
         Date beginDate = DateUtil.parseDate(strBeginDate);
@@ -193,22 +195,43 @@ public class DateUtils {
         return calendar.getTime();
     }
 
+    public static Map<Date, List<Date>> getBetweenDateGroupByDay(Date beginDateTime, Date endDateTime) {
+        return getBetweenDateGroup(beginDateTime, endDateTime, DATE_DAY_PATTERN);
+    }
 
     public static Map<Date, List<Date>> getBetweenDateGroupByMonth(Date beginDateTime, Date endDateTime) {
-        String dateMonthFormat = "yyyy-MM";
-        List<Date> eachMonth = DateUtils.getEachMonth(beginDateTime, endDateTime);
+        return getBetweenDateGroup(beginDateTime, endDateTime, DATE_MONTH_PATTERN);
+    }
+
+    public static Map<Date, List<Date>> getBetweenDateGroup(Date beginDateTime, Date endDateTime, String dateFormat) {
+        List<Date> eachDate;
+        if (DATE_MONTH_PATTERN.equals(dateFormat)) {
+            eachDate = DateUtils.getEachMonth(beginDateTime, endDateTime);
+        } else if (DATE_DAY_PATTERN.equals(dateFormat)) {
+            eachDate = DateUtils.getEachDay(beginDateTime, endDateTime);
+        } else {
+            return null;
+        }
         Map<Date, List<Date>> dateMap = new LinkedHashMap<>();
-        for (Date date : eachMonth) {
+        for (Date date : eachDate) {
             List<Date> tempDateList = new ArrayList<>();
-            if (DateUtil.format(date, dateMonthFormat).equals(DateUtil.format(beginDateTime, dateMonthFormat))) {
+            if (DateUtil.format(date, dateFormat).equals(DateUtil.format(beginDateTime, dateFormat))) {
                 tempDateList.add(beginDateTime);
             } else {
-                tempDateList.add(DateUtil.beginOfMonth(date));
+                if (DATE_MONTH_PATTERN.equals(dateFormat)) {
+                    tempDateList.add(DateUtil.beginOfMonth(date));
+                } else if (DATE_DAY_PATTERN.equals(dateFormat)) {
+                    tempDateList.add(DateUtil.beginOfDay(date));
+                }
             }
-            if (DateUtil.format(date, dateMonthFormat).equals(DateUtil.format(endDateTime, dateMonthFormat))) {
+            if (DateUtil.format(date, dateFormat).equals(DateUtil.format(endDateTime, dateFormat))) {
                 tempDateList.add(endDateTime);
             } else {
-                tempDateList.add(DateUtil.endOfMonth(date));
+                if (DATE_MONTH_PATTERN.equals(dateFormat)) {
+                    tempDateList.add(DateUtil.endOfMonth(date));
+                } else if (DATE_DAY_PATTERN.equals(dateFormat)) {
+                    tempDateList.add(DateUtil.endOfDay(date));
+                }
             }
             dateMap.put(date, tempDateList);
         }
