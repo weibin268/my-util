@@ -51,8 +51,8 @@ public class JSONUtils {
             if (v1 instanceof JSONObject) {
                 resolvingMapDiff(JSON.parseObject(JSON.toJSONString(v1), Map.class), JSON.parseObject(JSON.toJSONString(map2.get(k)), Map.class), getKeyString(parent, k), diffInfoList);
             } else if (v1 instanceof JSONArray) {
-                JSONArray object1 = sortJsonArray((JSONArray) v1);
-                JSONArray object2 = sortJsonArray((JSONArray) v2);
+                JSONArray object1 = (JSONArray) v1;
+                JSONArray object2 = (JSONArray) v2;
                 for (int i = 0; i < object1.size(); i++) {
                     HashMap<String, Object> hs1 = new HashMap<>();
                     HashMap<String, Object> hs2 = new HashMap<>();
@@ -71,12 +71,6 @@ public class JSONUtils {
                 }
             }
         });
-    }
-
-    public static JSONArray sortJsonArray(JSONArray array) {
-        List<Object> list = array.toJavaList(Object.class);
-        list.sort(Comparator.comparing(Object::toString));
-        return JSON.parseArray(JSON.toJSONString(list));
     }
 
     public static String getKeyString(String parent, Object key) {
