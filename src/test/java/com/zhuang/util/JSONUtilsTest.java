@@ -9,7 +9,7 @@ public class JSONUtilsTest {
 
     @Test
     public void test() {
-        List<JSONUtils.DiffInfo> diffInfoList = JSONUtils.getJsonDiff("{person:{name:\"a\"}}", "{person:{name:\"b\",age:18}}");
+        List<JSONUtils.DiffInfo> diffInfoList = JSONUtils.getJsonDiffList("{person:{name:\"a\"}}", "{person:{name:\"b\",age:18}}");
         System.out.println(JSON.toJSONString(diffInfoList));
     }
 

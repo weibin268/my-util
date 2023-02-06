@@ -10,7 +10,7 @@ import java.util.*;
 
 public class JSONUtils {
 
-    public static List<DiffInfo> getJsonDiff(String json1, String json2) {
+    public static List<DiffInfo> getJsonDiffList(String json1, String json2) {
         List<DiffInfo> diffInfoList = new ArrayList<>();
         Map map1 = null, map2 = null;
         map1 = JSON.parseObject(json1, Map.class);
@@ -46,12 +46,13 @@ public class JSONUtils {
                 diffInfo.setNewValue(map2.get(k));
                 return;
             }
-            Object v = map1.get(k);
-            if (v instanceof JSONObject) {
-                resolvingMapDiff(JSON.parseObject(JSON.toJSONString(v), Map.class), JSON.parseObject(JSON.toJSONString(map2.get(k)), Map.class), getKeyString(parent, k), diffInfoList);
-            } else if (v instanceof JSONArray) {
-                JSONArray object1 = sortJsonArray((JSONArray) v);
-                JSONArray object2 = sortJsonArray(JSON.parseArray(JSON.toJSONString(map2.get(k))));
+            Object v1 = map1.get(k);
+            Object v2 = map2.get(k);
+            if (v1 instanceof JSONObject) {
+                resolvingMapDiff(JSON.parseObject(JSON.toJSONString(v1), Map.class), JSON.parseObject(JSON.toJSONString(map2.get(k)), Map.class), getKeyString(parent, k), diffInfoList);
+            } else if (v1 instanceof JSONArray) {
+                JSONArray object1 = sortJsonArray((JSONArray) v1);
+                JSONArray object2 = sortJsonArray((JSONArray) v2);
                 for (int i = 0; i < object1.size(); i++) {
                     HashMap<String, Object> hs1 = new HashMap<>();
                     HashMap<String, Object> hs2 = new HashMap<>();
@@ -60,7 +61,7 @@ public class JSONUtils {
                     resolvingMapDiff(hs1, hs2, getKeyString(parent, k), diffInfoList);
                 }
             } else {
-                if (!v.equals(map2.get(k))) {
+                if (!v1.equals(map2.get(k))) {
                     DiffInfo diffInfo = new DiffInfo();
                     diffInfoList.add(diffInfo);
                     diffInfo.setType("U");
