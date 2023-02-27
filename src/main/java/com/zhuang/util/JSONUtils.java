@@ -53,11 +53,14 @@ public class JSONUtils {
             } else if (v1 instanceof JSONArray) {
                 JSONArray object1 = (JSONArray) v1;
                 JSONArray object2 = (JSONArray) v2;
-                for (int i = 0; i < object1.size(); i++) {
+                int size = object2.size() > object1.size() ? object2.size() : object1.size();
+                for (int i = 0; i < size; i++) {
                     HashMap<String, Object> hs1 = new HashMap<>();
                     HashMap<String, Object> hs2 = new HashMap<>();
-                    hs1.put(String.valueOf(i), object1.get(i));
-                    hs2.put(String.valueOf(i), object2.get(i));
+                    Object row1 = object1.size() >= size ? object1.get(i) : new HashMap<>();
+                    Object row2 = object2.size() >= size ? object2.get(i) : new HashMap<>();
+                    hs1.put(String.valueOf(i), row1);
+                    hs2.put(String.valueOf(i), row2);
                     resolvingMapDiff(hs1, hs2, getKeyString(parent, k), diffInfoList);
                 }
             } else {
