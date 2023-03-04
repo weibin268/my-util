@@ -19,4 +19,11 @@ public class CollectionUtilTest {
         System.out.println(split);
     }
 
+
+    @Test
+    public void containsAny() {
+        List<Integer> list1 = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> list2 = Arrays.asList(1, 9);
+        System.out.println(CollectionUtil.containsAny(list1, list2));
+    }
 }
