@@ -1,5 +1,6 @@
 package com.zhuang.util;
 
+import javax.xml.bind.DatatypeConverter;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -21,4 +22,23 @@ public class ByteUtils {
         return ByteBuffer.allocate(Float.BYTES).order(bo).putFloat(value).array();
     }
 
+    public static int getInt(byte[] bytes) {
+        return getInt(bytes, ByteOrder.BIG_ENDIAN);
+    }
+
+    public static int getInt(byte[] bytes, ByteOrder bo) {
+        return ByteBuffer.wrap(bytes).order(bo).getInt();
+    }
+
+    public static byte[] getBytes(int value) {
+        return getBytes(value, ByteOrder.BIG_ENDIAN);
+    }
+
+    public static byte[] getBytes(int value, ByteOrder bo) {
+        return ByteBuffer.allocate(Integer.BYTES).order(bo).putInt(value).array();
+    }
+
+    public static String toHexString(byte[] bytes) {
+        return DatatypeConverter.printHexBinary(bytes);
+    }
 }

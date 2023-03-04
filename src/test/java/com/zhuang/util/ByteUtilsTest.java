@@ -25,11 +25,16 @@ public class ByteUtilsTest {
     }
 
     @Test
-    public void getBytes() {
+    public void getBytes4Float() {
         float v = 1.12345f;
         byte[] bytes = ByteUtils.getBytes(v);
         float f = ByteUtils.getFloat(bytes);
         System.out.println(f);
     }
 
+    @Test
+    public void getBytes4Int() {
+        byte[] bytes = ByteUtils.getBytes(-1);
+        System.out.println(ByteUtils.toHexString(bytes));
+    }
 }
