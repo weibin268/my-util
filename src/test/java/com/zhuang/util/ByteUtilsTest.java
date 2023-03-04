@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 
 public class ByteUtilsTest {
 
@@ -36,5 +37,12 @@ public class ByteUtilsTest {
     public void getBytes4Int() {
         byte[] bytes = ByteUtils.getBytes(-1);
         System.out.println(ByteUtils.toHexString(bytes));
+    }
+
+    @Test
+    public void toHexString() {
+        byte[] bodyBytes = "庄伟斌".getBytes(StandardCharsets.UTF_8);
+        byte[] headerBytes = ByteUtils.getBytes(bodyBytes.length);
+        System.out.println(ByteUtils.toHexString(headerBytes) + ByteUtils.toHexString(bodyBytes));
     }
 }
