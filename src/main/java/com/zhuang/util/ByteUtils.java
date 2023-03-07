@@ -1,6 +1,5 @@
 package com.zhuang.util;
 
-import javax.xml.bind.DatatypeConverter;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -39,6 +38,10 @@ public class ByteUtils {
     }
 
     public static String toHexString(byte[] bytes) {
-        return DatatypeConverter.printHexBinary(bytes);
+        StringBuilder hex = new StringBuilder();
+        for (byte b : bytes) {
+            hex.append(String.format("%02x", b));
+        }
+        return hex.toString();
     }
 }
