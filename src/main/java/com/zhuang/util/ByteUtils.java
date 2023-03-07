@@ -42,6 +42,6 @@ public class ByteUtils {
         for (byte b : bytes) {
             hex.append(String.format("%02x", b));
         }
-        return hex.toString();
+        return hex.toString().toUpperCase();
     }
 }
