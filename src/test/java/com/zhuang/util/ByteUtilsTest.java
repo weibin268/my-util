@@ -36,13 +36,13 @@ public class ByteUtilsTest {
     @Test
     public void getBytes4Int() {
         byte[] bytes = ByteUtils.getBytes(-1);
-        System.out.println(ByteUtils.toHexString(bytes));
+        System.out.println(ByteUtils.toHex(bytes));
     }
 
     @Test
-    public void toHexString() {
+    public void toHex() {
         byte[] bodyBytes = "庄伟斌".getBytes(StandardCharsets.UTF_8);
         byte[] headerBytes = ByteUtils.getBytes(bodyBytes.length);
-        System.out.println(ByteUtils.toHexString(headerBytes) + ByteUtils.toHexString(bodyBytes));
+        System.out.println(ByteUtils.toHex(headerBytes) + ByteUtils.toHex(bodyBytes));
     }
 }

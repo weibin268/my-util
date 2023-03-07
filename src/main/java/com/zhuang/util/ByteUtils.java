@@ -37,7 +37,7 @@ public class ByteUtils {
         return ByteBuffer.allocate(Integer.BYTES).order(bo).putInt(value).array();
     }
 
-    public static String toHexString(byte[] bytes) {
+    public static String toHex(byte[] bytes) {
         StringBuilder hex = new StringBuilder();
         for (byte b : bytes) {
             hex.append(String.format("%02x", b));
