@@ -3,6 +3,7 @@ package com.zhuang.hutool;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.AsymmetricCrypto;
 import cn.hutool.crypto.asymmetric.KeyType;
+import cn.hutool.crypto.symmetric.DES;
 import org.junit.Test;
 import sun.security.rsa.RSAPrivateKeyImpl;
 import sun.security.rsa.RSAPublicKeyImpl;
@@ -10,6 +11,7 @@ import sun.security.util.DerValue;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -55,11 +57,20 @@ public class SecureUtilTest {
         String timestamp = new Long(System.currentTimeMillis() / 1000).toString();
         System.out.println(timestamp);
         String secret = "Ruo2PCUmII8mi8f83eqCcg7OeWdLxVgR";
-        String nonce= UUID.randomUUID().toString();
+        String nonce = UUID.randomUUID().toString();
         System.out.println(nonce);
         String rawData = timestamp + secret + nonce + timestamp;
         String s = SecureUtil.sha256(rawData).toUpperCase();
         System.out.println(s);
+    }
+
+    @Test
+    public void des() {
+        DES des = SecureUtil.des("zhuangweibin".getBytes(StandardCharsets.UTF_8));
+        String encrypted = des.encryptBase64("庄伟斌");
+        System.out.println(encrypted);
+        String decrypted = des.decryptStr(encrypted);
+        System.out.println(decrypted);
     }
 
     @Test
