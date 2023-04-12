@@ -10,7 +10,7 @@ public class DesUtils {
     private static DES des = SecureUtil.des("zhuangweibin".getBytes(StandardCharsets.UTF_8));
 
     public static String encryptStr(String str) {
-        return des.encryptBase64(str);
+        return des.encryptHex(str);
     }
 
     public static String decryptStr(String str) {
