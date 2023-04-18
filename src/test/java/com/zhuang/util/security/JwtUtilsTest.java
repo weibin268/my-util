@@ -1,6 +1,7 @@
-package com.zhuang.util;
+package com.zhuang.util.security;
 
 import cn.hutool.core.date.DateUtil;
+import com.zhuang.util.security.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;

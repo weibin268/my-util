@@ -1,4 +1,4 @@
-package com.zhuang.util;
+package com.zhuang.util.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;

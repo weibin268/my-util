@@ -1,4 +1,4 @@
-package com.zhuang.util;
+package com.zhuang.util.security;
 
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.DES;
