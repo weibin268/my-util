@@ -45,4 +45,10 @@ public class ByteUtilsTest {
         byte[] headerBytes = ByteUtils.getBytes(bodyBytes.length);
         System.out.println(ByteUtils.toHex(headerBytes) + ByteUtils.toHex(bodyBytes));
     }
+
+    @Test
+    public void toBytes() {
+        byte[] bytes = ByteUtils.toBytes("FA12");
+        System.out.println(bytes);
+    }
 }

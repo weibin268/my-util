@@ -2,8 +2,6 @@ package com.zhuang.util.security;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class DesUtilsTest {
 
     @Test
