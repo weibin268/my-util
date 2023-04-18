@@ -6,6 +6,7 @@ import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -28,11 +29,15 @@ public class RestTemplateUtils {
     private static HttpComponentsClientHttpRequestFactory getHttpsRequestFactory() {
         try {
             TrustStrategy acceptingTrustStrategy = (x509Certificates, authType) -> true;
-            SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+            SSLContextBuilder sslContextBuilder = SSLContexts.custom();
+            SSLContext sslContext = sslContextBuilder
+                    .loadTrustMaterial(null, acceptingTrustStrategy)
+                    .build();
             SSLConnectionSocketFactory connectionSocketFactory = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
             HttpClientBuilder httpClientBuilder = HttpClients.custom();
-            httpClientBuilder.setSSLSocketFactory(connectionSocketFactory);
-            CloseableHttpClient httpClient = httpClientBuilder.build();
+            CloseableHttpClient httpClient = httpClientBuilder
+                    .setSSLSocketFactory(connectionSocketFactory)
+                    .build();
             HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
             factory.setHttpClient(httpClient);
             factory.setConnectTimeout(30 * 1000);
