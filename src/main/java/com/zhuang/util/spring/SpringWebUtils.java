@@ -31,9 +31,15 @@ public class SpringWebUtils {
         if (servletRequestAttributes == null) {
             throw new RuntimeException("非Web上下文无法获取Request");
         }
-        // 设置子进程也可以获取到该对象
-        RequestContextHolder.setRequestAttributes(servletRequestAttributes, true);
         return servletRequestAttributes.getRequest();
+    }
+
+    /**
+     * 设置子进程也可以获取到该对象，在创建子进程之前调用
+     */
+    public static void setInheritable() {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        RequestContextHolder.setRequestAttributes(servletRequestAttributes, true);
     }
 
     /**
