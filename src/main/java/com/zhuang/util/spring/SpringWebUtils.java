@@ -37,7 +37,7 @@ public class SpringWebUtils {
     /**
      * 设置子进程也可以获取到该对象，在创建子进程之前调用
      */
-    public static void setInheritable() {
+    public static void setRequestInheritable() {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         RequestContextHolder.setRequestAttributes(servletRequestAttributes, true);
     }
