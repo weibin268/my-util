@@ -1,5 +1,6 @@
 package com.zhuang.util;
 
+import cn.hutool.core.codec.Base64;
 import sun.misc.BASE64Encoder;
 
 import java.io.ByteArrayOutputStream;
@@ -37,7 +38,6 @@ public class ImageUtils {
                 e.getStackTrace();
             }
         }
-        BASE64Encoder base = new BASE64Encoder();
-        return base.encode(out.toByteArray());
+        return Base64.encode(out.toByteArray());
     }
 }
