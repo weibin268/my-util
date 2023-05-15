@@ -13,7 +13,7 @@ import java.util.Base64;
 
 public class ImageUtils {
 
-    public static String getBase64ByUrl(String path) {
+    public static byte[] getBytesByUrl(String path) {
         InputStream in = null;
         ByteArrayOutputStream out;
         try {
@@ -49,7 +49,11 @@ public class ImageUtils {
                 e.getStackTrace();
             }
         }
-        return Base64.getEncoder().encodeToString(out.toByteArray());
+        return out.toByteArray();
+    }
+
+    public static String getBase64ByUrl(String path) {
+        return Base64.getEncoder().encodeToString(getBytesByUrl(path));
     }
 
     public static class MyX509TrustManager implements X509TrustManager {
