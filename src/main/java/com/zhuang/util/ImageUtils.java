@@ -1,13 +1,11 @@
 package com.zhuang.util;
 
-import cn.hutool.core.codec.Base64;
-import sun.misc.BASE64Encoder;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Base64;
 
 public class ImageUtils {
 
@@ -38,6 +36,6 @@ public class ImageUtils {
                 e.getStackTrace();
             }
         }
-        return Base64.encode(out.toByteArray());
+        return Base64.getEncoder().encodeToString(out.toByteArray());
     }
 }
