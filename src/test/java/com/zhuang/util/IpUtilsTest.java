@@ -10,4 +10,9 @@ public class IpUtilsTest {
         System.out.println(s);
     }
 
+    @Test
+    public void getIpList() {
+        IpUtils.getIpList("http://192.168.1.3:8080/api/ 127.0.0.1").forEach(System.out::println);
+    }
+
 }
