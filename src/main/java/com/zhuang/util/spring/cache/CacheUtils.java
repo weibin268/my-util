@@ -1,5 +1,6 @@
 package com.zhuang.util.spring.cache;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,27 @@ public class CacheUtils {
 
     public static String get(String key) {
         return _this.getCacheable().get(key);
+    }
+
+    public static void setObject(String key, Object value, int timeoutSeconds) {
+        String jsonValue;
+        if (value == null) {
+            jsonValue = null;
+        } else if (value instanceof String) {
+            jsonValue = (String) value;
+        } else {
+            jsonValue = JSON.toJSONString(value);
+        }
+        set(key, jsonValue, timeoutSeconds);
+    }
+
+    public static <T> T getObject(String key, Class<T> clazz) {
+        String s = get(key);
+        if (String.class == clazz) {
+            return (T) s;
+        } else {
+            return JSON.parseObject(s, clazz);
+        }
     }
 
     public static void delete(String key) {
