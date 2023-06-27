@@ -1,6 +1,7 @@
 package com.zhuang.util;
 
 import cn.hutool.core.img.FontUtil;
+import cn.hutool.core.img.Img;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.IoUtil;
 
@@ -61,16 +62,16 @@ public class ImageUtils {
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text) {
-        addText(inputStream, outputStream, text, Color.green, "黑体", 0.045d, 1f);
+        addText(inputStream, outputStream, text, Color.green, "黑体", 0.04d, 1f);
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text, Color color, String fontName, double fontSizeScale, float alpha) {
         BufferedImage inputImage = ImgUtil.toImage(IoUtil.readBytes(inputStream));
-        double fontHeight = inputImage.getHeight() * fontSizeScale;
-        Font sansSerifFont = FontUtil.createFont(fontName, (int) fontHeight);
-        int x = (inputImage.getWidth() / 2) - Double.valueOf(fontHeight * 1.9).intValue();
-        int y = (inputImage.getHeight() / 2) - Double.valueOf(fontHeight * 1.7).intValue();
-        ImgUtil.pressText(inputImage, outputStream, text, color, sansSerifFont, -x, -y, alpha);
+        Double fontSize = inputImage.getHeight() * fontSizeScale;
+        Font sansSerifFont = FontUtil.createFont(fontName, fontSize.intValue());
+        int x = fontSize.intValue();
+        int y = fontSize.intValue() * 2;
+        ImgUtil.writeJpg(Img.from(inputImage).setPositionBaseCentre(false).pressText(text, color, sansSerifFont, x, y, alpha).getImg(), ImgUtil.getImageOutputStream(outputStream));
     }
 
     public static class MyX509TrustManager implements X509TrustManager {
