@@ -1,9 +1,13 @@
 package com.zhuang.util;
 
+import cn.hutool.core.img.FontUtil;
+import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.io.IoUtil;
+
 import javax.net.ssl.*;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
@@ -54,6 +58,19 @@ public class ImageUtils {
 
     public static String getBase64ByUrl(String path) {
         return Base64.getEncoder().encodeToString(getBytesByUrl(path));
+    }
+
+    public static void addText(InputStream inputStream, OutputStream outputStream, String text) {
+        addText(inputStream, outputStream, text, Color.green, "宋体", 0.045d, 1f);
+    }
+
+    public static void addText(InputStream inputStream, OutputStream outputStream, String text, Color color, String fontName, double fontSizeScale, float alpha) {
+        BufferedImage inputImage = ImgUtil.toImage(IoUtil.readBytes(inputStream));
+        double fontHeight = inputImage.getHeight() * fontSizeScale;
+        Font sansSerifFont = FontUtil.createFont(fontName, (int) fontHeight);
+        int x = (inputImage.getWidth() / 2) - Double.valueOf(fontHeight * 1.5).intValue();
+        int y = (inputImage.getHeight() / 2) - Double.valueOf(fontHeight * 1.5).intValue();
+        ImgUtil.pressText(inputImage, outputStream, text, color, sansSerifFont, -x, -y, alpha);
     }
 
     public static class MyX509TrustManager implements X509TrustManager {
