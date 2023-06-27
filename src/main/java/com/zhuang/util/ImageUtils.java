@@ -61,15 +61,15 @@ public class ImageUtils {
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text) {
-        addText(inputStream, outputStream, text, Color.green, "宋体", 0.045d, 1f);
+        addText(inputStream, outputStream, text, Color.green, "黑体", 0.045d, 1f);
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text, Color color, String fontName, double fontSizeScale, float alpha) {
         BufferedImage inputImage = ImgUtil.toImage(IoUtil.readBytes(inputStream));
         double fontHeight = inputImage.getHeight() * fontSizeScale;
         Font sansSerifFont = FontUtil.createFont(fontName, (int) fontHeight);
-        int x = (inputImage.getWidth() / 2) - Double.valueOf(fontHeight * 1.5).intValue();
-        int y = (inputImage.getHeight() / 2) - Double.valueOf(fontHeight * 1.5).intValue();
+        int x = (inputImage.getWidth() / 2) - Double.valueOf(fontHeight * 1.9).intValue();
+        int y = (inputImage.getHeight() / 2) - Double.valueOf(fontHeight * 1.7).intValue();
         ImgUtil.pressText(inputImage, outputStream, text, color, sansSerifFont, -x, -y, alpha);
     }
 
