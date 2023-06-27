@@ -68,10 +68,10 @@ public class ImageUtils {
     public static void addText(InputStream inputStream, OutputStream outputStream, String text, Color color, String fontName, double fontSizeScale, float alpha) {
         BufferedImage inputImage = ImgUtil.toImage(IoUtil.readBytes(inputStream));
         Double fontSize = inputImage.getHeight() * fontSizeScale;
-        Font sansSerifFont = FontUtil.createFont(fontName, fontSize.intValue());
+        Font font = FontUtil.createFont(fontName, fontSize.intValue());
         int x = fontSize.intValue();
         int y = fontSize.intValue() * 2;
-        ImgUtil.writeJpg(Img.from(inputImage).setPositionBaseCentre(false).pressText(text, color, sansSerifFont, x, y, alpha).getImg(), ImgUtil.getImageOutputStream(outputStream));
+        ImgUtil.writeJpg(Img.from(inputImage).setPositionBaseCentre(false).pressText(text, color, font, x, y, alpha).getImg(), ImgUtil.getImageOutputStream(outputStream));
     }
 
     public static class MyX509TrustManager implements X509TrustManager {
