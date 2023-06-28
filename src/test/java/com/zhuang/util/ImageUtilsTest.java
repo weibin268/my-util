@@ -19,7 +19,9 @@ public class ImageUtilsTest {
     public void addText() throws FileNotFoundException {
         String inputFileName = "/Users/zhuang/Desktop/IMG_20211006_192434 2.jpg";
         String outputFileName = "/Users/zhuang/Desktop/IMG_20211006_192434 2_out.jpg";
-        ImageUtils.addText(new FileInputStream(inputFileName), new FileOutputStream(outputFileName), "2023年06月26日 星期一 00:03:54");
+        String text = "2023年06月26日 星期一 00:03:54";
+        //String text = "庄伟斌";
+        ImageUtils.addText(new FileInputStream(inputFileName), new FileOutputStream(outputFileName), text, ImageUtils.Position.right_bottom);
     }
 
 }

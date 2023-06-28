@@ -4,11 +4,18 @@ import cn.hutool.core.img.FontUtil;
 import cn.hutool.core.img.Img;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.IoUtil;
+import sun.font.FontDesignMetrics;
 
-import javax.net.ssl.*;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
@@ -61,17 +68,27 @@ public class ImageUtils {
         return Base64.getEncoder().encodeToString(getBytesByUrl(path));
     }
 
-    public static void addText(InputStream inputStream, OutputStream outputStream, String text) {
-        addText(inputStream, outputStream, text, Color.green, "黑体", 0.04d, 1f);
+    public static void addText(InputStream inputStream, OutputStream outputStream, String text, Position position) {
+        addText(inputStream, outputStream, text, position, Color.green, "黑体", 0.04d, 1f);
     }
 
-    public static void addText(InputStream inputStream, OutputStream outputStream, String text, Color color, String fontName, double fontSizeScale, float alpha) {
+    public static void addText(InputStream inputStream, OutputStream outputStream, String text, Position position, Color color, String fontName, double fontSizeScale, float alpha) {
         BufferedImage inputImage = ImgUtil.toImage(IoUtil.readBytes(inputStream));
         Double fontSize = inputImage.getHeight() * fontSizeScale;
         Font font = FontUtil.createFont(fontName, fontSize.intValue());
-        int x = fontSize.intValue();
-        int y = fontSize.intValue() * 2;
-        ImgUtil.writeJpg(Img.from(inputImage).setPositionBaseCentre(false).pressText(text, color, font, x, y, alpha).getImg(), ImgUtil.getImageOutputStream(outputStream));
+        int x;
+        int y;
+        if (position == Position.left_top) {
+            x = fontSize.intValue();
+            y = fontSize.intValue() * 2;
+        } else if (position == Position.right_bottom) {
+            x = inputImage.getWidth() - getTextWidth(font, text) - fontSize.intValue();
+            y = inputImage.getHeight() - fontSize.intValue();
+        } else {
+            x = 0;
+            y = 0;
+        }
+        ImgUtil.writeJpg(Img.from(inputImage).setPositionBaseCentre(position == Position.center).pressText(text, color, font, x, y, alpha).getImg(), ImgUtil.getImageOutputStream(outputStream));
     }
 
     public static class MyX509TrustManager implements X509TrustManager {
@@ -94,6 +111,38 @@ public class ImageUtils {
             return null;
         }
 
+    }
+
+    public static int getTextWidth(Font font, String content) {
+        FontDesignMetrics metrics = FontDesignMetrics.getMetrics(font);
+        int width = 0;
+        for (int i = 0; i < content.length(); i++) {
+            width += metrics.charWidth(content.charAt(i));
+        }
+        return width;
+    }
+
+    public enum Position {
+
+        center("center", "中间"),
+        left_top("left_top", "左上"),
+        right_bottom("right_bottom", "右下");
+
+        private String value;
+        private String name;
+
+        Position(String value, String name) {
+            this.value = value;
+            this.name = name;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 
 }
