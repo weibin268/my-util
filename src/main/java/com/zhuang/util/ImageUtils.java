@@ -113,11 +113,11 @@ public class ImageUtils {
 
     }
 
-    public static int getTextWidth(Font font, String content) {
+    public static int getTextWidth(Font font, String text) {
         FontDesignMetrics metrics = FontDesignMetrics.getMetrics(font);
         int width = 0;
-        for (int i = 0; i < content.length(); i++) {
-            width += metrics.charWidth(content.charAt(i));
+        for (int i = 0; i < text.length(); i++) {
+            width += metrics.charWidth(text.charAt(i));
         }
         return width;
     }
