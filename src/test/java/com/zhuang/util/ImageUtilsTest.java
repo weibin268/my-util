@@ -22,7 +22,7 @@ public class ImageUtilsTest {
         String text = "2023年06月26日 星期一 00:03:54";
         //String text = "庄伟斌";
         //String text = "zwb";
-        ImageUtils.addText(new FileInputStream(inputFileName), new FileOutputStream(outputFileName), text, ImageUtils.Position.right_bottom);
+        ImageUtils.addText(new FileInputStream(inputFileName), new FileOutputStream(outputFileName), text, ImageUtils.Position.left_top);
     }
 
 }

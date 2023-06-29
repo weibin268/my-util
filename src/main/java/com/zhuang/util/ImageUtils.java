@@ -69,7 +69,7 @@ public class ImageUtils {
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text, Position position) {
-        addText(inputStream, outputStream, text, position, Color.green, "黑体", 0.04d, 1f);
+        addText(inputStream, outputStream, text, position, null, "黑体", 0.04d, 1f);
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text, Position position, Color color, String fontName, double fontSizeScale, float alpha) {
@@ -88,7 +88,29 @@ public class ImageUtils {
             x = 0;
             y = 0;
         }
+        int rgb = inputImage.getRGB(x, y);
+        int[] rgbArr = intToArgb(rgb);
+        int a = 255 - rgbArr[0];
+        int r = 255 - rgbArr[1];
+        int g = 255 - rgbArr[2];
+        int b = 255 - rgbArr[3];
+        int newRgb = argbToInt(a, r, g, b);
+        if (color == null) {
+            color = new Color(newRgb);
+        }
         ImgUtil.writeJpg(Img.from(inputImage).setPositionBaseCentre(position == Position.center).pressText(text, color, font, x, y, alpha).getImg(), ImgUtil.getImageOutputStream(outputStream));
+    }
+
+    public static int argbToInt(int a, int r, int g, int b) {
+        return (a << 24) | (r << 16) | (g << 8) | (b << 0);
+    }
+
+    public static int[] intToArgb(int rgb) {
+        int a = (rgb >> 24) & 0xFF;
+        int r = (rgb >> 16) & 0xFF;
+        int g = (rgb >> 8) & 0xFF;
+        int b = (rgb >> 0) & 0xFF;
+        return new int[]{a, r, g, b};
     }
 
     public static class MyX509TrustManager implements X509TrustManager {
