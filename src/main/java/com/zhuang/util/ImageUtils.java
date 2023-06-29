@@ -88,15 +88,15 @@ public class ImageUtils {
             x = 0;
             y = 0;
         }
-        int rgb = inputImage.getRGB(x, y);
-        int[] rgbArr = intToArgb(rgb);
-        int a = 255 - rgbArr[0];
-        int r = 255 - rgbArr[1];
-        int g = 255 - rgbArr[2];
-        int b = 255 - rgbArr[3];
-        int newRgb = argbToInt(a, r, g, b);
         if (color == null) {
-            color = new Color(newRgb);
+            int argb = inputImage.getRGB(x, y);
+            int[] rgbArr = intToArgb(argb);
+            int a = 255 - rgbArr[0];
+            int r = 255 - rgbArr[1];
+            int g = 255 - rgbArr[2];
+            int b = 255 - rgbArr[3];
+            int newArgb = argbToInt(a, r, g, b);
+            color = new Color(newArgb);
         }
         ImgUtil.writeJpg(Img.from(inputImage).setPositionBaseCentre(position == Position.center).pressText(text, color, font, x, y, alpha).getImg(), ImgUtil.getImageOutputStream(outputStream));
     }
