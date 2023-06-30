@@ -91,8 +91,8 @@ public class ImageUtils {
         if (color == null) {
             int argb = inputImage.getRGB(x, y);
             int[] rgbArr = intToArgb(argb);
-            int a = rgbArr[0];
             int minDiff = 80;
+            int a = 255;
             int r = 255 - rgbArr[1];
             if (r - rgbArr[1] < minDiff) {
                 r = 0;
