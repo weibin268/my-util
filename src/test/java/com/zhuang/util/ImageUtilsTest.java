@@ -17,8 +17,8 @@ public class ImageUtilsTest {
 
     @Test
     public void addText() throws FileNotFoundException {
-        String inputFileName = "/Users/zhuang/Desktop/20230626000400.jpg";
-        String outputFileName = "/Users/zhuang/Desktop/IMG_20211006_192434 2_out.jpg";
+        String inputFileName = "/Users/zhuang/Desktop/download (1).png";
+        String outputFileName = "/Users/zhuang/Desktop/out.jpg";
         String text = "2023年06月26日 星期一 00:03:54";
         //String text = "庄伟斌";
         //String text = "zwb";
