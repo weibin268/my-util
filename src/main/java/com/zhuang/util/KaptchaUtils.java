@@ -1,8 +1,10 @@
 package com.zhuang.util;
 
+import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 
+import java.awt.image.BufferedImage;
 import java.util.Properties;
 
 import static com.google.code.kaptcha.Constants.*;
@@ -29,12 +31,20 @@ public class KaptchaUtils {
         // 验证码文本字体样式 默认为new Font("Arial", 1, fontSize), new Font("Courier", 1, fontSize)
         properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_NAMES, "Arial,Courier");
         // 图片样式：水纹=com.google.code.kaptcha.impl.WaterRipple；鱼眼=com.google.code.kaptcha.impl.FishEyeGimpy；阴影=com.google.code.kaptcha.impl.ShadowGimpy；
-        properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.ShadowGimpy");
+        properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.zhuang.util.KaptchaUtils$NoGimpy");
         // 干扰实现类
         properties.setProperty(KAPTCHA_NOISE_IMPL, "com.google.code.kaptcha.impl.NoNoise");
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
+    }
+
+    public static class NoGimpy implements GimpyEngine {
+
+        @Override
+        public BufferedImage getDistortedImage(BufferedImage baseImage) {
+            return baseImage;
+        }
     }
 
 }
