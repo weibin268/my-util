@@ -30,6 +30,8 @@ public class KaptchaUtils {
         properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_LENGTH, "4");
         // 验证码文本字体样式 默认为new Font("Arial", 1, fontSize), new Font("Courier", 1, fontSize)
         properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_NAMES, "Arial,Courier");
+        // 验证码文本字符间距
+        properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "5");
         // 图片样式：水纹=com.google.code.kaptcha.impl.WaterRipple；鱼眼=com.google.code.kaptcha.impl.FishEyeGimpy；阴影=com.google.code.kaptcha.impl.ShadowGimpy；
         properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.zhuang.util.KaptchaUtils$NoGimpy");
         // 干扰实现类
