@@ -266,11 +266,12 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- 验证码 -->
+        <!-- Kaptcha -->
         <dependency>
             <groupId>com.github.penggle</groupId>
             <artifactId>kaptcha</artifactId>
             <version>2.3.2</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
