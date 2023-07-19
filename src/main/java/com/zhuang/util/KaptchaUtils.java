@@ -39,7 +39,7 @@ public class KaptchaUtils {
         // 干扰线实现
         //properties.setProperty(KAPTCHA_NOISE_IMPL, "com.google.code.kaptcha.impl.NoNoise");
         // 干扰线颜色
-        properties.setProperty(KAPTCHA_NOISE_COLOR, "red");
+        properties.setProperty(KAPTCHA_NOISE_COLOR, "200,0,200,127");
 
 
         Config config = new Config(properties);
