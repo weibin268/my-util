@@ -32,7 +32,9 @@ public class KaptchaUtils {
         properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_NAMES, "Arial,Courier");
         // 验证码文本字符间距
         properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "5");
-        // 滤镜效果：水纹=com.google.code.kaptcha.impl.WaterRipple；鱼眼=com.google.code.kaptcha.impl.FishEyeGimpy；阴影=com.google.code.kaptcha.impl.ShadowGimpy；
+        // 滤镜效果：
+        // 水纹=com.google.code.kaptcha.impl.WaterRipple；鱼眼=com.google.code.kaptcha.impl.FishEyeGimpy；阴影=com.google.code.kaptcha.impl.ShadowGimpy；
+        // 没有=com.zhuang.util.KaptchaUtils$NoGimpy
         properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.WaterRipple");
         // 干扰线实现
         //properties.setProperty(KAPTCHA_NOISE_IMPL, "com.google.code.kaptcha.impl.NoNoise");
