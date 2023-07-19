@@ -23,7 +23,7 @@ public class KaptchaUtils {
         // 验证码图片高度 默认为50
         properties.setProperty(KAPTCHA_IMAGE_HEIGHT, "60");
         // 验证码文本字符大小 默认为40
-        properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_SIZE, "38");
+        properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_SIZE, "40");
         // KAPTCHA_SESSION_KEY
         properties.setProperty(KAPTCHA_SESSION_CONFIG_KEY, "kaptchaCode");
         // 验证码文本字符长度 默认为5
@@ -32,10 +32,14 @@ public class KaptchaUtils {
         properties.setProperty(KAPTCHA_TEXTPRODUCER_FONT_NAMES, "Arial,Courier");
         // 验证码文本字符间距
         properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "5");
-        // 图片样式：水纹=com.google.code.kaptcha.impl.WaterRipple；鱼眼=com.google.code.kaptcha.impl.FishEyeGimpy；阴影=com.google.code.kaptcha.impl.ShadowGimpy；
-        properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.zhuang.util.KaptchaUtils$NoGimpy");
-        // 干扰实现类
-        properties.setProperty(KAPTCHA_NOISE_IMPL, "com.google.code.kaptcha.impl.NoNoise");
+        // 滤镜效果：水纹=com.google.code.kaptcha.impl.WaterRipple；鱼眼=com.google.code.kaptcha.impl.FishEyeGimpy；阴影=com.google.code.kaptcha.impl.ShadowGimpy；
+        properties.setProperty(KAPTCHA_OBSCURIFICATOR_IMPL, "com.google.code.kaptcha.impl.WaterRipple");
+        // 干扰线实现
+        //properties.setProperty(KAPTCHA_NOISE_IMPL, "com.google.code.kaptcha.impl.NoNoise");
+        // 干扰线颜色
+        properties.setProperty(KAPTCHA_NOISE_COLOR, "red");
+
+
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
