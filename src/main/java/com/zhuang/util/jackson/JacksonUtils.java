@@ -10,7 +10,7 @@ public class JacksonUtils {
     public static <T> T toBean(String json, Class<T> clazz) {
         try {
             return objectMapper.readValue(json, clazz);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -18,7 +18,7 @@ public class JacksonUtils {
     public static String toJsonStr(Object object) {
         try {
             return objectMapper.writeValueAsString(object);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
