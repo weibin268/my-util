@@ -8,10 +8,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -124,6 +121,7 @@ public class WaterMeasureUtils {
      * @param rightCount
      */
     public static void smoothDataList(List<? extends WaterData> dataList, int leftCount, int rightCount, List<? extends WaterData> extLeftDataList, List<? extends WaterData> extRightDataList) {
+        HashMap<Date, BigDecimal> tempResultMap = new HashMap<>();
         for (int i = 0; i < dataList.size(); i++) {
             WaterData waterData = dataList.get(i);
             if (waterData.getDataValue() == null) continue;
@@ -155,9 +153,16 @@ public class WaterMeasureUtils {
             if (CollectionUtils.isEmpty(sampleList)) continue;
             BigDecimal avgValue = sampleList.stream().map(c -> c.getDataValue()).reduce(BigDecimal.ZERO, BigDecimal::add).divide(BigDecimal.valueOf(sampleList.size()), 3, RoundingMode.HALF_UP);
             if (avgValue != null) {
-                waterData.setDataValue(avgValue);
+                tempResultMap.put(waterData.getDataTime(), avgValue);
             }
         }
+
+        tempResultMap.forEach((key, value) -> {
+            WaterData waterData = dataList.stream().filter(c -> key.equals(c.getDataTime())).findFirst().orElse(null);
+            if (waterData != null) {
+                waterData.setDataValue(value);
+            }
+        });
     }
 
     public interface WaterData {
