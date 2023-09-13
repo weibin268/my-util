@@ -11,7 +11,7 @@ public class JacksonUtils {
         try {
             // 设置发现未知字段不报错
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            // 允许解析NoN等无效值（注：新json标准不允许出现这样的值，所有该特性后续版本会弃用）
+            // 允许解析NoN等无效值（注：新json标准不允许出现这样的值，所以该特性后续版本会弃用）
             //objectMapper.configure(ALLOW_NON_NUMERIC_NUMBERS, true);
             return objectMapper.readValue(json, clazz);
         } catch (Exception e) {
