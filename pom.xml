@@ -80,6 +80,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.openoffice.version>4.1.2</org.openoffice.version>
+        <okhttp.version>4.11.0</okhttp.version>
     </properties>
 
     <dependencies>
@@ -281,6 +282,20 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--begin okhttp3-->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp-sse</artifactId>
+            <version>${okhttp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--end okhttp3-->
     </dependencies>
 
     <dependencyManagement>
