@@ -15,4 +15,10 @@ public class IpUtilsTest {
         IpUtils.getIpList("http://192.168.1.3:8080/api/ 127.0.0.1").forEach(System.out::println);
     }
 
+
+    @Test
+    public void getLocationByIp() {
+        IpUtils.IPLocation locationByIp = IpUtils.getLocationByIp("120.238.64.59");
+        System.out.println(locationByIp);
+    }
 }
