@@ -6,8 +6,6 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import static org.junit.Assert.*;
-
 public class JacksonUtilsTest {
 
     @Test
@@ -17,7 +15,7 @@ public class JacksonUtilsTest {
         user.setAge(18);
         user.setHeight(new BigDecimal("1.10"));
         user.setBirthday(new Date());
-        user.setJobTitle("软件工程师");
+        //user.setJobTitle("软件工程师");
         String s = JacksonUtils.toJsonStr(user);
         System.out.println(s);
     }
