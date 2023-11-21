@@ -25,7 +25,9 @@ public class ThreadUtilsTest {
     @Test
     public void startCompletableFuture()   {
         CompletableFuture<String> futureTaskA = ThreadUtils.startCompletableFuture(() -> {
+            System.out.println("begin a");
             ThreadUtils.sleep(3000);
+            System.out.println("end a");
             return "a";
         });
 
