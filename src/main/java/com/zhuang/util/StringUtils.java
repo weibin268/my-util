@@ -1,12 +1,10 @@
 package com.zhuang.util;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class StringUtils {
 
@@ -27,6 +25,25 @@ public class StringUtils {
             lTemp++;
         }
         return result;
+    }
+
+    public static String format(String template, Object... arguments) {
+        if (StrUtil.isEmpty(template)) return template;
+        if (arguments.length == 0) return template;
+        if (template.contains("${")) {
+            template = template.replace("${", "{");
+        }
+        if (template.contains("{}")) {
+            return StrUtil.format(template, arguments);
+        }
+        Object params = arguments[0];
+        Map<?, ?> mapParams;
+        if (params instanceof Map) {
+            mapParams = (Map<?, ?>) params;
+        } else {
+            mapParams = BeanUtil.beanToMap(params);
+        }
+        return StrUtil.format(template, mapParams);
     }
 
 }
