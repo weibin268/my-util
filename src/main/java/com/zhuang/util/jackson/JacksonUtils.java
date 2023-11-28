@@ -1,5 +1,6 @@
 package com.zhuang.util.jackson;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,6 +22,8 @@ public class JacksonUtils {
 
     public static String toJsonStr(Object object) {
         try {
+            // 设置字段为null的不进行序列化
+            objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             return objectMapper.writeValueAsString(object);
         } catch (Exception e) {
             throw new RuntimeException(e);
