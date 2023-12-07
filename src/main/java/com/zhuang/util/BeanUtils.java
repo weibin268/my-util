@@ -8,10 +8,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class BeanUtils {
 
@@ -113,7 +110,7 @@ public class BeanUtils {
         }
     }
 
-    private static final List<Class<?>> primitiveClassList = Arrays.asList(Number.class, String.class);
+    private static final List<Class<?>> primitiveClassList = Arrays.asList(Number.class, String.class, Date.class);
 
     public static void recursiveProperty(Object bean, PropertyHandler propertyHandler, Class<?>... propertyClasses) {
         recursiveProperty(bean, "", propertyHandler, propertyClasses);

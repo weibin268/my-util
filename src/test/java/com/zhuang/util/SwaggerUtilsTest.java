@@ -4,6 +4,7 @@ import com.zhuang.model.User4Swagger;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Map;
 
 public class SwaggerUtilsTest {
@@ -14,6 +15,7 @@ public class SwaggerUtilsTest {
         user.setName("zwb");
         user.setAge(18);
         user.setHeight(new BigDecimal("1.72"));
+        user.setBirthday(new Date());
         User4Swagger wife = new User4Swagger();
         wife.setName("lxc");
         wife.setAge(17);
