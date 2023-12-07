@@ -1,8 +1,11 @@
 package com.zhuang.util;
 
+import cn.hutool.core.util.StrUtil;
+
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -20,12 +23,14 @@ public class BeanUtils {
     public static class PropertyContext {
 
         private Object bean;
+        private BeanInfo beanInfo;
+        private Field field;
+        private PropertyDescriptor descriptor;
+        private String fullName;
         private String name;
         private Object value;
-        private PropertyDescriptor descriptor;
         private Method readMethod;
         private Method writeMethod;
-        private BeanInfo beanInfo;
 
         public void write(Object value) {
             try {
@@ -43,12 +48,28 @@ public class BeanUtils {
             this.bean = bean;
         }
 
+        public Field getField() {
+            return field;
+        }
+
+        public void setField(Field field) {
+            this.field = field;
+        }
+
         public String getName() {
             return name;
         }
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
         }
 
         public Object getValue() {
@@ -95,9 +116,14 @@ public class BeanUtils {
     private static final List<Class<?>> primitiveClassList = Arrays.asList(Number.class, String.class);
 
     public static void recursiveProperty(Object bean, PropertyHandler propertyHandler, Class<?>... propertyClasses) {
+        recursiveProperty(bean, "", propertyHandler, propertyClasses);
+    }
+
+    public static void recursiveProperty(Object bean, String beanName, PropertyHandler propertyHandler, Class<?>... propertyClasses) {
         try {
             List<Class<?>> propertyClassList = Arrays.asList(propertyClasses);
             BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
                 String name = propertyDescriptor.getName();
@@ -117,8 +143,14 @@ public class BeanUtils {
                 PropertyContext propertyContext = new PropertyContext();
                 propertyContext.setBean(bean);
                 propertyContext.setBeanInfo(beanInfo);
+                propertyContext.setField(bean.getClass().getDeclaredField(name));
                 propertyContext.setDescriptor(propertyDescriptor);
                 propertyContext.setName(name);
+                if (StrUtil.isNotEmpty(beanName)) {
+                    propertyContext.setFullName(beanName + "." + name);
+                } else {
+                    propertyContext.setFullName(name);
+                }
                 propertyContext.setValue(objProperty);
                 propertyContext.setReadMethod(readMethod);
                 propertyContext.setWriteMethod(writeMethod);
@@ -132,10 +164,10 @@ public class BeanUtils {
                 } else if (objProperty.getClass().isArray()) {
                     Object[] objects = (Object[]) objProperty;
                     for (Object o : objects) {
-                        recursiveProperty(o, propertyHandler, propertyClasses);
+                        recursiveProperty(o, propertyContext.getFullName(), propertyHandler, propertyClasses);
                     }
                 } else {
-                    recursiveProperty(objProperty, propertyHandler, propertyClasses);
+                    recursiveProperty(objProperty, propertyContext.getFullName(), propertyHandler, propertyClasses);
                 }
             }
         } catch (Exception e) {

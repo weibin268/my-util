@@ -320,6 +320,14 @@
             <scope>provided</scope>
         </dependency>
         <!--end okhttp3-->
+
+        <!--begin swagger-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <!--end swagger-->
     </dependencies>
 
     <dependencyManagement>
