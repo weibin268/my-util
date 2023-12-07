@@ -121,11 +121,12 @@ public class BeanUtils {
         try {
             List<Class<?>> propertyClassList = Arrays.asList(propertyClasses);
             BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
-
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
                 String name = propertyDescriptor.getName();
                 if (name.equals("class")) continue;
+                Field field = ReflectUtil.getField(bean.getClass(), name);
+                if (field == null) continue;
                 Method readMethod = propertyDescriptor.getReadMethod();
                 Method writeMethod = propertyDescriptor.getWriteMethod();
                 Object objProperty = readMethod.invoke(bean);
@@ -141,7 +142,7 @@ public class BeanUtils {
                 PropertyContext propertyContext = new PropertyContext();
                 propertyContext.setBean(bean);
                 propertyContext.setBeanInfo(beanInfo);
-                propertyContext.setField(ReflectUtil.getField(bean.getClass(), name));
+                propertyContext.setField(field);
                 propertyContext.setDescriptor(propertyDescriptor);
                 propertyContext.setName(name);
                 if (StrUtil.isNotEmpty(beanName)) {
