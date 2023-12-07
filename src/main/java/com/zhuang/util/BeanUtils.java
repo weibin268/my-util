@@ -1,5 +1,6 @@
 package com.zhuang.util;
 
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 
 import java.beans.BeanInfo;
@@ -140,7 +141,7 @@ public class BeanUtils {
                 PropertyContext propertyContext = new PropertyContext();
                 propertyContext.setBean(bean);
                 propertyContext.setBeanInfo(beanInfo);
-                propertyContext.setField(bean.getClass().getDeclaredField(name));
+                propertyContext.setField(ReflectUtil.getField(bean.getClass(), name));
                 propertyContext.setDescriptor(propertyDescriptor);
                 propertyContext.setName(name);
                 if (StrUtil.isNotEmpty(beanName)) {
