@@ -158,13 +158,17 @@ public class BeanUtils {
                     propertyHandler.handle(propertyContext);
                 } else if (Collection.class.isAssignableFrom(objProperty.getClass())) {
                     Collection<?> collection = (Collection<?>) objProperty;
+                    Integer index = 0;
                     for (Object o : collection) {
-                        recursiveProperty(o, propertyHandler, propertyClasses);
+                        recursiveProperty(o, propertyContext.getFullName() + "." + index, propertyHandler, propertyClasses);
+                        index++;
                     }
                 } else if (objProperty.getClass().isArray()) {
                     Object[] objects = (Object[]) objProperty;
+                    Integer index = 0;
                     for (Object o : objects) {
-                        recursiveProperty(o, propertyContext.getFullName(), propertyHandler, propertyClasses);
+                        recursiveProperty(o, propertyContext.getFullName() + "." + index, propertyHandler, propertyClasses);
+                        index++;
                     }
                 } else {
                     recursiveProperty(objProperty, propertyContext.getFullName(), propertyHandler, propertyClasses);
