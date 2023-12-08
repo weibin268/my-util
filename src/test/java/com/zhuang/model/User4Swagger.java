@@ -3,13 +3,14 @@ package com.zhuang.model;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class User4Swagger {
+public class User4Swagger implements Serializable {
 
     @ApiModelProperty("姓名")
     private String name;
