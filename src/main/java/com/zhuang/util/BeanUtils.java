@@ -22,6 +22,7 @@ public class BeanUtils {
 
         private Object bean;
         private BeanInfo beanInfo;
+        private boolean primitive;
         private Field field;
         private PropertyDescriptor descriptor;
         private String fullName;
@@ -109,6 +110,15 @@ public class BeanUtils {
         public void setBeanInfo(BeanInfo beanInfo) {
             this.beanInfo = beanInfo;
         }
+
+        public boolean isPrimitive() {
+            return primitive;
+        }
+
+        public void setPrimitive(boolean primitive) {
+            this.primitive = primitive;
+        }
+
     }
 
     private static final List<Class<?>> primitiveClassList = Arrays.asList(Number.class, String.class, Date.class);
@@ -154,8 +164,11 @@ public class BeanUtils {
                 propertyContext.setReadMethod(readMethod);
                 propertyContext.setWriteMethod(writeMethod);
                 if (inClassList(objProperty, needHandleClasses)) {
+                    propertyContext.setPrimitive(true);
                     propertyHandler.handle(propertyContext);
                 } else if (Collection.class.isAssignableFrom(objProperty.getClass())) {
+                    propertyContext.setPrimitive(false);
+                    propertyHandler.handle(propertyContext);
                     Collection<?> collection = (Collection<?>) objProperty;
                     Integer index = 0;
                     for (Object o : collection) {
@@ -163,6 +176,8 @@ public class BeanUtils {
                         index++;
                     }
                 } else if (objProperty.getClass().isArray()) {
+                    propertyContext.setPrimitive(false);
+                    propertyHandler.handle(propertyContext);
                     Object[] objects = (Object[]) objProperty;
                     Integer index = 0;
                     for (Object o : objects) {
@@ -170,6 +185,8 @@ public class BeanUtils {
                         index++;
                     }
                 } else {
+                    propertyContext.setPrimitive(false);
+                    propertyHandler.handle(propertyContext);
                     recursiveProperty(objProperty, propertyContext.getFullName(), propertyHandler, propertyClasses);
                 }
             }
