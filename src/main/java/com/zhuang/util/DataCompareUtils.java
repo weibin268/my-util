@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 public class DataCompareUtils {
@@ -28,7 +28,7 @@ public class DataCompareUtils {
                 }
             }
             jsonDiffList = jsonDiffList.stream()
-                    .filter(item -> !Arrays.asList(".ts", ".id").stream().anyMatch(c -> item.getKey().contains(c)))
+                    .filter(item -> Stream.of(".ts", ".id").noneMatch(c -> item.getKey().contains(c)))
                     .collect(Collectors.toList());
             for (JSONUtils.DiffInfo diffInfo : jsonDiffList) {
                 if ("A".equals(diffInfo.getType())) {
@@ -53,14 +53,14 @@ public class DataCompareUtils {
         String[] keyParts = key.split("\\.");
         List<String> subKeyList = new ArrayList<>();
         String tempSubKey = "";
-        for (int i = 0; i < keyParts.length; i++) {
+        for (String keyPart : keyParts) {
             if (StrUtil.isNotEmpty(tempSubKey)) {
                 tempSubKey = tempSubKey + ".";
             }
-            tempSubKey = tempSubKey + keyParts[i];
+            tempSubKey = tempSubKey + keyPart;
             subKeyList.add(tempSubKey);
         }
-        List<String> keyList = propertyNameMap.keySet().stream().collect(Collectors.toList());
+        List<String> keyList = new ArrayList<>(propertyNameMap.keySet());
         for (String subKey : subKeyList) {
             String tempKey = keyList.stream().filter(c -> c.equals(subKey)).findFirst().orElse(null);
             if (StrUtil.isNotEmpty(tempKey)) {

@@ -170,7 +170,7 @@ public class BeanUtils {
                     propertyContext.setPrimitive(false);
                     propertyHandler.handle(propertyContext);
                     Collection<?> collection = (Collection<?>) objProperty;
-                    Integer index = 0;
+                    int index = 0;
                     for (Object o : collection) {
                         recursiveProperty(o, propertyContext.getFullName() + "." + index, propertyHandler, propertyClasses);
                         index++;
@@ -179,7 +179,7 @@ public class BeanUtils {
                     propertyContext.setPrimitive(false);
                     propertyHandler.handle(propertyContext);
                     Object[] objects = (Object[]) objProperty;
-                    Integer index = 0;
+                    int index = 0;
                     for (Object o : objects) {
                         recursiveProperty(o, propertyContext.getFullName() + "." + index, propertyHandler, propertyClasses);
                         index++;
