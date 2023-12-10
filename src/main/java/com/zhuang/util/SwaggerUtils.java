@@ -8,7 +8,7 @@ import java.util.Map;
 public class SwaggerUtils {
 
     public static Map<String, String> getPropertyNameMap(Object bean, Class<?>... propertyClasses) {
-        Map result = new HashMap();
+        Map<String, String> result = new HashMap<>();
         BeanUtils.recursiveProperty(bean, propertyContext -> {
             ApiModelProperty apiModelProperty = propertyContext.getField().getAnnotation(ApiModelProperty.class);
             if (apiModelProperty != null) {
