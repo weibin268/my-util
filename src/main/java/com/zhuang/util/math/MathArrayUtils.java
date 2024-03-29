@@ -2,6 +2,8 @@ package com.zhuang.util.math;
 
 import cn.hutool.core.util.ArrayUtil;
 
+import java.math.BigDecimal;
+
 public class MathArrayUtils {
 
     // 输出长度：|m-n|+1，例如：a=[1,2,3,4],b=[0,1,2],r=[8,11]
@@ -10,7 +12,6 @@ public class MathArrayUtils {
     public static int CONVOLVE_MODE_2 = 2;
     // 输出长度：m+n-1，例如：a=[1,2,3,4],b=[0,1,2],r=[2,5,8,11,4,0]
     public static int CONVOLVE_MODE_3 = 3;
-
 
     /**
      * mode:1=valid;2=same;3=full;
@@ -83,5 +84,41 @@ public class MathArrayUtils {
         return result;
     }
 
+    public static double[] add(double[] a, double n) {
+        return operate(a, n, "+");
+    }
 
+    public static double[] subtract(double[] a, double n) {
+        return operate(a, n, "-");
+    }
+
+    public static double[] multiply(double[] a, double n) {
+        return operate(a, n, "*");
+    }
+
+    public static double[] divide(double[] a, double n) {
+        return operate(a, n, "/");
+    }
+
+    public static double[] power(double[] a, double n) {
+        return operate(a, n, "^");
+    }
+
+    private static double[] operate(double[] a, double n, String mode) {
+        double[] r = new double[a.length];
+        for (int i = 0; i < a.length; i++) {
+            if (mode.equals("+")) {
+                r[i] = a[i] + n;
+            } else if (mode.equals("-")) {
+                r[i] = a[i] - n;
+            } else if (mode.equals("*")) {
+                r[i] = a[i] * n;
+            } else if (mode.equals("/")) {
+                r[i] = a[i] / n;
+            } else if (mode.equals("^")) {
+                r[i] = Math.pow(a[i], n);
+            }
+        }
+        return r;
+    }
 }
