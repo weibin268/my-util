@@ -2,7 +2,7 @@ package com.zhuang.util.math;
 
 import cn.hutool.core.util.ArrayUtil;
 
-public class ConvolutionUtils {
+public class MathArrayUtils {
 
     // 输出长度：|m-n|+1，例如：a=[1,2,3,4],b=[0,1,2],r=[8,11]
     public static int CONVOLVE_MODE_1 = 1;
