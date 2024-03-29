@@ -4,6 +4,13 @@ import cn.hutool.core.util.ArrayUtil;
 
 public class ConvolutionUtils {
 
+    // 输出长度：|m-n|+1，例如：a=[1,2,3,4],b=[0,1,2],r=[8,11]
+    public static int CONVOLVE_MODE_1 = 1;
+    // 输出长度：max(m,n)，例如：a=[1,2,3,4],b=[0,1,2],r=[5,8,11,4]
+    public static int CONVOLVE_MODE_2 = 2;
+    // 输出长度：m+n-1，例如：a=[1,2,3,4],b=[0,1,2],r=[2,5,8,11,4,0]
+    public static int CONVOLVE_MODE_3 = 3;
+
 
     /**
      * mode:1=valid;2=same;3=full;
@@ -37,7 +44,7 @@ public class ConvolutionUtils {
             }
         } else if (mode == 2) {
             if (m > n) {
-                result = convolve(b, a, 2);
+                result = convolve(b, a, CONVOLVE_MODE_2);
                 result = ArrayUtil.reverse(result);
             } else {
                 result = new double[n];
@@ -57,7 +64,7 @@ public class ConvolutionUtils {
             }
         } else if (mode == 3) {
             if (m > n) {
-                result = convolve(b, a, 3);
+                result = convolve(b, a, CONVOLVE_MODE_3);
                 result = ArrayUtil.reverse(result);
             } else {
                 int dim = m + n - 1;
