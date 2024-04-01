@@ -1,8 +1,11 @@
 package com.zhuang.util.math;
 
 import cn.hutool.core.util.ArrayUtil;
+import org.apache.commons.math3.fitting.PolynomialCurveFitter;
+import org.apache.commons.math3.fitting.WeightedObservedPoint;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class MathArrayUtils {
 
@@ -121,4 +124,25 @@ public class MathArrayUtils {
         }
         return r;
     }
+
+    /**
+     * 多项式曲线拟合
+     * @param x
+     * @param y
+     * @param degree
+     * @return
+     */
+    public static double[] fit4PolynomialCurve(double[] x, double[] y, int degree) {
+        // Create a default curve fitter with zero initial guess for coefficients
+        PolynomialCurveFitter fitter = PolynomialCurveFitter.create(degree);
+        // Fit the data points
+        WeightedObservedPoint[] observations = new WeightedObservedPoint[x.length];
+        for (int i = 0; i < x.length; i++) {
+            observations[i] = new WeightedObservedPoint(1.0, x[i], y[i]);
+        }
+        double[] coefficients = fitter.fit(Arrays.asList(observations));
+        return coefficients;
+    }
+
+
 }
