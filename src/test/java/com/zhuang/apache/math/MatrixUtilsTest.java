@@ -1,4 +1,4 @@
-package com.zhuang.math;
+package com.zhuang.apache.math;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;

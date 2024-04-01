@@ -1,4 +1,4 @@
-package com.zhuang.math;
+package com.zhuang.apache.math;
 
 import cn.hutool.core.util.ArrayUtil;
 import org.apache.commons.math3.util.MathArrays;
