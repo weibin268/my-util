@@ -24,4 +24,14 @@ public class MathArrayUtilsTest {
         }
     }
 
+
+    @Test
+    public void fill4PolynomialCurve() {
+        double[] d = {-20, -15, -10, -5, Double.NaN, 0, 5, 10, 15, 20, 25};
+        MathArrayUtils.fill4PolynomialCurve(d, 30, 3);
+        for (double v : d) {
+            System.out.println(v);
+        }
+    }
+
 }

@@ -5,7 +5,9 @@ import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoint;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MathArrayUtils {
 
@@ -127,6 +129,7 @@ public class MathArrayUtils {
 
     /**
      * 多项式曲线拟合
+     *
      * @param x
      * @param y
      * @param degree
@@ -144,5 +147,41 @@ public class MathArrayUtils {
         return coefficients;
     }
 
+    public static void fill4PolynomialCurve(double[] d, int win, int degree) {
+        List<Integer> nanIndexList = new ArrayList<>();
+        for (int i = 0; i < d.length; i++) {
+            if (Double.isNaN(d[i]))
+                nanIndexList.add(i);
+        }
+        for (int j = 0; j < nanIndexList.size(); j++) {
+            int idxL = Math.max(0, nanIndexList.get(j) - win / 2);
+            int idxU = Math.min(d.length - 1, nanIndexList.get(j) + win / 2);
+            List<Double> x = new ArrayList<>();
+            List<Double> y = new ArrayList<>();
+            int nanLen = 0, maxNanLen = 0;
+            for (int k = idxL; k <= idxU; k++) {
+                if (!Double.isNaN(d[k])) {
+                    x.add(Double.valueOf(k));
+                    y.add(d[k]);
+                    nanLen = 0;
+                } else {
+                    nanLen++;
+                    if (nanLen > maxNanLen)
+                        maxNanLen = nanLen;
+                }
+            }
 
+            if (maxNanLen < (idxU - idxL + 1) / 2) {
+                double[] xMatrix = ArrayUtil.unWrap(x.toArray(new Double[0]));
+                double[] yMatrix = ArrayUtil.unWrap(y.toArray(new Double[0]));
+
+                double[] p = fit4PolynomialCurve(xMatrix, yMatrix, degree);
+                double insertData = 0d;
+                for (int k = 0; k < p.length; k++) {
+                    insertData += Math.pow(nanIndexList.get(j), k) * p[k];
+                }
+                d[nanIndexList.get(j)] = insertData;
+            }
+        }
+    }
 }
