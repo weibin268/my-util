@@ -2,6 +2,7 @@ package com.zhuang.util.math;
 
 import cn.hutool.core.util.ArrayUtil;
 import lombok.Data;
+import org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.util.MathArrays;
@@ -55,22 +56,21 @@ public class SGFilterUtils {
     }
 
     public static RealMatrix sgWave(RealMatrix sourceData, int win, int polyorder, int mode) {
-
-//        bool Transpose = false;
-//
-//        if (sourceData.IsColumnVetor)
-//        {
-//            Transpose = true;
-//            sourceData = sourceData.Transpose();
-//        }
-//        else
-//        {
-//            if (!sourceData.IsRowVetor)
-//                throw new Exception("SGFilter 暂时只支持一位数组");
-//        }
-
+        boolean Transpose = false;
+        if (isColumnVector(sourceData)) {
+            Transpose = true;
+            sourceData = sourceData.transpose();
+        } else {
+            if (!isRowVector(sourceData))
+                throw new RuntimeException("SGFilter 暂时只支持一位数组");
+        }
         RealMatrix result = MatrixUtils.createRealMatrix(sourceData.getRowDimension(), sourceData.getColumnDimension());
-
+        result.walkInRowOrder(new DefaultRealMatrixChangingVisitor() {
+            @Override
+            public double visit(int row, int column, double value) {
+                return Double.NaN;
+            }
+        });
         if (win % 2 == 0)
             win += 1;
         double[] bodycofe = savgolCoeffs(win, polyorder, -1, true);
@@ -83,9 +83,10 @@ public class SGFilterUtils {
                 RealMatrix xData = MatrixUtils.createRealMatrix(1, win);
 
                 for (int i = 0; i < win; i++) {
-                    xData.getRow(0)[i] = i;
-                    headdata.getRow(0)[i] = sourceData.getRow(0)[i];
-                    bottomdata.getRow(0)[i] = sourceData.getRow(0)[sourceData.getColumnDimension() - win + i];
+                    //xData.getRow(0)[i] = i;
+                    xData.setEntry(0, i, i);
+                    headdata.setEntry(0, i, sourceData.getRow(0)[i]);
+                    bottomdata.setEntry(0, i, sourceData.getRow(0)[sourceData.getColumnDimension() - win + i]);
                 }
 
                 double[] headcofe = polyFit(xData, headdata, polyorder);
@@ -138,12 +139,12 @@ public class SGFilterUtils {
             for (int j = i; j < i + win; j++) {
                 insertData += sourceData.getEntry(0, j - half) * bodycofe[j - i];
             }
-            result.getRow(0)[i] = insertData;
+            result.setEntry(0, i, insertData);
         }
-//        if (Transpose) {
-//            sourceData = sourceData.Transpose();
-//            result = result.Transpose();
-//        }
+        if (Transpose) {
+            sourceData = sourceData.transpose();
+            result = result.transpose();
+        }
         return result;
     }
 
@@ -156,6 +157,16 @@ public class SGFilterUtils {
     }
 
     public static double[] polyFit(RealMatrix xData, RealMatrix yData, int degree) {
+        boolean tx = false;
+        boolean ty = false;
+        if (isRowVector(xData)) {
+            tx = true;
+            xData = xData.transpose();
+        }
+        if (isRowVector(yData)) {
+            ty = true;
+            yData = yData.transpose();
+        }
         if ((xData.getRowDimension() != yData.getRowDimension()) || yData.getColumnDimension() != 1 || xData.getColumnDimension() != 1)
             throw new RuntimeException("Polyfit fail:params error");
         int n = xData.getRowDimension();
@@ -169,9 +180,22 @@ public class SGFilterUtils {
         //(xT * xMatrix).InverseMatrix(out var xT11);
         RealMatrix xT11 = inverseMatrix(xT.multiply(xMatrix));
         RealMatrix b = xT11.multiply(xT).multiply(yData);
-        return b.getRow(0);
+        if (tx)
+            xData = xData.transpose();
+        if (ty)
+            yData = yData.transpose();
+        return b.getColumn(0);
 
     }
+
+    public static boolean isRowVector(RealMatrix matrix) {
+        return matrix.getColumnDimension() > 0 && matrix.getRowDimension() == 1;
+    }
+
+    public static boolean isColumnVector(RealMatrix matrix) {
+        return matrix.getColumnDimension() == 1 && matrix.getRowDimension() > 0;
+    }
+
 
     public static PreprocessDataResult preprocessData(double[] data) {
         PreprocessDataResult resultModel = new PreprocessDataResult();
@@ -310,7 +334,7 @@ public class SGFilterUtils {
         int rows = matrix.getRowDimension();
         int columns = matrix.getColumnDimension();
 
-        RealMatrix result = makeUnitMatrix(rows, matrix);
+        RealMatrix result = makeUnitMatrix(rows);
 
         //用于进行 行列变换的临时矩阵
         RealMatrix tempData = matrix.copy();
@@ -329,7 +353,6 @@ public class SGFilterUtils {
                     tempData.setEntry(line, j, tmp);
                     tmp = result.getEntry(i, j);
                     result.setEntry(i, j, result.getEntry(line, j));
-                    ;
                     result.setEntry(line, j, tmp);
                 }
                 i--;
@@ -369,7 +392,7 @@ public class SGFilterUtils {
         return result;
     }
 
-    public static RealMatrix makeUnitMatrix(int nSize, RealMatrix unitMatrix) {
+    public static RealMatrix makeUnitMatrix(int nSize) {
         RealMatrix result = MatrixUtils.createRealMatrix(nSize, nSize);
         for (int i = 0; i < nSize; ++i)
             result.setEntry(i, i, 1);

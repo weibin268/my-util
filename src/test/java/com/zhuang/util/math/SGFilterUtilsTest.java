@@ -10,11 +10,10 @@ public class SGFilterUtilsTest {
         System.out.println(doubles);
     }
 
-
     @Test
     public void filter() {
-        double[] d = new double[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
-        double[] doubles = SGFilterUtils.filter(d, 1, 3);
+        double[] d = new double[]{1, 3, 5, 3, 8, 3, 5};
+        double[] doubles = SGFilterUtils.filter(d, 7, 2);
         System.out.println(doubles);
     }
 
