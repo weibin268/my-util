@@ -160,7 +160,7 @@ public class MathArrayUtils {
             List<Double> y = new ArrayList<>();
             int nanLen = 0, maxNanLen = 0;
             for (int k = idxL; k <= idxU; k++) {
-                if (!Double.isNaN(d[k])) {
+                if (!nanIndexList.contains(k)) {
                     x.add(Double.valueOf(k));
                     y.add(d[k]);
                     nanLen = 0;
@@ -170,11 +170,9 @@ public class MathArrayUtils {
                         maxNanLen = nanLen;
                 }
             }
-
-            if (maxNanLen < (idxU - idxL + 1) / 2) {
+            if (maxNanLen < (idxU - idxL + 1) / 2 && x.size() > (idxU - idxL + 1) / 2) {
                 double[] xMatrix = ArrayUtil.unWrap(x.toArray(new Double[0]));
                 double[] yMatrix = ArrayUtil.unWrap(y.toArray(new Double[0]));
-
                 double[] p = fit4PolynomialCurve(xMatrix, yMatrix, degree);
                 double insertData = 0d;
                 for (int k = 0; k < p.length; k++) {
