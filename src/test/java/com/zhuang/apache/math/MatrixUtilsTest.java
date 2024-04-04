@@ -7,9 +7,18 @@ import org.junit.Test;
 public class MatrixUtilsTest {
 
     @Test
-    public void test() {
-        double[][] matrixData = {{1d, 2d, 3d}, {2d, 5d, 3d}};
-        RealMatrix m = MatrixUtils.createRealMatrix(matrixData);
+    public void transpose() {
+        RealMatrix m = MatrixUtils.createRealMatrix(new double[][]{{1, 2, 3}, {4, 5, 6}});
+        RealMatrix m2 = m.transpose();
+        System.out.println(m2);
+    }
+
+
+    @Test
+    public void multiply() {
+        RealMatrix m = MatrixUtils.createRealMatrix(new double[][]{{1, 2}, {3, 4}});
+        RealMatrix m2 = m.power(2);
+        System.out.println(m2);
     }
 
 }
