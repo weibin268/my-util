@@ -21,4 +21,10 @@ public class MatrixUtilsTest {
         System.out.println(m2);
     }
 
+    @Test
+    public void inverse() {
+        RealMatrix m = MatrixUtils.createRealMatrix(new double[][]{{1, 2, 3}, {4, 5, 6}});
+        RealMatrix m2 = MatrixUtils.inverse(m);
+        System.out.println(m2);
+    }
 }
