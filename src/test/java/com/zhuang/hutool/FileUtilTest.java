@@ -24,10 +24,11 @@ public class FileUtilTest {
 
     @Test
     public void walkFiles() {
-        FileUtil.walkFiles(Paths.get("/Users/zhuang/Documents/"), 2, new SimpleFileVisitor<Path>() {
+        FileUtil.walkFiles(Paths.get("D:\\fileupload"), 5, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
                 System.out.println("正在访问文件 -> " + file + "");
+                System.out.println("正在访问文件 -> " + attrs.lastModifiedTime() + "");
                 return FileVisitResult.CONTINUE;
             }
         });
