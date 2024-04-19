@@ -19,7 +19,6 @@ public class DemoBlockingQueue {
         }
     }
 
-
     public static Demo take() {
         Demo element;
         try {
@@ -28,6 +27,10 @@ public class DemoBlockingQueue {
             throw new RuntimeException(e);
         }
         return element;
+    }
+
+    public static int size() {
+        return queue.size();
     }
 
     @Data

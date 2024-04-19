@@ -12,7 +12,7 @@ public class DemoBlockingQueueTest {
             demo.setValue(i.toString());
             DemoBlockingQueue.put(demo);
         }
-
+        System.out.println("size:" + DemoBlockingQueue.size());
         DemoBlockingQueue.Demo temp = DemoBlockingQueue.take();
         while (temp != null) {
             temp = DemoBlockingQueue.take();

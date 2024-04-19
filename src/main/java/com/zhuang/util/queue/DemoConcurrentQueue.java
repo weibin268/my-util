@@ -20,6 +20,10 @@ public class DemoConcurrentQueue {
         return element;
     }
 
+    public static int size() {
+        return queue.size();
+    }
+
     @Data
     public static class Demo {
         private String value;

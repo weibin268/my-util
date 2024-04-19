@@ -13,7 +13,7 @@ public class DemoConcurrentQueueTest {
             demo.setValue(i.toString());
             DemoConcurrentQueue.offer(demo);
         }
-
+        System.out.println("size:" + DemoConcurrentQueue.size());
         DemoConcurrentQueue.Demo temp = DemoConcurrentQueue.poll();
         while (temp != null) {
             temp = DemoConcurrentQueue.poll();
