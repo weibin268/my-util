@@ -8,12 +8,12 @@ public class DemoBlockingQueueTest {
     public void test() throws InterruptedException {
 
         for (Integer i = 0; i < 11; i++) {
-            DemoBlockingQueue.Demo demo = new DemoBlockingQueue.Demo();
-            demo.setValue(i.toString());
-            DemoBlockingQueue.put(demo);
+            DemoBlockingQueue.Element element = new DemoBlockingQueue.Element();
+            element.setValue(i.toString());
+            DemoBlockingQueue.put(element);
         }
         System.out.println("size:" + DemoBlockingQueue.size());
-        DemoBlockingQueue.Demo temp = DemoBlockingQueue.take();
+        DemoBlockingQueue.Element temp = DemoBlockingQueue.take();
         while (temp != null) {
             temp = DemoBlockingQueue.take();
             System.out.println(temp);

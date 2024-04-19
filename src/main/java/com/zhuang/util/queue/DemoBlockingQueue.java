@@ -9,9 +9,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class DemoBlockingQueue {
 
-    private static final LinkedBlockingQueue<Demo> QUEUE = new LinkedBlockingQueue();
+    private static final LinkedBlockingQueue<Element> QUEUE = new LinkedBlockingQueue();
 
-    public static void put(Demo element) {
+    public static void put(Element element) {
         try {
             QUEUE.put(element);
         } catch (InterruptedException e) {
@@ -19,8 +19,8 @@ public class DemoBlockingQueue {
         }
     }
 
-    public static Demo take() {
-        Demo element;
+    public static Element take() {
+        Element element;
         try {
             element = QUEUE.take();
         } catch (InterruptedException e) {
@@ -34,7 +34,7 @@ public class DemoBlockingQueue {
     }
 
     @Data
-    public static class Demo {
+    public static class Element {
         private String value;
     }
 }

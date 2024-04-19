@@ -12,20 +12,20 @@ import java.util.stream.Collectors;
  */
 public class DemoConcurrentQueue {
 
-    private static final ConcurrentLinkedQueue<Demo> QUEUE = new ConcurrentLinkedQueue();
+    private static final ConcurrentLinkedQueue<Element> QUEUE = new ConcurrentLinkedQueue();
 
-    public static void offer(Demo element) {
+    public static void offer(Element element) {
         QUEUE.offer(element);
     }
 
-    public static Demo poll() {
-        Demo element = QUEUE.poll();
+    public static Element poll() {
+        Element element = QUEUE.poll();
         return element;
     }
 
-    public static List<Demo> pollAll() {
-        List<Demo> result = new ArrayList<>();
-        Demo element = poll();
+    public static List<Element> pollAll() {
+        List<Element> result = new ArrayList<>();
+        Element element = poll();
         while (element != null) {
             result.add(element);
             element = poll();
@@ -37,12 +37,12 @@ public class DemoConcurrentQueue {
         return QUEUE.size();
     }
 
-    public static List<Demo> toList() {
+    public static List<Element> toList() {
         return QUEUE.stream().collect(Collectors.toList());
     }
 
     @Data
-    public static class Demo {
+    public static class Element {
         private String value;
     }
 }
