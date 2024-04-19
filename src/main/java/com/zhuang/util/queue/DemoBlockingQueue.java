@@ -9,11 +9,11 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class DemoBlockingQueue {
 
-    private static final LinkedBlockingQueue<Demo> queue = new LinkedBlockingQueue();
+    private static final LinkedBlockingQueue<Demo> QUEUE = new LinkedBlockingQueue();
 
     public static void put(Demo element) {
         try {
-            queue.put(element);
+            QUEUE.put(element);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -22,7 +22,7 @@ public class DemoBlockingQueue {
     public static Demo take() {
         Demo element;
         try {
-            element = queue.take();
+            element = QUEUE.take();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -30,7 +30,7 @@ public class DemoBlockingQueue {
     }
 
     public static int size() {
-        return queue.size();
+        return QUEUE.size();
     }
 
     @Data
