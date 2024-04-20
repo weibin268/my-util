@@ -9,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class DemoBlockingQueue {
 
-    private static final LinkedBlockingQueue<Element> QUEUE = new LinkedBlockingQueue();
+    private static final LinkedBlockingQueue<Element> QUEUE = new LinkedBlockingQueue<>();
 
     public static void put(Element element) {
         try {

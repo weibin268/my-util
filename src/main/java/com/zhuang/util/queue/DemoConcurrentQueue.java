@@ -5,22 +5,20 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.stream.Collectors;
 
 /**
  * 非阻塞无边界的队列
  */
 public class DemoConcurrentQueue {
 
-    private static final ConcurrentLinkedQueue<Element> QUEUE = new ConcurrentLinkedQueue();
+    private static final ConcurrentLinkedQueue<Element> QUEUE = new ConcurrentLinkedQueue<>();
 
     public static void offer(Element element) {
         QUEUE.offer(element);
     }
 
     public static Element poll() {
-        Element element = QUEUE.poll();
-        return element;
+        return QUEUE.poll();
     }
 
     public static List<Element> pollAll() {
@@ -38,7 +36,7 @@ public class DemoConcurrentQueue {
     }
 
     public static List<Element> toList() {
-        return QUEUE.stream().collect(Collectors.toList());
+        return new ArrayList<>(QUEUE);
     }
 
     @Data
