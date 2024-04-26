@@ -6,7 +6,8 @@ import org.junit.Test;
 public class JnaTest {
     @Test
     public void test() {
-        MyLib instance = (MyLib) Native.loadLibrary("MyLib.dll", MyLib.class);
+        System.setProperty("jna.library.path", "/Users/zhuang/Documents/temp/");
+        MyLib instance = (MyLib) Native.loadLibrary("test", MyLib.class);
         int add = instance.add(1, 2);
         System.out.println(add);
     }
