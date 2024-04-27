@@ -256,7 +256,6 @@
             <scope>provided</scope>
         </dependency>
         <!--end oshi-->
-
         <!--begin openoffice-->
         <dependency>
             <groupId>com.artofsolving</groupId>
@@ -289,7 +288,6 @@
             <scope>provided</scope>
         </dependency>
         <!--end openoffice-->
-
         <!-- Jwt -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -297,7 +295,6 @@
             <version>0.9.1</version>
             <scope>provided</scope>
         </dependency>
-
         <!-- Kaptcha -->
         <dependency>
             <groupId>com.github.penggle</groupId>
@@ -305,7 +302,6 @@
             <version>2.3.2</version>
             <scope>provided</scope>
         </dependency>
-
         <!--begin okhttp3-->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
@@ -320,20 +316,20 @@
             <scope>provided</scope>
         </dependency>
         <!--end okhttp3-->
-
         <!--begin swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
+            <scope>provided</scope>
         </dependency>
         <!--end swagger-->
-
         <!--commons-math3-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
+            <scope>provided</scope>
         </dependency>
         <!--jna-->
         <dependency>
