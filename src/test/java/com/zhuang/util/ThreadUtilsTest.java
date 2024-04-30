@@ -9,14 +9,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ThreadUtilsTest {
-
-
-    private static final ThreadPoolExecutor executor = ThreadPoolUtils.getThreadPoolExecutor();
 
     @Test
     public void startFutureTask() throws ExecutionException, InterruptedException {
@@ -32,6 +28,8 @@ public class ThreadUtilsTest {
 
     @Test
     public void startCompletableFuture() {
+        // 指定线程池，默认使用的是：ForkJoinPool.commonPool()
+        ThreadPerTaskExecutor threadPerTaskExecutor = new ThreadPerTaskExecutor(new NamedThreadFactory("test-thread", false));
         List<CompletableFuture<String>> taskList = Stream.of("a", "b", "c").map(c -> ThreadUtils.startCompletableFuture(() -> {
             System.out.println(Thread.currentThread().getName() + ":" + c + " begin");
             if (c.equals("b")) {
@@ -39,7 +37,7 @@ public class ThreadUtilsTest {
             }
             System.out.println(Thread.currentThread().getName() + ":" + c + " end");
             return Thread.currentThread().getName() + ":" + "result -> " + c;
-        }, new ThreadPerTaskExecutor(new NamedThreadFactory("test-thread", false)))).collect(Collectors.toList());
+        }, threadPerTaskExecutor)).collect(Collectors.toList());
         List<String> result = new ArrayList<>();
         for (CompletableFuture<String> task : taskList) {
             String taskResult = task.join();

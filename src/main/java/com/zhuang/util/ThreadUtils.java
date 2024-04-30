@@ -14,6 +14,7 @@ public class ThreadUtils {
         return futureTask;
     }
 
+
     public static <T> CompletableFuture<T> startCompletableFuture(Supplier<T> supplier) {
         return CompletableFuture.supplyAsync(supplier);
     }
