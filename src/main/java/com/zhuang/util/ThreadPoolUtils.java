@@ -1,6 +1,8 @@
 package com.zhuang.util;
 
-import java.util.concurrent.ArrayBlockingQueue;
+import cn.hutool.core.thread.NamedThreadFactory;
+
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -8,13 +10,13 @@ public class ThreadPoolUtils {
 
     public static ThreadPoolExecutor getThreadPoolExecutor() {
         return new ThreadPoolExecutor(
-                5,      // corePoolSize
-                10,                 // maximumPoolSize
-                60,                 // keepAliveTime
+                5,   // corePoolSize
+                10,             // maximumPoolSize
+                60,             // keepAliveTime
                 TimeUnit.SECONDS,
-                new ArrayBlockingQueue<Runnable>(50)     // workQueue
-                //new LinkedBlockingQueue<Runnable>()
-                , new ThreadPoolExecutor.DiscardPolicy()  // rejected handler
+                new LinkedBlockingQueue<Runnable>(1000),    //workQueue
+                new NamedThreadFactory("test-thread-%d", false),
+                new ThreadPoolExecutor.DiscardPolicy()
         );
     }
 
