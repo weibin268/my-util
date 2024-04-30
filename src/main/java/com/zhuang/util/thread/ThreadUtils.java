@@ -15,6 +15,7 @@ public class ThreadUtils {
     }
 
     public static <T> CompletableFuture<T> startCompletableFuture(Supplier<T> supplier) {
+        // 设置每个任务创建一个线，默认使用的是ForkJoinPool线程池
         return CompletableFuture.supplyAsync(supplier, new ThreadPerTaskExecutor());
     }
 
