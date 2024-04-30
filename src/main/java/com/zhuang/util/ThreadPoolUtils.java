@@ -10,12 +10,12 @@ public class ThreadPoolUtils {
 
     public static ThreadPoolExecutor getThreadPoolExecutor() {
         return new ThreadPoolExecutor(
-                1,   // corePoolSize
+                5,   // corePoolSize
                 10,             // maximumPoolSize
                 60,             // keepAliveTime
                 TimeUnit.SECONDS,
                 new LinkedBlockingQueue<Runnable>(1024),    //workQueue
-                new NamedThreadFactory("test-thread-%d", false),
+                new NamedThreadFactory("test-thread", false),
                 new ThreadPoolExecutor.DiscardPolicy()
         );
     }
