@@ -1,4 +1,4 @@
-package com.zhuang.util;
+package com.zhuang.util.thread;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
@@ -14,9 +14,8 @@ public class ThreadUtils {
         return futureTask;
     }
 
-
     public static <T> CompletableFuture<T> startCompletableFuture(Supplier<T> supplier) {
-        return CompletableFuture.supplyAsync(supplier);
+        return CompletableFuture.supplyAsync(supplier, new ThreadPerTaskExecutor());
     }
 
     public static <T> CompletableFuture<T> startCompletableFuture(Supplier<T> supplier, Executor executor) {

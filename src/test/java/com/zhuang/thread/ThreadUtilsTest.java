@@ -1,7 +1,6 @@
-package com.zhuang.util;
+package com.zhuang.thread;
 
-import cn.hutool.core.thread.NamedThreadFactory;
-import io.netty.util.concurrent.ThreadPerTaskExecutor;
+import com.zhuang.util.thread.ThreadUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -28,8 +27,6 @@ public class ThreadUtilsTest {
 
     @Test
     public void startCompletableFuture() {
-        // 指定线程池，默认使用的是：ForkJoinPool.commonPool()
-        ThreadPerTaskExecutor threadPerTaskExecutor = new ThreadPerTaskExecutor(new NamedThreadFactory("test-thread", false));
         List<CompletableFuture<String>> taskList = Stream.of("a", "b", "c").map(c -> ThreadUtils.startCompletableFuture(() -> {
             System.out.println(Thread.currentThread().getName() + ":" + c + " begin");
             if (c.equals("b")) {
@@ -37,7 +34,7 @@ public class ThreadUtilsTest {
             }
             System.out.println(Thread.currentThread().getName() + ":" + c + " end");
             return Thread.currentThread().getName() + ":" + "result -> " + c;
-        }, threadPerTaskExecutor)).collect(Collectors.toList());
+        })).collect(Collectors.toList());
         List<String> result = new ArrayList<>();
         for (CompletableFuture<String> task : taskList) {
             String taskResult = task.join();

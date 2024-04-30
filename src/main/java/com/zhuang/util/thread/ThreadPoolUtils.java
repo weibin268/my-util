@@ -1,4 +1,4 @@
-package com.zhuang.util;
+package com.zhuang.util.thread;
 
 import cn.hutool.core.thread.NamedThreadFactory;
 
