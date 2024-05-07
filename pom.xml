@@ -338,6 +338,13 @@
             <version>4.1.0</version>
             <scope>provided</scope>
         </dependency>
+        <!--javacv-platform-->
+        <!--<dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>1.5.10</version>
+            <scope>provided</scope>
+        </dependency>-->
     </dependencies>
 
     <dependencyManagement>
