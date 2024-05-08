@@ -29,9 +29,9 @@ public class FrameGrabberUtils {
             recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
             // 开始录制视频帧到文件
             recorder.start();
+            long endTime = grabber.getTimestamp() + durationSeconds * 1000000; // 抓取 10 秒视频
             Frame frame;
-            long startTime = System.currentTimeMillis();
-            while ((frame = grabber.grab()) != null && (System.currentTimeMillis() - startTime) / 1000 < durationSeconds) {
+            while ((frame = grabber.grab()) != null && grabber.getTimestamp() < endTime) {
                 // 将每一帧录制到文件
                 recorder.record(frame);
             }
