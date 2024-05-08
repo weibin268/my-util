@@ -12,7 +12,7 @@ public class FFmpegFrameGrabberTest {
     public void test() throws FrameGrabber.Exception, FrameRecorder.Exception, InterruptedException {
         String filePath = "d:\\tmp\\test.mp4";
         int maxDurationSeconds = 30;
-        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("rtsp://120.238.22.9:554/openUrl/E99OI1O");
+        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("rtsp://120.238.22.9:554/openUrl/qC8L3So");
         grabber.setOption("rtsp_transport", "tcp");
         // 开始连接RTSP服务器
         grabber.start();
@@ -24,8 +24,8 @@ public class FFmpegFrameGrabberTest {
         FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(filePath, grabber.getImageWidth(), grabber.getImageHeight());
         recorder.setAudioChannels(1);
         recorder.setVideoQuality(0);
-        recorder.setFrameRate(grabber.getFrameRate());
-        //recorder.setVideoBitrate(grabber.getVideoBitrate());
+        recorder.setFrameRate(25);
+        recorder.setVideoBitrate(900 * 1024);
         recorder.setFormat("mp4");
         recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
         // 开始录制视频帧到文件
