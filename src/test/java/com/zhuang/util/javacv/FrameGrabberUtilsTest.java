@@ -5,6 +5,6 @@ import org.junit.Test;
 public class FrameGrabberUtilsTest {
     @Test
     public void test() {
-        FrameGrabberUtils.grab("rtsp://120.238.22.9:554/openUrl/f5H37So", "d:\\tmp\\test.mp4", 30);
+        FrameGrabberUtils.grab("rtmp://120.238.22.9:1935/live/openUrl/HnwpUas", "d:\\tmp\\test.mp4", 10);
     }
 }
