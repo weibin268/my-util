@@ -19,6 +19,7 @@ public class CronUtilTest {
         CronUtil.schedule("002", "0/1 * * * * ? *", () -> {
             System.out.println("thread:" + Thread.currentThread().getName() + " -> " + DateUtil.formatDateTime(new Date()));
         });
+        CronUtil.getScheduler().getTaskTable().getIds().forEach(System.out::println);
         Thread.sleep(1000 * 60);
     }
 }
