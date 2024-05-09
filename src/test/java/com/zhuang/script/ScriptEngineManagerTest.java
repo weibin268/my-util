@@ -20,7 +20,7 @@ public class ScriptEngineManagerTest {
         bindings.put("username", "admin");
         bindings.put("password", "123");
         bindings.put("loginBean", new LoginBean());
-        Map result = (Map) jsEngine.eval(loginJs, scriptContext);
+        Object result =  jsEngine.eval(loginJs, scriptContext);
         System.out.println("result -> " + result);
     }
 
