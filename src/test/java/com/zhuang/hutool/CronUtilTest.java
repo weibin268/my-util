@@ -14,7 +14,10 @@ public class CronUtilTest {
         CronUtil.setMatchSecond(true);
         CronUtil.start();
         CronUtil.schedule("001", "0/1 * * * * ? *", () -> {
-            System.out.println(DateUtil.formatDateTime(new Date()));
+            System.out.println("thread:" + Thread.currentThread().getName() + " -> " + DateUtil.formatDateTime(new Date()));
+        });
+        CronUtil.schedule("002", "0/1 * * * * ? *", () -> {
+            System.out.println("thread:" + Thread.currentThread().getName() + " -> " + DateUtil.formatDateTime(new Date()));
         });
         Thread.sleep(1000 * 60);
     }
