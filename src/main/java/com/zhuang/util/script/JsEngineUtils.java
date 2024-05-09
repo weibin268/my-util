@@ -8,10 +8,9 @@ import java.util.Map;
 
 public class JsEngineUtils {
 
-    private static final ScriptEngine jsEngine = new ScriptEngineManager().getEngineByName("js");
-
     public static Object eval(String script, Map<String, Object> context) {
         try {
+            ScriptEngine jsEngine = new ScriptEngineManager().getEngineByName("js");
             ScriptContext scriptContext = jsEngine.getContext();
             Bindings bindings = scriptContext.getBindings(ScriptContext.ENGINE_SCOPE);
             bindings.putAll(context);
