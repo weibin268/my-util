@@ -1,9 +1,8 @@
 package com.zhuang.util.script;
 
-import javax.script.Bindings;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
+import cn.hutool.script.ScriptUtil;
+
+import javax.script.*;
 import java.util.Map;
 
 /**
@@ -12,9 +11,18 @@ import java.util.Map;
 public class JsEngineUtils {
 
     public static Object eval(String script, Map<String, Object> context) {
+        return eval(script, context, false);
+    }
+
+    public static Object eval(String script, Map<String, Object> context, boolean newContext) {
         try {
-            ScriptEngine jsEngine = new ScriptEngineManager().getEngineByName("js");
-            ScriptContext scriptContext = jsEngine.getContext();
+            ScriptEngine jsEngine = ScriptUtil.getJsEngine();
+            ScriptContext scriptContext;
+            if (newContext) {
+                scriptContext = new SimpleScriptContext();
+            } else {
+                scriptContext = jsEngine.getContext();
+            }
             Bindings bindings = scriptContext.getBindings(ScriptContext.ENGINE_SCOPE);
             bindings.putAll(context);
             Object result = jsEngine.eval(script, scriptContext);

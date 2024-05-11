@@ -10,12 +10,25 @@ import static org.junit.Assert.*;
 public class JsEngineUtilsTest {
 
     @Test
-    public void test() {
+    public void sameContext() {
         JsEngineUtilsTest t = new JsEngineUtilsTest();
         Map<String, Object> context = new HashMap<>();
         context.put("t", t);
-        Object eval = JsEngineUtils.eval("var a=1;var b=1; t.sayHello(); a+b;", context);
-        System.out.println(eval);
+        Object r1 = JsEngineUtils.eval("var a=1;var b=1; t.sayHello(); a+b;", context);
+        System.out.println(r1);
+        Object r2 = JsEngineUtils.eval("a+b;", context);
+        System.out.println(r2);
+    }
+
+    @Test
+    public void diffContext() {
+        JsEngineUtilsTest t = new JsEngineUtilsTest();
+        Map<String, Object> context = new HashMap<>();
+        context.put("t", t);
+        Object r1 = JsEngineUtils.eval("var a=1;var b=1; t.sayHello(); a+b;", context, true);
+        System.out.println(r1);
+        Object r2 = JsEngineUtils.eval("a+b;", context, true);
+        System.out.println(r2);
     }
 
     public void sayHello() {
