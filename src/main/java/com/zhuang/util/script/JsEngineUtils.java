@@ -6,6 +6,9 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.util.Map;
 
+/**
+ * 建议使用hutool的ScriptUtil，它做了缓存实现
+ */
 public class JsEngineUtils {
 
     public static Object eval(String script, Map<String, Object> context) {
