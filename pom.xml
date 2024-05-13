@@ -105,6 +105,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.openoffice.version>4.1.2</org.openoffice.version>
         <okhttp.version>4.11.0</okhttp.version>
+        <javacv.version>1.5.10</javacv.version>
+        <ffmpeg.version>6.1.1</ffmpeg.version>
     </properties>
 
     <dependencies>
@@ -338,13 +340,34 @@
             <version>4.1.0</version>
             <scope>provided</scope>
         </dependency>
-        <!--javacv-platform-->
-        <dependency>
+        <!--begin javacv-->
+        <!--所有依赖，大小几百M-->
+        <!--<dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv-platform</artifactId>
-            <version>1.5.10</version>
+            <version>${javacv.version}</version>
             <scope>provided</scope>
+        </dependency>-->
+        <!--部分依赖，大小几十M-->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>${javacv.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>6.1.1-1.5.10</version>
+            <classifier>windows-x86_64</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>${ffmpeg.version}-1.5.10</version>
+            <classifier>linux-x86_64</classifier>
+        </dependency>
+        <!--end javacv-->
+
         <!--Java-WebSocket-->
         <dependency>
             <groupId>org.java-websocket</groupId>
