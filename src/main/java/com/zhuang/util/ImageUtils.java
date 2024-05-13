@@ -69,7 +69,7 @@ public class ImageUtils {
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text, Position position) {
-        addText(inputStream, outputStream, text, position, null, "黑体", 0.04d, 1f);
+        addText(inputStream, outputStream, text, position, null, "黑体", 0.05d, 1f);
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text, Position position, Color color, String fontName, double fontSizeScale, float alpha) {
