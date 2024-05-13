@@ -354,18 +354,24 @@
             <artifactId>javacv</artifactId>
             <version>${javacv.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>ffmpeg</artifactId>
-            <version>6.1.1-1.5.10</version>
+            <version>${ffmpeg.version}-1.5.10</version>
             <classifier>windows-x86_64</classifier>
-        </dependency>
-        <dependency>
+        </dependency>-->
+        <!--<dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>ffmpeg</artifactId>
             <version>${ffmpeg.version}-1.5.10</version>
             <classifier>linux-x86_64</classifier>
-        </dependency>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>${ffmpeg.version}-1.5.10</version>
+            <classifier>macosx-arm64</classifier>
+        </dependency>-->
         <!--end javacv-->
 
         <!--Java-WebSocket-->
