@@ -1,5 +1,7 @@
 package com.zhuang.util.javacv;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.bytedeco.ffmpeg.global.avcodec;
@@ -23,6 +25,7 @@ public class FrameGrabberUtils {
             if (of.exists()) {
                 of.delete();
             }
+            FileUtil.mkParentDirs(of);
             FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(outputFile, grabber.getImageWidth(), grabber.getImageHeight());
             recorder.setAudioChannels(1);
             recorder.setVideoQuality(0);
