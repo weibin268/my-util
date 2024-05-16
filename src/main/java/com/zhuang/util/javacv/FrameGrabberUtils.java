@@ -35,12 +35,14 @@ public class FrameGrabberUtils {
             recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
             // 开始录制视频帧到文件
             recorder.start();
+            double maxFrameCount = recorder.getFrameRate() * durationSeconds;
+            double tempFromCount = 0;
             log.info("begin grab video -> videoUrl={}, outputFile={}", videoUrl, outputFile);
-            long endTime = grabber.getTimestamp() + durationSeconds * 1000000;
             Frame frame;
-            while ((frame = grabber.grab()) != null && grabber.getTimestamp() < endTime) {
+            while ((frame = grabber.grab()) != null && tempFromCount < maxFrameCount) {
                 // 将每一帧录制到文件
                 recorder.record(frame);
+                tempFromCount++;
             }
             log.info("end grab video -> videoUrl={}, outputFile={}", videoUrl, outputFile);
             // 停止录制视频帧到文件
