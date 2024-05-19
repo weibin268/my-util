@@ -1,4 +1,4 @@
-package com.zhuang.util.spring.cache;
+package com.zhuang.util.cache;
 
 public interface Cacheable {
     void set(String key, String value, int timeoutSeconds);

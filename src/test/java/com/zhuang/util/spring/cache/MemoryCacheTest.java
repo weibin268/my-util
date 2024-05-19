@@ -1,7 +1,7 @@
 package com.zhuang.util.spring.cache;
 
 import cn.hutool.core.thread.ThreadUtil;
-import com.zhuang.util.spring.cache.MemoryCache;
+import com.zhuang.util.cache.MemoryCache;
 import org.junit.Test;
 
 public class MemoryCacheTest {

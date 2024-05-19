@@ -1,4 +1,4 @@
-package com.zhuang.util.spring.cache;
+package com.zhuang.util.cache;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ClassUtil;

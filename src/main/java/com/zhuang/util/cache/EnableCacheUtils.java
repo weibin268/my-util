@@ -1,4 +1,4 @@
-package com.zhuang.util.spring.cache;
+package com.zhuang.util.cache;
 
 import com.zhuang.util.spring.RedisUtils;
 import org.springframework.context.annotation.Import;
