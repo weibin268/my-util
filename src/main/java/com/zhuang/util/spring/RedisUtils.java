@@ -5,7 +5,6 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.zhuang.util.jackson.JacksonUtils;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -62,7 +61,7 @@ public class RedisUtils {
         return keys.stream().map(RedisUtils::get).collect(Collectors.toList());
     }
 
-    public static List<T> getByPattern(String pattern, Class<T> clazz) {
+    public static <T> List<T> getByPattern(String pattern, Class<T> clazz) {
         List<String> stringList = getByPattern(pattern);
         return stringList.stream().map(c -> JacksonUtils.toBean(c, clazz)).collect(Collectors.toList());
     }
