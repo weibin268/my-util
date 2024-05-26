@@ -380,6 +380,13 @@
             <artifactId>Java-WebSocket</artifactId>
             <version>1.5.6</version>
         </dependency>
+
+        <!--image-combiner-->
+        <dependency>
+            <groupId>com.freewayso</groupId>
+            <artifactId>image-combiner</artifactId>
+            <version>2.6.8</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

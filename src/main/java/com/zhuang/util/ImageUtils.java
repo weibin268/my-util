@@ -73,6 +73,10 @@ public class ImageUtils {
     }
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String text, Position position, Color color, String fontName, double fontSizeScale, float alpha) {
+        addText(inputStream, outputStream, "jpg", text, position, color, fontName, fontSizeScale, alpha);
+    }
+
+    public static void addText(InputStream inputStream, OutputStream outputStream, String imageType, String text, Position position, Color color, String fontName, double fontSizeScale, float alpha) {
         BufferedImage inputImage = ImgUtil.toImage(IoUtil.readBytes(inputStream));
         Double fontSize = inputImage.getHeight() * fontSizeScale;
         Font font = FontUtil.createFont(fontName, fontSize.intValue());
@@ -108,7 +112,7 @@ public class ImageUtils {
             int newArgb = argbToInt(a, r, g, b);
             color = new Color(newArgb);
         }
-        ImgUtil.writeJpg(Img.from(inputImage).setPositionBaseCentre(position == Position.center).pressText(text, color, font, x, y, alpha).getImg(), ImgUtil.getImageOutputStream(outputStream));
+        ImgUtil.write(Img.from(inputImage).setPositionBaseCentre(position == Position.center).pressText(text, color, font, x, y, alpha).getImg(), imageType, ImgUtil.getImageOutputStream(outputStream));
     }
 
     public static int argbToInt(int a, int r, int g, int b) {
