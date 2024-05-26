@@ -78,16 +78,16 @@ public class ImageUtils {
 
     public static void addText(InputStream inputStream, OutputStream outputStream, String imageType, String text, Position position, Color color, String fontName, double fontSizeScale, float alpha) {
         BufferedImage inputImage = ImgUtil.toImage(IoUtil.readBytes(inputStream));
-        Double fontSize = inputImage.getHeight() * fontSizeScale;
-        Font font = FontUtil.createFont(fontName, fontSize.intValue());
+        double fontSize = inputImage.getHeight() * fontSizeScale;
+        Font font = FontUtil.createFont(fontName, (int) fontSize);
         int x;
         int y;
         if (position == Position.left_top) {
-            x = fontSize.intValue();
-            y = fontSize.intValue() * 2;
+            x = (int) fontSize;
+            y = (int) fontSize * 2;
         } else if (position == Position.right_bottom) {
-            x = inputImage.getWidth() - getTextWidth(font, text) - fontSize.intValue();
-            y = inputImage.getHeight() - fontSize.intValue();
+            x = inputImage.getWidth() - getTextWidth(font, text) - (int) fontSize;
+            y = inputImage.getHeight() - (int) fontSize;
         } else {
             x = 0;
             y = 0;
