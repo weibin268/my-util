@@ -353,6 +353,7 @@
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv</artifactId>
             <version>${javacv.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!--<dependency>
             <groupId>org.bytedeco</groupId>
@@ -379,6 +380,7 @@
             <groupId>org.java-websocket</groupId>
             <artifactId>Java-WebSocket</artifactId>
             <version>1.5.6</version>
+            <scope>provided</scope>
         </dependency>
 
         <!--image-combiner-->
@@ -386,6 +388,7 @@
             <groupId>com.freewayso</groupId>
             <artifactId>image-combiner</artifactId>
             <version>2.6.8</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
