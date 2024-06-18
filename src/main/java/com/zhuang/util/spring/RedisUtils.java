@@ -89,6 +89,6 @@ public class RedisUtils {
                 log.error("RedisUtils.getByPattern error!", ex);
             }
             return t;
-        }).collect(Collectors.toList());
+        }).filter(c -> c != null).collect(Collectors.toList());
     }
 }
