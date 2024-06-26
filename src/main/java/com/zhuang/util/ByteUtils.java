@@ -13,20 +13,20 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getFloat();
     }
 
-    public static byte[] getBytes(float value) {
-        return getBytes(value, ByteOrder.BIG_ENDIAN);
-    }
-
-    public static byte[] getBytes(float value, ByteOrder bo) {
-        return ByteBuffer.allocate(Float.BYTES).order(bo).putFloat(value).array();
-    }
-
     public static int getInt(byte[] bytes) {
         return getInt(bytes, ByteOrder.BIG_ENDIAN);
     }
 
     public static int getInt(byte[] bytes, ByteOrder bo) {
         return ByteBuffer.wrap(bytes).order(bo).getInt();
+    }
+
+    public static byte[] getBytes(float value) {
+        return getBytes(value, ByteOrder.BIG_ENDIAN);
+    }
+
+    public static byte[] getBytes(float value, ByteOrder bo) {
+        return ByteBuffer.allocate(Float.BYTES).order(bo).putFloat(value).array();
     }
 
     public static byte[] getBytes(int value) {
@@ -45,23 +45,18 @@ public class ByteUtils {
         return hex.toString().toUpperCase();
     }
 
-    public static byte[] toBytes(String s) {
-        final int len = s.length();
-
+    public static byte[] toBytes(String hex) {
+        final int len = hex.length();
         if (len % 2 != 0)
-            throw new IllegalArgumentException("hexBinary needs to be even-length: " + s);
-
+            throw new IllegalArgumentException("hexBinary needs to be even-length: " + hex);
         byte[] out = new byte[len / 2];
-
         for (int i = 0; i < len; i += 2) {
-            int h = hexToBin(s.charAt(i));
-            int l = hexToBin(s.charAt(i + 1));
+            int h = hexToBin(hex.charAt(i));
+            int l = hexToBin(hex.charAt(i + 1));
             if (h == -1 || l == -1)
-                throw new IllegalArgumentException("contains illegal character for hexBinary: " + s);
-
+                throw new IllegalArgumentException("contains illegal character for hexBinary: " + hex);
             out[i / 2] = (byte) (h * 16 + l);
         }
-
         return out;
     }
 
