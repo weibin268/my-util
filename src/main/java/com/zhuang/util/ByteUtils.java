@@ -60,10 +60,37 @@ public class ByteUtils {
         return out;
     }
 
+    public static String toBin(byte[] bytes) {
+        if (bytes == null) return null;
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            String strBin = Integer.toBinaryString(b);
+            int lack = 8 - strBin.length();
+            if (lack > 0) {
+                strBin = repeat('0', lack) + strBin;
+            }
+            sb.append(strBin);
+        }
+        return sb.toString();
+    }
+
     private static int hexToBin(char ch) {
         if ('0' <= ch && ch <= '9') return ch - '0';
         if ('A' <= ch && ch <= 'F') return ch - 'A' + 10;
         if ('a' <= ch && ch <= 'f') return ch - 'a' + 10;
         return -1;
     }
+
+    private static String repeat(char c, int count) {
+        if (count <= 0) {
+            return "";
+        }
+
+        char[] result = new char[count];
+        for (int i = 0; i < count; i++) {
+            result[i] = c;
+        }
+        return new String(result);
+    }
+
 }

@@ -51,4 +51,10 @@ public class ByteUtilsTest {
         byte[] bytes = ByteUtils.toBytes("FA12");
         System.out.println(bytes);
     }
+
+    @Test
+    public void toBin() {
+        String bin = ByteUtils.toBin(ByteUtils.toBytes("1111"));
+        System.out.println(bin);
+    }
 }
