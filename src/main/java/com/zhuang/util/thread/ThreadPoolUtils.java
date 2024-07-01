@@ -12,7 +12,7 @@ public class ThreadPoolUtils {
                 5,
                 // 最大线程数（maximumPoolSize）：如果队列已满且当前线程数小于最大线程数，线程池会创建新的线程来执行任务
                 10,
-                // 保持活动时间（keepAliveTime）：当线程数超过核心线程数时，这是多余空闲线程在终止前可以保持空闲的最长时间
+                // 保持活动时间（keepAliveTime）：当线程数超过核心线程数时，这时多余空闲线程在终止前可以保持空闲的最长时间
                 60,
                 // 时间单位（unit）：keepAliveTime 参数的时间单位
                 TimeUnit.SECONDS,
