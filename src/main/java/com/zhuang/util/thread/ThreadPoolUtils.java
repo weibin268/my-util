@@ -1,8 +1,6 @@
 package com.zhuang.util.thread;
 
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class ThreadPoolUtils {
 
@@ -17,7 +15,9 @@ public class ThreadPoolUtils {
                 // 时间单位（unit）：keepAliveTime 参数的时间单位
                 TimeUnit.SECONDS,
                 // 工作队列（workQueue）：用于保存等待执行的任务的阻塞队列
-                new LinkedBlockingQueue<Runnable>(1024),
+                new LinkedBlockingQueue<>(1024), // 默认无界队列，当运行线程大于corePoolSize时始终放入此队列，此时maxPoolSize无效。当构造LinkedBlockingQueue对象时传入参数，变为有界队列，队列满时，运行线程小于maxPoolSize时会创建新线程，否则触发异常策略
+                //new ArrayBlockingQueue<>(1024), // 有界队列，相对无界队列有利于控制队列大小，队列满时，运行线程小于maxPoolSize时会创建新线程，否则触发异常策略
+                //new SynchronousQueue<>(false), // 它将任务直接提交给线程而不保持它们。当运行线程小于maxPoolSize时会创建新线程，否则触发异常策略
                 // 线程工厂（threadFactory）：用于创建新线程的工厂
                 //new NamedThreadFactory("test-thread", false),
                 // 拒绝策略（handler）：当任务太多以至于无法及时处理时，线程池采取的策略
