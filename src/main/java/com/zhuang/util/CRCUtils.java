@@ -23,20 +23,29 @@ public class CRCUtils {
     }
 
     private static final short POLYNOMIAL_8 = 0x07; // CRC8多项式，也可以使用其他的多项式
+    private static final short POLYNOMIAL_7 = 0xe5; // CRC7多项式，也可以使用其他的多项式
 
     public static byte getCRC8(byte[] bytes) {
+        return getCRC8(bytes, POLYNOMIAL_8);
+    }
+
+    public static byte getCRC8(byte[] bytes, short polynomial) {
         short crc = 0x00; // CRC8校验值初始值
         for (byte b : bytes) {
             crc ^= b; // 异或
             for (int i = 0; i < 8; i++) {
                 if ((crc & 0x80) != 0) {
-                    crc = (short) ((crc << 1) ^ POLYNOMIAL_8); // 左移并异或
+                    crc = (short) ((crc << 1) ^ polynomial); // 左移并异或
                 } else {
                     crc <<= 1; // 左移
                 }
             }
         }
         return (byte) (crc & 0xFF); // 返回低8位
+    }
+
+    public static byte getCRC7(byte[] bytes) {
+        return getCRC8(bytes, POLYNOMIAL_7);
     }
 
 }
