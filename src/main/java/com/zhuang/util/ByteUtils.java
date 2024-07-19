@@ -2,6 +2,7 @@ package com.zhuang.util;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
 public class ByteUtils {
 
@@ -62,7 +63,7 @@ public class ByteUtils {
         int index = 0;
         byte[] bytes = new byte[totalBytes];
         while (offset < bin.length()) {
-            bytes[index] =  Integer.valueOf(bin.substring(offset, offset + 8), 2).byteValue();
+            bytes[index] = Integer.valueOf(bin.substring(offset, offset + 8), 2).byteValue();
             offset = offset + 8;
             index++;
         }
@@ -102,11 +103,8 @@ public class ByteUtils {
         if (count <= 0) {
             return "";
         }
-
         char[] result = new char[count];
-        for (int i = 0; i < count; i++) {
-            result[i] = c;
-        }
+        Arrays.fill(result, c);
         return new String(result);
     }
 
