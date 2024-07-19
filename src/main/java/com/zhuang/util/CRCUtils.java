@@ -1,5 +1,8 @@
 package com.zhuang.util;
 
+/**
+ * hutool相关的实现类型（CRC16、CRC8）
+ */
 public class CRCUtils {
 
     private static final int POLYNOMIAL_16 = 0xA001;
