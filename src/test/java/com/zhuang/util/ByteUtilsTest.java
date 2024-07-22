@@ -62,7 +62,11 @@ public class ByteUtilsTest {
     public void binToHex() {
         String bin = ByteUtils.binToHex("0000000100000011");
         System.out.println(bin);
+    }
 
-
+    @Test
+    public void intToHex() {
+        String hex = ByteUtils.intToHex(123456, 8);
+        System.out.println(hex);
     }
 }

@@ -62,8 +62,8 @@ public class ByteUtils {
             throw new IllegalArgumentException("hexBinary needs to be even-length: " + hex);
         byte[] out = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
-            int h = hexToInt(hex.charAt(i));
-            int l = hexToInt(hex.charAt(i + 1));
+            int h = hexCharToInt(hex.charAt(i));
+            int l = hexCharToInt(hex.charAt(i + 1));
             if (h == -1 || l == -1)
                 throw new IllegalArgumentException("contains illegal character for hexBinary: " + hex);
             out[i / 2] = (byte) (h * 16 + l);
@@ -110,20 +110,16 @@ public class ByteUtils {
         return sb.toString();
     }
 
-    private static int hexToInt(char ch) {
-        if ('0' <= ch && ch <= '9') return ch - '0';
-        if ('A' <= ch && ch <= 'F') return ch - 'A' + 10;
-        if ('a' <= ch && ch <= 'f') return ch - 'a' + 10;
-        return -1;
+    public static String intToHex(int i) {
+        return intToHex(i, -1);
     }
 
-    private static String repeat(char c, int count) {
-        if (count <= 0) {
-            return "";
+    public static String intToHex(int i, int minLength) {
+        String hexString = Integer.toHexString(i);
+        if (hexString.length() < minLength) {
+            hexString = repeat('0', minLength - hexString.length()) + hexString;
         }
-        char[] result = new char[count];
-        Arrays.fill(result, c);
-        return new String(result);
+        return hexString.toUpperCase();
     }
 
     public static BytesReader getBytesReader(byte[] bytes) {
@@ -177,5 +173,22 @@ public class ByteUtils {
             byte[] bytes1 = getBytes(8);
             return ByteUtils.getLong(bytes1, bo);
         }
+    }
+
+
+    private static int hexCharToInt(char ch) {
+        if ('0' <= ch && ch <= '9') return ch - '0';
+        if ('A' <= ch && ch <= 'F') return ch - 'A' + 10;
+        if ('a' <= ch && ch <= 'f') return ch - 'a' + 10;
+        return -1;
+    }
+
+    private static String repeat(char c, int count) {
+        if (count <= 0) {
+            return "";
+        }
+        char[] result = new char[count];
+        Arrays.fill(result, c);
+        return new String(result);
     }
 }
