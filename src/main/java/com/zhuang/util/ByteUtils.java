@@ -6,8 +6,10 @@ import java.util.Arrays;
 
 public class ByteUtils {
 
+    private static final ByteOrder DEFAULT_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
+
     public static float getFloat(byte[] bytes) {
-        return getFloat(bytes, ByteOrder.BIG_ENDIAN);
+        return getFloat(bytes, DEFAULT_BYTE_ORDER);
     }
 
     public static float getFloat(byte[] bytes, ByteOrder bo) {
@@ -15,7 +17,7 @@ public class ByteUtils {
     }
 
     public static short getShort(byte[] bytes) {
-        return getShort(bytes, ByteOrder.BIG_ENDIAN);
+        return getShort(bytes, DEFAULT_BYTE_ORDER);
     }
 
     public static short getShort(byte[] bytes, ByteOrder bo) {
@@ -23,7 +25,7 @@ public class ByteUtils {
     }
 
     public static int getInt(byte[] bytes) {
-        return getInt(bytes, ByteOrder.BIG_ENDIAN);
+        return getInt(bytes, DEFAULT_BYTE_ORDER);
     }
 
     public static int getInt(byte[] bytes, ByteOrder bo) {
@@ -31,7 +33,7 @@ public class ByteUtils {
     }
 
     public static long getLong(byte[] bytes) {
-        return getLong(bytes, ByteOrder.BIG_ENDIAN);
+        return getLong(bytes, DEFAULT_BYTE_ORDER);
     }
 
     public static long getLong(byte[] bytes, ByteOrder bo) {
@@ -39,7 +41,7 @@ public class ByteUtils {
     }
 
     public static byte[] getBytes(float value) {
-        return getBytes(value, ByteOrder.BIG_ENDIAN);
+        return getBytes(value, DEFAULT_BYTE_ORDER);
     }
 
     public static byte[] getBytes(float value, ByteOrder bo) {
@@ -47,7 +49,7 @@ public class ByteUtils {
     }
 
     public static byte[] getBytes(int value) {
-        return getBytes(value, ByteOrder.BIG_ENDIAN);
+        return getBytes(value, DEFAULT_BYTE_ORDER);
     }
 
     public static byte[] getBytes(int value, ByteOrder bo) {
@@ -150,7 +152,7 @@ public class ByteUtils {
         }
 
         public short getShort() {
-            return getShort(ByteOrder.BIG_ENDIAN);
+            return getShort(DEFAULT_BYTE_ORDER);
         }
 
         public short getShort(ByteOrder bo) {
@@ -159,7 +161,7 @@ public class ByteUtils {
         }
 
         public int getInt() {
-            return getInt(ByteOrder.BIG_ENDIAN);
+            return getInt(DEFAULT_BYTE_ORDER);
         }
 
         public int getInt(ByteOrder bo) {
@@ -168,7 +170,7 @@ public class ByteUtils {
         }
 
         public long getLong() {
-            return getLong(ByteOrder.BIG_ENDIAN);
+            return getLong(DEFAULT_BYTE_ORDER);
         }
 
         public long getLong(ByteOrder bo) {
