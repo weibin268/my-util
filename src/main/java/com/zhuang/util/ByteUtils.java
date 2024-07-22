@@ -14,12 +14,28 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getFloat();
     }
 
+    public static short getShort(byte[] bytes) {
+        return getShort(bytes, ByteOrder.BIG_ENDIAN);
+    }
+
+    public static short getShort(byte[] bytes, ByteOrder bo) {
+        return ByteBuffer.wrap(bytes).order(bo).getShort();
+    }
+
     public static int getInt(byte[] bytes) {
         return getInt(bytes, ByteOrder.BIG_ENDIAN);
     }
 
     public static int getInt(byte[] bytes, ByteOrder bo) {
         return ByteBuffer.wrap(bytes).order(bo).getInt();
+    }
+
+    public static long getLong(byte[] bytes) {
+        return getLong(bytes, ByteOrder.BIG_ENDIAN);
+    }
+
+    public static long getLong(byte[] bytes, ByteOrder bo) {
+        return ByteBuffer.wrap(bytes).order(bo).getLong();
     }
 
     public static byte[] getBytes(float value) {

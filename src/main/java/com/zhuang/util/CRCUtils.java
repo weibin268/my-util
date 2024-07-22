@@ -57,4 +57,8 @@ public class CRCUtils {
         return getCRC8(bytes, POLYNOMIAL_7);
     }
 
+    public static byte getCRC7(byte[] bytes, int pos, int length) {
+        return getCRC8(bytes, pos, length, POLYNOMIAL_7);
+    }
+
 }
