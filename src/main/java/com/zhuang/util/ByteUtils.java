@@ -139,7 +139,7 @@ public class ByteUtils {
 
         public byte[] getBytes(int length) {
             byte[] result = new byte[length];
-            System.arraycopy(bytes, 0, result, offset, length);
+            System.arraycopy(bytes, offset, result, 0, length);
             offset = offset + length;
             return result;
         }
