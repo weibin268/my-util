@@ -124,4 +124,56 @@ public class ByteUtils {
         return new String(result);
     }
 
+    public static BytesReader getBytesReader(byte[] bytes) {
+        return new BytesReader(bytes);
+    }
+
+    public static class BytesReader {
+        private byte[] bytes;
+        private int offset;
+
+        public BytesReader(byte[] bytes) {
+            this.bytes = bytes;
+            this.offset = 0;
+        }
+
+        public byte[] getBytes(int length) {
+            byte[] result = new byte[length];
+            System.arraycopy(bytes, 0, result, offset, length);
+            offset = offset + length;
+            return result;
+        }
+
+        public byte getByte() {
+            byte[] bytes1 = getBytes(1);
+            return bytes1[0];
+        }
+
+        public short getShort() {
+            return getShort(ByteOrder.BIG_ENDIAN);
+        }
+
+        public short getShort(ByteOrder bo) {
+            byte[] bytes1 = getBytes(2);
+            return ByteUtils.getShort(bytes1, bo);
+        }
+
+        public int getInt() {
+            return getInt(ByteOrder.BIG_ENDIAN);
+        }
+
+        public int getInt(ByteOrder bo) {
+            byte[] bytes1 = getBytes(4);
+            return ByteUtils.getInt(bytes1, bo);
+        }
+
+        public long getLong() {
+            return getLong(ByteOrder.BIG_ENDIAN);
+        }
+
+        public long getLong(ByteOrder bo) {
+            byte[] bytes1 = getBytes(8);
+            return ByteUtils.getLong(bytes1, bo);
+        }
+    }
 }
