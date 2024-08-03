@@ -15,7 +15,9 @@ import org.springframework.web.client.RestTemplate;
 import javax.net.ssl.SSLContext;
 import java.nio.charset.StandardCharsets;
 
-
+/**
+ * 注意：RestTemplate内部是但线程实现，所以每次请求都需要new新的，或使用异步的AsyncRestTemplate
+ */
 public class RestTemplateUtils {
 
     public static RestTemplate getRestTemplate() {
