@@ -73,7 +73,7 @@ public class ByteUtilsTest {
 
     @Test
     public void getUIntAsLong() {
-        byte[] bytes = ByteUtils.hexToBytes("5B000000");
+        byte[] bytes = ByteUtils.hexToBytes("0000005B");
         System.out.println(ByteUtils.getUIntAsLong(bytes, ByteOrder.LITTLE_ENDIAN));
     }
 

@@ -45,15 +45,7 @@ public class ByteUtils {
             throw new RuntimeException("bytes length must be 4 !");
         }
         byte[] newBytes = new byte[8];
-        int beingIndex = 0;
-        int endIndex = 4;
-        if (bo == ByteOrder.BIG_ENDIAN) {
-            beingIndex = 4;
-            endIndex = 8;
-        }
-        for (int i = beingIndex; i < endIndex; i++) {
-            newBytes[i] = bytes[i - beingIndex];
-        }
+        System.arraycopy(bytes, 0, newBytes, (bo == ByteOrder.LITTLE_ENDIAN ? 0 : 4), 4);
         return ByteBuffer.wrap(newBytes).order(bo).getLong();
     }
 
