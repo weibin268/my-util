@@ -40,7 +40,7 @@ public class ByteUtils {
         int uShortLength = 2;
         int intLength = 4;
         if (bytes.length != uShortLength) {
-            throw new RuntimeException("bytes length must be 4 !");
+            throw new RuntimeException("bytes length must be " + uShortLength + "!");
         }
         byte[] newBytes = new byte[intLength];
         System.arraycopy(bytes, 0, newBytes, (bo == ByteOrder.LITTLE_ENDIAN ? 0 : uShortLength), uShortLength);
@@ -63,7 +63,7 @@ public class ByteUtils {
         int uIntLength = 4;
         int longLength = 8;
         if (bytes.length != uIntLength) {
-            throw new RuntimeException("bytes length must be 4 !");
+            throw new RuntimeException("bytes length must be " + uIntLength + "!");
         }
         byte[] newBytes = new byte[longLength];
         System.arraycopy(bytes, 0, newBytes, (bo == ByteOrder.LITTLE_ENDIAN ? 0 : uIntLength), uIntLength);
