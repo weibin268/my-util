@@ -32,6 +32,21 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getInt();
     }
 
+    public static int getUShortAsInt(byte[] bytes) {
+        return getUShortAsInt(bytes, DEFAULT_BYTE_ORDER);
+    }
+
+    public static int getUShortAsInt(byte[] bytes, ByteOrder bo) {
+        int uShortLength = 2;
+        int intLength = 4;
+        if (bytes.length != uShortLength) {
+            throw new RuntimeException("bytes length must be 4 !");
+        }
+        byte[] newBytes = new byte[intLength];
+        System.arraycopy(bytes, 0, newBytes, (bo == ByteOrder.LITTLE_ENDIAN ? 0 : uShortLength), uShortLength);
+        return ByteBuffer.wrap(newBytes).order(bo).getInt();
+    }
+
     public static long getLong(byte[] bytes) {
         return getLong(bytes, DEFAULT_BYTE_ORDER);
     }
@@ -40,12 +55,18 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getLong();
     }
 
+    public static long getUIntAsLong(byte[] bytes) {
+        return getUIntAsLong(bytes, DEFAULT_BYTE_ORDER);
+    }
+
     public static long getUIntAsLong(byte[] bytes, ByteOrder bo) {
-        if (bytes.length != 4) {
+        int uIntLength = 4;
+        int longLength = 8;
+        if (bytes.length != uIntLength) {
             throw new RuntimeException("bytes length must be 4 !");
         }
-        byte[] newBytes = new byte[8];
-        System.arraycopy(bytes, 0, newBytes, (bo == ByteOrder.LITTLE_ENDIAN ? 0 : 4), 4);
+        byte[] newBytes = new byte[longLength];
+        System.arraycopy(bytes, 0, newBytes, (bo == ByteOrder.LITTLE_ENDIAN ? 0 : uIntLength), uIntLength);
         return ByteBuffer.wrap(newBytes).order(bo).getLong();
     }
 
