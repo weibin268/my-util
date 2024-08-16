@@ -40,6 +40,23 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getLong();
     }
 
+    public static long getUIntAsLong(byte[] bytes, ByteOrder bo) {
+        if (bytes.length != 4) {
+            throw new RuntimeException("bytes length must be 4 !");
+        }
+        byte[] newBytes = new byte[8];
+        int beingIndex = 0;
+        int endIndex = 4;
+        if (bo == ByteOrder.BIG_ENDIAN) {
+            beingIndex = 4;
+            endIndex = 8;
+        }
+        for (int i = beingIndex; i < endIndex; i++) {
+            newBytes[i] = bytes[i - beingIndex];
+        }
+        return ByteBuffer.wrap(newBytes).order(bo).getLong();
+    }
+
     public static byte[] getBytes(float value) {
         return getBytes(value, DEFAULT_BYTE_ORDER);
     }

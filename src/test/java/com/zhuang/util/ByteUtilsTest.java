@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
 public class ByteUtilsTest {
@@ -69,4 +70,12 @@ public class ByteUtilsTest {
         String hex = ByteUtils.intToHex(123456, 8);
         System.out.println(hex);
     }
+
+    @Test
+    public void getUIntAsLong() {
+        byte[] bytes = ByteUtils.hexToBytes("5B000000");
+        System.out.println(ByteUtils.getUIntAsLong(bytes, ByteOrder.LITTLE_ENDIAN));
+    }
+
+
 }
