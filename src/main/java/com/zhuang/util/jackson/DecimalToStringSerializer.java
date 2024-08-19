@@ -24,7 +24,7 @@ public class DecimalToStringSerializer extends JsonSerializer<BigDecimal> {
      * @return
      */
     private String toString(BigDecimal num) {
-        if (num == null) return null;
+        if (num == null) return "--";
         return num.stripTrailingZeros().toPlainString();
     }
 
