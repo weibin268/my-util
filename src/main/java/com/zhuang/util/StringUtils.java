@@ -46,4 +46,22 @@ public class StringUtils {
         return StrUtil.format(template, mapParams);
     }
 
+    public static String trim(String str, char c) {
+        int startIndex = 0;
+        int endIndex = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) != c) {
+                startIndex = i;
+                break;
+            }
+        }
+        for (int i = str.length() - 1; i >= 0; i--) {
+            if (str.charAt(i) != c) {
+                endIndex = i;
+                break;
+            }
+        }
+        return str.substring(startIndex, endIndex + 1);
+    }
+
 }

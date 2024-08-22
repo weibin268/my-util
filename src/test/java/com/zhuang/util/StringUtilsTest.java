@@ -32,4 +32,9 @@ public class StringUtilsTest {
         System.out.println(result);
     }
 
+    @Test
+    public void trim(){
+        System.out.println(StringUtils.trim("000B00A00",'0'));
+    }
+
 }
