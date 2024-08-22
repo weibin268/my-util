@@ -195,6 +195,15 @@ public class ByteUtils {
             return ByteUtils.getInt(bytes1, bo);
         }
 
+        public int getUShortAsInt() {
+            return getUShortAsInt(DEFAULT_BYTE_ORDER);
+        }
+
+        public int getUShortAsInt(ByteOrder bo) {
+            byte[] bytes1 = getBytes(2);
+            return ByteUtils.getUShortAsInt(bytes1, bo);
+        }
+
         public long getLong() {
             return getLong(DEFAULT_BYTE_ORDER);
         }
@@ -203,6 +212,16 @@ public class ByteUtils {
             byte[] bytes1 = getBytes(8);
             return ByteUtils.getLong(bytes1, bo);
         }
+
+        public long getUIntAsLong() {
+            return getUIntAsLong(DEFAULT_BYTE_ORDER);
+        }
+
+        public long getUIntAsLong(ByteOrder bo) {
+            byte[] bytes1 = getBytes(4);
+            return ByteUtils.getUIntAsLong(bytes1, bo);
+        }
+
     }
 
 
