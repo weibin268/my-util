@@ -238,4 +238,8 @@ public class DateUtils {
         return dateMap;
     }
 
+    public static Date newDate(int year, int month, int day, int hour, int min, int sec) {
+        Calendar calendar = new GregorianCalendar(year, month - 1, day, hour, min, sec);
+        return calendar.getTime();
+    }
 }

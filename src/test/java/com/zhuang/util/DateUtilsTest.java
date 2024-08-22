@@ -75,4 +75,9 @@ public class DateUtilsTest {
         Map<Date, List<Date>> dateMap = DateUtils.getBetweenDateGroupByDay(beginDate, endDate);
         System.out.println(dateMap);
     }
+
+    @Test
+    public void date() {
+        System.out.println(DateUtil.formatDateTime(DateUtils.newDate(2024, 8, 22, 1, 1, 1)));
+    }
 }
