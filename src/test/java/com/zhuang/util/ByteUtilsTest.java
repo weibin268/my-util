@@ -94,8 +94,10 @@ public class ByteUtilsTest {
     @Test
     public void getBytesWriter() {
         ByteUtils.BytesWriter bytesWriter = ByteUtils.getBytesWriter();
-        bytesWriter.putInt(1);
-        bytesWriter.putLong(2);
+        bytesWriter.putUShort(1);
+        bytesWriter.putInt(2);
+        bytesWriter.putUInt(3);
+        bytesWriter.putLong(4);
         System.out.println(ByteUtils.bytesToHex(bytesWriter.toBytes()));
     }
 

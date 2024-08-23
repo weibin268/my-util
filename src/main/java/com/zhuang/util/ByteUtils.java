@@ -26,14 +26,6 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getShort();
     }
 
-    public static int getInt(byte[] bytes) {
-        return getInt(bytes, DEFAULT_BYTE_ORDER);
-    }
-
-    public static int getInt(byte[] bytes, ByteOrder bo) {
-        return ByteBuffer.wrap(bytes).order(bo).getInt();
-    }
-
     public static int getUShort(byte[] bytes) {
         return getUShort(bytes, DEFAULT_BYTE_ORDER);
     }
@@ -49,12 +41,12 @@ public class ByteUtils {
         return ByteBuffer.wrap(newBytes).order(bo).getInt();
     }
 
-    public static long getLong(byte[] bytes) {
-        return getLong(bytes, DEFAULT_BYTE_ORDER);
+    public static int getInt(byte[] bytes) {
+        return getInt(bytes, DEFAULT_BYTE_ORDER);
     }
 
-    public static long getLong(byte[] bytes, ByteOrder bo) {
-        return ByteBuffer.wrap(bytes).order(bo).getLong();
+    public static int getInt(byte[] bytes, ByteOrder bo) {
+        return ByteBuffer.wrap(bytes).order(bo).getInt();
     }
 
     public static long getUInt(byte[] bytes) {
@@ -70,6 +62,14 @@ public class ByteUtils {
         byte[] newBytes = new byte[longLength];
         System.arraycopy(bytes, 0, newBytes, (bo == ByteOrder.LITTLE_ENDIAN ? 0 : uIntLength), uIntLength);
         return ByteBuffer.wrap(newBytes).order(bo).getLong();
+    }
+
+    public static long getLong(byte[] bytes) {
+        return getLong(bytes, DEFAULT_BYTE_ORDER);
+    }
+
+    public static long getLong(byte[] bytes, ByteOrder bo) {
+        return ByteBuffer.wrap(bytes).order(bo).getLong();
     }
 
     public static byte[] shortToBytes(short value) {
@@ -109,7 +109,6 @@ public class ByteUtils {
         System.arraycopy(bytes4Long, bo == ByteOrder.BIG_ENDIAN ? bytes4Int.length : 0, bytes4Int, 0, bytes4Int.length);
         return bytes4Int;
     }
-
 
     public static byte[] longToBytes(long value) {
         return longToBytes(value, DEFAULT_BYTE_ORDER);
@@ -292,12 +291,32 @@ public class ByteUtils {
             return this;
         }
 
+        public BytesWriter putUShort(int i) {
+            return putUShort(i, DEFAULT_BYTE_ORDER);
+        }
+
+        public BytesWriter putUShort(int i, ByteOrder bo) {
+            byte[] bytes = ByteUtils.uShortToBytes(i, bo);
+            putBytes(bytes);
+            return this;
+        }
+
         public BytesWriter putInt(int i) {
             return putInt(i, DEFAULT_BYTE_ORDER);
         }
 
         public BytesWriter putInt(int i, ByteOrder bo) {
             byte[] bytes = ByteUtils.intToBytes(i, bo);
+            putBytes(bytes);
+            return this;
+        }
+
+        public BytesWriter putUInt(long l) {
+            return putUInt(l, DEFAULT_BYTE_ORDER);
+        }
+
+        public BytesWriter putUInt(long l, ByteOrder bo) {
+            byte[] bytes = ByteUtils.uIntToBytes(l, bo);
             putBytes(bytes);
             return this;
         }
