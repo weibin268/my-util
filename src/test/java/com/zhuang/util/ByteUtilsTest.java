@@ -27,7 +27,7 @@ public class ByteUtilsTest {
     }
 
     @Test
-    public void getBytes4Float() {
+    public void floatToBytes() {
         float v = 1.12345f;
         byte[] bytes = ByteUtils.floatToBytes(v);
         float f = ByteUtils.getFloat(bytes);
@@ -35,10 +35,18 @@ public class ByteUtilsTest {
     }
 
     @Test
-    public void getBytes4Int() {
+    public void intToBytes() {
         byte[] bytes = ByteUtils.intToBytes(-1);
         System.out.println(ByteUtils.bytesToHex(bytes));
     }
+
+    @Test
+    public void uShortToBytes() {
+        byte[] bytes = ByteUtils.uShortToBytes(10);
+        System.out.println(ByteUtils.bytesToHex(bytes));
+        System.out.println(ByteUtils.getUShort(bytes));
+    }
+
 
     @Test
     public void toHex() {
@@ -74,7 +82,7 @@ public class ByteUtilsTest {
     @Test
     public void getUIntAsLong() {
         byte[] bytes = ByteUtils.hexToBytes("0000005B");
-        System.out.println(ByteUtils.getUIntAsLong(bytes, ByteOrder.LITTLE_ENDIAN));
+        System.out.println(ByteUtils.getUInt(bytes, ByteOrder.LITTLE_ENDIAN));
     }
 
     @Test

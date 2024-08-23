@@ -34,11 +34,11 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getInt();
     }
 
-    public static int getUShortAsInt(byte[] bytes) {
-        return getUShortAsInt(bytes, DEFAULT_BYTE_ORDER);
+    public static int getUShort(byte[] bytes) {
+        return getUShort(bytes, DEFAULT_BYTE_ORDER);
     }
 
-    public static int getUShortAsInt(byte[] bytes, ByteOrder bo) {
+    public static int getUShort(byte[] bytes, ByteOrder bo) {
         int uShortLength = 2;
         int intLength = 4;
         if (bytes.length != uShortLength) {
@@ -57,11 +57,11 @@ public class ByteUtils {
         return ByteBuffer.wrap(bytes).order(bo).getLong();
     }
 
-    public static long getUIntAsLong(byte[] bytes) {
-        return getUIntAsLong(bytes, DEFAULT_BYTE_ORDER);
+    public static long getUInt(byte[] bytes) {
+        return getUInt(bytes, DEFAULT_BYTE_ORDER);
     }
 
-    public static long getUIntAsLong(byte[] bytes, ByteOrder bo) {
+    public static long getUInt(byte[] bytes, ByteOrder bo) {
         int uIntLength = 4;
         int longLength = 8;
         if (bytes.length != uIntLength) {
@@ -72,12 +72,31 @@ public class ByteUtils {
         return ByteBuffer.wrap(newBytes).order(bo).getLong();
     }
 
-    public static byte[] floatToBytes(float value) {
-        return floatToBytes(value, DEFAULT_BYTE_ORDER);
+    public static byte[] shortToBytes(short value) {
+        return shortToBytes(value, DEFAULT_BYTE_ORDER);
     }
 
-    public static byte[] floatToBytes(float value, ByteOrder bo) {
-        return ByteBuffer.allocate(Float.BYTES).order(bo).putFloat(value).array();
+    public static byte[] shortToBytes(short value, ByteOrder bo) {
+        return ByteBuffer.allocate(Short.BYTES).order(bo).putShort(value).array();
+    }
+
+    public static byte[] uShortToBytes(int value) {
+        return uShortToBytes(value, DEFAULT_BYTE_ORDER);
+    }
+
+    public static byte[] uShortToBytes(int value, ByteOrder bo) {
+        byte[] bytes4Int = ByteBuffer.allocate(Integer.BYTES).order(bo).putInt(value).array();
+        byte[] bytes4Short = new byte[2];
+        System.arraycopy(bytes4Int, bo == ByteOrder.BIG_ENDIAN ? 2 : 0, bytes4Short, 0, 2);
+        return bytes4Short;
+    }
+
+    public static byte[] intToBytes(int value) {
+        return intToBytes(value, DEFAULT_BYTE_ORDER);
+    }
+
+    public static byte[] intToBytes(int value, ByteOrder bo) {
+        return ByteBuffer.allocate(Integer.BYTES).order(bo).putInt(value).array();
     }
 
     public static byte[] longToBytes(long value) {
@@ -88,12 +107,20 @@ public class ByteUtils {
         return ByteBuffer.allocate(Long.BYTES).order(bo).putLong(value).array();
     }
 
-    public static byte[] intToBytes(int value) {
-        return intToBytes(value, DEFAULT_BYTE_ORDER);
+    public static byte[] floatToBytes(float value) {
+        return floatToBytes(value, DEFAULT_BYTE_ORDER);
     }
 
-    public static byte[] intToBytes(int value, ByteOrder bo) {
-        return ByteBuffer.allocate(Integer.BYTES).order(bo).putInt(value).array();
+    public static byte[] floatToBytes(float value, ByteOrder bo) {
+        return ByteBuffer.allocate(Float.BYTES).order(bo).putFloat(value).array();
+    }
+
+    public static byte[] doubleToBytes(double value) {
+        return doubleToBytes(value, DEFAULT_BYTE_ORDER);
+    }
+
+    public static byte[] doubleToBytes(double value, ByteOrder bo) {
+        return ByteBuffer.allocate(Double.BYTES).order(bo).putDouble(value).array();
     }
 
     public static byte[] hexToBytes(String hex) {
@@ -215,7 +242,7 @@ public class ByteUtils {
 
         public int getUShortAsInt(ByteOrder bo) {
             byte[] bytes1 = getBytes(2);
-            return ByteUtils.getUShortAsInt(bytes1, bo);
+            return ByteUtils.getUShort(bytes1, bo);
         }
 
         public long getLong() {
@@ -233,7 +260,7 @@ public class ByteUtils {
 
         public long getUIntAsLong(ByteOrder bo) {
             byte[] bytes1 = getBytes(4);
-            return ByteUtils.getUIntAsLong(bytes1, bo);
+            return ByteUtils.getUInt(bytes1, bo);
         }
 
     }
