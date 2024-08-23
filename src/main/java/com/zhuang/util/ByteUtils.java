@@ -2,7 +2,9 @@ package com.zhuang.util;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ByteUtils {
 
@@ -152,8 +154,18 @@ public class ByteUtils {
         return hexString.toUpperCase();
     }
 
+    public static byte[] intToBytes(int i) {
+        ByteBuffer buffer = ByteBuffer.allocate(4);
+        buffer.putInt(i);
+        return buffer.array();
+    }
+
     public static BytesReader getBytesReader(byte[] bytes) {
         return new BytesReader(bytes);
+    }
+
+    public static BytesWriter getBytesWriter() {
+        return new BytesWriter();
     }
 
     public static class BytesReader {
@@ -224,6 +236,37 @@ public class ByteUtils {
 
     }
 
+    public static class BytesWriter {
+        private int totalBytes = 0;
+        List<byte[]> bytesList = new ArrayList<>();
+
+        public BytesWriter putBytes(byte[] bytes) {
+            totalBytes = totalBytes + bytes.length;
+            this.bytesList.add(bytes);
+            return this;
+        }
+
+        public BytesWriter putByte(byte byte1) {
+            putBytes(new byte[]{byte1});
+            return this;
+        }
+
+        public BytesWriter putInt(int i) {
+            byte[] bytes = ByteUtils.intToBytes(i);
+            putBytes(bytes);
+            return this;
+        }
+
+        public byte[] toBytes() {
+            byte[] bytes = new byte[totalBytes];
+            int destPos = 0;
+            for (byte[] bytes1 : bytesList) {
+                System.arraycopy(bytes1, 0, bytes, destPos, bytes1.length);
+                destPos = destPos + bytes1.length;
+            }
+            return bytes;
+        }
+    }
 
     private static int hexCharToInt(char ch) {
         if ('0' <= ch && ch <= '9') return ch - '0';

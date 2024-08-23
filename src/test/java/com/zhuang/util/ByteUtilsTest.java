@@ -77,5 +77,13 @@ public class ByteUtilsTest {
         System.out.println(ByteUtils.getUIntAsLong(bytes, ByteOrder.LITTLE_ENDIAN));
     }
 
+    @Test
+    public void getBytesWriter() {
+        ByteUtils.BytesWriter bytesWriter = ByteUtils.getBytesWriter();
+        bytesWriter.putInt(1);
+        bytesWriter.putInt(2);
+        System.out.println(ByteUtils.bytesToHex(bytesWriter.toBytes()));
+    }
+
 
 }
