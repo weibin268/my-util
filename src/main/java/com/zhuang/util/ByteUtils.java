@@ -247,11 +247,11 @@ public class ByteUtils {
             return ByteUtils.getInt(bytes1, bo);
         }
 
-        public int getUShortAsInt() {
-            return getUShortAsInt(DEFAULT_BYTE_ORDER);
+        public int getUShort() {
+            return getUShort(DEFAULT_BYTE_ORDER);
         }
 
-        public int getUShortAsInt(ByteOrder bo) {
+        public int getUShort(ByteOrder bo) {
             byte[] bytes1 = getBytes(2);
             return ByteUtils.getUShort(bytes1, bo);
         }
@@ -265,11 +265,11 @@ public class ByteUtils {
             return ByteUtils.getLong(bytes1, bo);
         }
 
-        public long getUIntAsLong() {
-            return getUIntAsLong(DEFAULT_BYTE_ORDER);
+        public long getUInt() {
+            return getUInt(DEFAULT_BYTE_ORDER);
         }
 
-        public long getUIntAsLong(ByteOrder bo) {
+        public long getUInt(ByteOrder bo) {
             byte[] bytes1 = getBytes(4);
             return ByteUtils.getUInt(bytes1, bo);
         }
@@ -277,11 +277,11 @@ public class ByteUtils {
     }
 
     public static class BytesWriter {
-        private int totalBytes = 0;
+        private int totalLength = 0;
         List<byte[]> bytesList = new ArrayList<>();
 
         public BytesWriter putBytes(byte[] bytes) {
-            totalBytes = totalBytes + bytes.length;
+            totalLength = totalLength + bytes.length;
             this.bytesList.add(bytes);
             return this;
         }
@@ -332,7 +332,7 @@ public class ByteUtils {
         }
 
         public byte[] toBytes() {
-            byte[] bytes = new byte[totalBytes];
+            byte[] bytes = new byte[totalLength];
             int destPos = 0;
             for (byte[] bytes1 : bytesList) {
                 System.arraycopy(bytes1, 0, bytes, destPos, bytes1.length);
