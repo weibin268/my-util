@@ -29,21 +29,21 @@ public class ByteUtilsTest {
     @Test
     public void getBytes4Float() {
         float v = 1.12345f;
-        byte[] bytes = ByteUtils.getBytes(v);
+        byte[] bytes = ByteUtils.floatToBytes(v);
         float f = ByteUtils.getFloat(bytes);
         System.out.println(f);
     }
 
     @Test
     public void getBytes4Int() {
-        byte[] bytes = ByteUtils.getBytes(-1);
+        byte[] bytes = ByteUtils.intToBytes(-1);
         System.out.println(ByteUtils.bytesToHex(bytes));
     }
 
     @Test
     public void toHex() {
         byte[] bodyBytes = "庄伟斌".getBytes(StandardCharsets.UTF_8);
-        byte[] headerBytes = ByteUtils.getBytes(bodyBytes.length);
+        byte[] headerBytes = ByteUtils.intToBytes(bodyBytes.length);
         System.out.println(ByteUtils.bytesToHex(headerBytes) + ByteUtils.bytesToHex(bodyBytes));
     }
 
@@ -81,7 +81,7 @@ public class ByteUtilsTest {
     public void getBytesWriter() {
         ByteUtils.BytesWriter bytesWriter = ByteUtils.getBytesWriter();
         bytesWriter.putInt(1);
-        bytesWriter.putInt(2);
+        bytesWriter.putLong(2);
         System.out.println(ByteUtils.bytesToHex(bytesWriter.toBytes()));
     }
 

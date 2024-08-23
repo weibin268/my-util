@@ -72,19 +72,27 @@ public class ByteUtils {
         return ByteBuffer.wrap(newBytes).order(bo).getLong();
     }
 
-    public static byte[] getBytes(float value) {
-        return getBytes(value, DEFAULT_BYTE_ORDER);
+    public static byte[] floatToBytes(float value) {
+        return floatToBytes(value, DEFAULT_BYTE_ORDER);
     }
 
-    public static byte[] getBytes(float value, ByteOrder bo) {
+    public static byte[] floatToBytes(float value, ByteOrder bo) {
         return ByteBuffer.allocate(Float.BYTES).order(bo).putFloat(value).array();
     }
 
-    public static byte[] getBytes(int value) {
-        return getBytes(value, DEFAULT_BYTE_ORDER);
+    public static byte[] longToBytes(long value) {
+        return longToBytes(value, DEFAULT_BYTE_ORDER);
     }
 
-    public static byte[] getBytes(int value, ByteOrder bo) {
+    public static byte[] longToBytes(long value, ByteOrder bo) {
+        return ByteBuffer.allocate(Long.BYTES).order(bo).putLong(value).array();
+    }
+
+    public static byte[] intToBytes(int value) {
+        return intToBytes(value, DEFAULT_BYTE_ORDER);
+    }
+
+    public static byte[] intToBytes(int value, ByteOrder bo) {
         return ByteBuffer.allocate(Integer.BYTES).order(bo).putInt(value).array();
     }
 
@@ -152,12 +160,6 @@ public class ByteUtils {
             hexString = repeat('0', minLength - hexString.length()) + hexString;
         }
         return hexString.toUpperCase();
-    }
-
-    public static byte[] intToBytes(int i) {
-        ByteBuffer buffer = ByteBuffer.allocate(4);
-        buffer.putInt(i);
-        return buffer.array();
     }
 
     public static BytesReader getBytesReader(byte[] bytes) {
@@ -252,7 +254,21 @@ public class ByteUtils {
         }
 
         public BytesWriter putInt(int i) {
-            byte[] bytes = ByteUtils.intToBytes(i);
+            return putInt(i, DEFAULT_BYTE_ORDER);
+        }
+
+        public BytesWriter putInt(int i, ByteOrder bo) {
+            byte[] bytes = ByteUtils.intToBytes(i, bo);
+            putBytes(bytes);
+            return this;
+        }
+
+        public BytesWriter putLong(long l) {
+            return putLong(l, DEFAULT_BYTE_ORDER);
+        }
+
+        public BytesWriter putLong(long l, ByteOrder bo) {
+            byte[] bytes = ByteUtils.longToBytes(l, bo);
             putBytes(bytes);
             return this;
         }
