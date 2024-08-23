@@ -47,6 +47,12 @@ public class ByteUtilsTest {
         System.out.println(ByteUtils.getUShort(bytes));
     }
 
+    @Test
+    public void uIntToBytes() {
+        byte[] bytes = ByteUtils.uIntToBytes(10);
+        System.out.println(ByteUtils.bytesToHex(bytes));
+        System.out.println(ByteUtils.getUInt(bytes));
+    }
 
     @Test
     public void toHex() {
@@ -80,7 +86,7 @@ public class ByteUtilsTest {
     }
 
     @Test
-    public void getUIntAsLong() {
+    public void getUInt() {
         byte[] bytes = ByteUtils.hexToBytes("0000005B");
         System.out.println(ByteUtils.getUInt(bytes, ByteOrder.LITTLE_ENDIAN));
     }

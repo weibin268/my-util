@@ -87,7 +87,7 @@ public class ByteUtils {
     public static byte[] uShortToBytes(int value, ByteOrder bo) {
         byte[] bytes4Int = ByteBuffer.allocate(Integer.BYTES).order(bo).putInt(value).array();
         byte[] bytes4Short = new byte[2];
-        System.arraycopy(bytes4Int, bo == ByteOrder.BIG_ENDIAN ? 2 : 0, bytes4Short, 0, 2);
+        System.arraycopy(bytes4Int, bo == ByteOrder.BIG_ENDIAN ? bytes4Short.length : 0, bytes4Short, 0, bytes4Short.length);
         return bytes4Short;
     }
 
@@ -98,6 +98,18 @@ public class ByteUtils {
     public static byte[] intToBytes(int value, ByteOrder bo) {
         return ByteBuffer.allocate(Integer.BYTES).order(bo).putInt(value).array();
     }
+
+    public static byte[] uIntToBytes(long value) {
+        return uIntToBytes(value, DEFAULT_BYTE_ORDER);
+    }
+
+    public static byte[] uIntToBytes(long value, ByteOrder bo) {
+        byte[] bytes4Long = ByteBuffer.allocate(Long.BYTES).order(bo).putLong(value).array();
+        byte[] bytes4Int = new byte[4];
+        System.arraycopy(bytes4Long, bo == ByteOrder.BIG_ENDIAN ? bytes4Int.length : 0, bytes4Int, 0, bytes4Int.length);
+        return bytes4Int;
+    }
+
 
     public static byte[] longToBytes(long value) {
         return longToBytes(value, DEFAULT_BYTE_ORDER);
