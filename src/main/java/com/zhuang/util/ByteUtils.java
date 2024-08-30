@@ -11,7 +11,7 @@ public class ByteUtils {
     private static final ByteOrder DEFAULT_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
 
     public static short getUByte(byte byte1) {
-        return ByteBuffer.wrap(new byte[]{0, byte1}).order(DEFAULT_BYTE_ORDER).getShort();
+        return ByteBuffer.wrap(new byte[]{0, byte1}).order(ByteOrder.BIG_ENDIAN).getShort();
     }
 
     public static float getFloat(byte[] bytes) {
@@ -74,6 +74,10 @@ public class ByteUtils {
 
     public static long getLong(byte[] bytes, ByteOrder bo) {
         return ByteBuffer.wrap(bytes).order(bo).getLong();
+    }
+
+    public static byte shortToUByte(short value) {
+        return ByteBuffer.allocate(2).order(ByteOrder.BIG_ENDIAN).putShort(value).array()[1];
     }
 
     public static byte[] shortToBytes(short value) {
@@ -297,6 +301,10 @@ public class ByteUtils {
         public BytesWriter putByte(byte byte1) {
             putBytes(new byte[]{byte1});
             return this;
+        }
+
+        public BytesWriter putUByte(short short1) {
+            return putByte(ByteUtils.shortToUByte(short1));
         }
 
         public BytesWriter putUShort(int i) {

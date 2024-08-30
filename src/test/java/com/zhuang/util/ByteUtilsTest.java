@@ -105,4 +105,11 @@ public class ByteUtilsTest {
     public void getUByte() {
         System.out.println(ByteUtils.getUByte((byte) -61));
     }
+
+    @Test
+    public void shortToUByte() {
+        System.out.println(ByteUtils.bytesToHex(new byte[]{ByteUtils.shortToUByte((short) 195)}));
+    }
+
+
 }
