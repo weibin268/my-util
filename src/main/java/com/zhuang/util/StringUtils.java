@@ -70,6 +70,7 @@ public class StringUtils {
             }
         }
         if (pos >= 0) {
+            endIndex = -1;
             for (int i = str.length() - 1; i >= 0; i--) {
                 if (!charInChars(str.charAt(i), ccc)) {
                     endIndex = i;
