@@ -10,6 +10,10 @@ public class ByteUtils {
 
     private static final ByteOrder DEFAULT_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
 
+    public static short getUByte(byte byte1) {
+        return ByteBuffer.wrap(new byte[]{0, byte1}).order(DEFAULT_BYTE_ORDER).getShort();
+    }
+
     public static float getFloat(byte[] bytes) {
         return getFloat(bytes, DEFAULT_BYTE_ORDER);
     }
@@ -227,6 +231,10 @@ public class ByteUtils {
         public byte getByte() {
             byte[] bytes1 = getBytes(1);
             return bytes1[0];
+        }
+
+        public short getUByte() {
+            return ByteUtils.getUByte(getByte());
         }
 
         public short getShort() {

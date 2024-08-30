@@ -101,5 +101,8 @@ public class ByteUtilsTest {
         System.out.println(ByteUtils.bytesToHex(bytesWriter.toBytes()));
     }
 
-
+    @Test
+    public void getUByte() {
+        System.out.println(ByteUtils.getUByte((byte) -61));
+    }
 }
