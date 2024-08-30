@@ -33,8 +33,9 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void trim(){
-        System.out.println(StringUtils.trim("000B00A00",'0'));
+    public void trim() {
+        System.out.println(StringUtils.trim("000B00A00", '0'));
+        System.out.println(StringUtils.trim("@000B00A00!.", '!', '0', '.', '@'));
     }
 
 }

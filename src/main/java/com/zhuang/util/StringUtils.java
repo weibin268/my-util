@@ -46,22 +46,49 @@ public class StringUtils {
         return StrUtil.format(template, mapParams);
     }
 
-    public static String trim(String str, char c) {
+    public static String trimLeft(String str, char... ccc) {
+        return trim(str, -1, ccc);
+    }
+
+    public static String trimRight(String str, char... ccc) {
+        return trim(str, 1, ccc);
+    }
+
+    public static String trim(String str, char... ccc) {
+        return trim(str, 0, ccc);
+    }
+
+    public static String trim(String str, int pos, char... ccc) {
         int startIndex = 0;
         int endIndex = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) != c) {
-                startIndex = i;
-                break;
+        if (pos < 0) {
+            for (int i = 0; i < str.length(); i++) {
+                if (!charInChars(str.charAt(i), ccc)) {
+                    startIndex = i;
+                    break;
+                }
             }
         }
-        for (int i = str.length() - 1; i >= 0; i--) {
-            if (str.charAt(i) != c) {
-                endIndex = i;
-                break;
+        if (pos > 0) {
+            for (int i = str.length() - 1; i >= 0; i--) {
+                if (!charInChars(str.charAt(i), ccc)) {
+                    endIndex = i;
+                    break;
+                }
             }
         }
         return str.substring(startIndex, endIndex + 1);
+    }
+
+    public static boolean charInChars(char c, char... ccc) {
+        boolean result = false;
+        for (char c2 : ccc) {
+            if (c == c2) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
 }
