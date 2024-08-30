@@ -60,8 +60,8 @@ public class StringUtils {
 
     public static String trim(String str, int pos, char... ccc) {
         int startIndex = 0;
-        int endIndex = 0;
-        if (pos < 0) {
+        int endIndex = str.length() - 1;
+        if (pos <= 0) {
             for (int i = 0; i < str.length(); i++) {
                 if (!charInChars(str.charAt(i), ccc)) {
                     startIndex = i;
@@ -69,7 +69,7 @@ public class StringUtils {
                 }
             }
         }
-        if (pos > 0) {
+        if (pos >= 0) {
             for (int i = str.length() - 1; i >= 0; i--) {
                 if (!charInChars(str.charAt(i), ccc)) {
                     endIndex = i;
