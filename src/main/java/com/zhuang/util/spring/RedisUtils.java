@@ -45,8 +45,25 @@ public class RedisUtils {
         _this.stringRedisTemplate.opsForValue().set(key, value, timeout, timeUnit);
     }
 
+    public static void put(String key, String hashKey, String value) {
+        _this.stringRedisTemplate.opsForHash().put(key, hashKey, value);
+    }
+
+    public static void expireForHash(String key, long timeout, TimeUnit unit) {
+        _this.stringRedisTemplate.opsForHash().getOperations().expire(key, timeout, unit);
+    }
+
+    public static void expireForValue(String key, long timeout, TimeUnit unit) {
+        _this.stringRedisTemplate.opsForValue().getOperations().expire(key, timeout, unit);
+    }
+
     public static String get(String key) {
         return _this.stringRedisTemplate.opsForValue().get(key);
+    }
+
+    public static String get(String key, String hashKey) {
+        Object o = _this.stringRedisTemplate.opsForHash().get(key, hashKey);
+        return o == null ? null : o.toString();
     }
 
     public static void delete(String key) {
