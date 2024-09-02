@@ -4,13 +4,14 @@ import cn.hutool.core.util.StrUtil;
 import com.zhuang.util.jackson.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -45,26 +46,10 @@ public class RedisUtils {
         _this.stringRedisTemplate.opsForValue().set(key, value, timeout, timeUnit);
     }
 
-    public static void put(String key, String hashKey, String value) {
-        _this.stringRedisTemplate.opsForHash().put(key, hashKey, value);
-    }
-
-    public static void expireForHash(String key, long timeout, TimeUnit unit) {
-        _this.stringRedisTemplate.opsForHash().getOperations().expire(key, timeout, unit);
-    }
-
-    public static void expireForValue(String key, long timeout, TimeUnit unit) {
-        _this.stringRedisTemplate.opsForValue().getOperations().expire(key, timeout, unit);
-    }
-
     public static String get(String key) {
         return _this.stringRedisTemplate.opsForValue().get(key);
     }
 
-    public static String get(String key, String hashKey) {
-        Object o = _this.stringRedisTemplate.opsForHash().get(key, hashKey);
-        return o == null ? null : o.toString();
-    }
 
     public static void delete(String key) {
         _this.stringRedisTemplate.delete(key);
@@ -85,6 +70,10 @@ public class RedisUtils {
 
     public static Long getExpire(String key) {
         return _this.stringRedisTemplate.getExpire(key);
+    }
+
+    public static void expire(String key, long timeout, TimeUnit unit) {
+        _this.stringRedisTemplate.expire(key, timeout, unit);
     }
 
     public static Object getNativeConnection() {
@@ -108,4 +97,38 @@ public class RedisUtils {
             return t;
         }).filter(c -> c != null).collect(Collectors.toList());
     }
+
+
+    public static HashOperations<String, String, String> opsForHash() {
+        return _this.stringRedisTemplate.opsForHash();
+    }
+
+    public static String getForHash(String key, String hashKey) {
+        return opsForHash().get(key, hashKey);
+    }
+
+    public static void putForHash(String key, String hashKey, String value) {
+        opsForHash().put(key, hashKey, value);
+    }
+
+    public static void putAllForHash(String key, Map<String, String> map) {
+        opsForHash().putAll(key, map);
+    }
+
+    public static Set<String> keysForHash(String key) {
+        return opsForHash().keys(key);
+    }
+
+    public static Map<String, String> entriesForHash(String key) {
+        return opsForHash().entries(key);
+    }
+
+    public static void deleteForHash(String key, Object... hashKeys) {
+        opsForHash().delete(key, hashKeys);
+    }
+
+    public static void expireForHash(String key, long timeout, TimeUnit unit) {
+        opsForHash().getOperations().expire(key, timeout, unit);
+    }
+
 }
