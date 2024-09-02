@@ -113,6 +113,16 @@ public class RedisUtils {
         return stringToObject(getForHash(key, hashKey), clazz);
     }
 
+    public static <T> List<T> getListForHash(String key, Class<T> clazz) {
+        List<T> result = new ArrayList<>();
+        Map<String, String> stringStringMap = entriesForHash(key);
+        Collection<String> values = stringStringMap.values();
+        for (String value : values) {
+            result.add(stringToObject(value, clazz));
+        }
+        return result;
+    }
+
     public static void putForHash(String key, String hashKey, Object value) {
         opsForHash().put(key, hashKey, objectToString(value));
     }
