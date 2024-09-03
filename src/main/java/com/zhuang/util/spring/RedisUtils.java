@@ -3,6 +3,7 @@ package com.zhuang.util.spring;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.zhuang.util.jackson.JacksonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,14 +156,14 @@ public class RedisUtils {
         } else if (value instanceof Date) {
             strValue = DateUtil.formatDateTime((Date) value);
         } else {
-            strValue = JacksonUtils.toJsonStr(value);
+            strValue = JSONUtil.toJsonStr(value);
         }
         return strValue;
     }
 
     private static <T> T stringToObject(String s, Class<T> clazz) {
         if (StrUtil.isEmpty(s)) return null;
-        return JacksonUtils.toBean(s, clazz);
+        return JSONUtil.toBean(s, clazz);
     }
 
 }
