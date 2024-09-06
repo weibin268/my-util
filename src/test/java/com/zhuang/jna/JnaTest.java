@@ -14,20 +14,19 @@ public class JnaTest {
     @Test
     public void DeleteFileA() {
         //System.setProperty("jna.library.path", "d:\\temp\\c");
-        Kernel32 kernel32 = (Kernel32) Native.loadLibrary("kernel32", Kernel32.class);
-        boolean b = kernel32.DeleteFileA("d:\\tmp\\c\\test.so");
+        boolean b = Kernel32.INSTANCE.DeleteFileA("d:\\tmp\\c\\test.so");
         System.out.println(b);
     }
 
     public interface Kernel32 extends Library {
+        Kernel32 INSTANCE = Native.load("kernel32", Kernel32.class);
         boolean DeleteFileA(String fileName);
     }
 
     @Test
     public void AdcpToolForWin() {
         System.setProperty("jna.library.path", "D:\\zhuang\\doc\\ADCP\\C++\\Debug");
-        AdcpToolForWin kernel32 = (AdcpToolForWin) Native.loadLibrary("AdcpToolForWin", AdcpToolForWin.class);
-        PointerByReference b = kernel32.AdcpToolRequest("AutoRating", " {\n" +
+        PointerByReference b = AdcpToolForWin.INSTANCE.AdcpToolRequest("AutoRating", " {\n" +
                 "            velocity:[], \n" +
                 "            velocityOnline:[], \n" +
                 "            waterOnline:[], \n" +
@@ -37,6 +36,7 @@ public class JnaTest {
     }
 
     public interface AdcpToolForWin extends Library {
+        AdcpToolForWin INSTANCE =  Native.load("AdcpToolForWin", AdcpToolForWin.class);
         PointerByReference AdcpToolRequest(String method, String jsonArgs);
     }
 }

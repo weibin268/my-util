@@ -337,7 +337,7 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>4.1.0</version>
+            <version>5.14.0</version>
             <scope>provided</scope>
         </dependency>
         <!--begin javacv-->
