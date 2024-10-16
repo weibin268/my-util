@@ -43,4 +43,10 @@ public class BigDecimalUtilsTest {
         System.out.println(BigDecimalUtils.avg(Arrays.asList(new BigDecimal("1.23"), new BigDecimal("4.33"), new BigDecimal("3.33"))));
     }
 
+
+    @Test
+    public void mid() {
+        System.out.println(BigDecimalUtils.mid(Arrays.asList(new BigDecimal("1.23"), new BigDecimal("4.33"), new BigDecimal("3.33"), new BigDecimal("3.34"))));
+    }
+
 }
