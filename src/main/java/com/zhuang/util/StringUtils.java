@@ -92,4 +92,46 @@ public class StringUtils {
         return result;
     }
 
+    public static String format2(String format, Object... args) {
+        StringBuilder result = new StringBuilder();
+        int argIndex = 0;
+        int formatIndex = 0;
+
+        while (formatIndex < format.length()) {
+            if (format.charAt(formatIndex) == '{') {
+                formatIndex++;
+                if (formatIndex < format.length() && format.charAt(formatIndex) == '}') {
+                    // 处理空占位符 {}
+                    if (argIndex < args.length) {
+                        result.append(args[argIndex++]);
+                    } else {
+                        throw new IllegalArgumentException("Not enough arguments for format string");
+                    }
+                    formatIndex++;
+                } else {
+                    // 处理带索引的占位符 {index}
+                    int endIndex = format.indexOf('}', formatIndex);
+                    if (endIndex == -1) {
+                        throw new IllegalArgumentException("Invalid format string");
+                    }
+                    String indexStr = format.substring(formatIndex, endIndex);
+                    int index = Integer.parseInt(indexStr);
+                    if (index < 0 || index >= args.length) {
+                        throw new IllegalArgumentException("Invalid argument index in format string");
+                    }
+                    result.append(args[index]);
+                    formatIndex = endIndex + 1;
+                }
+            } else {
+                result.append(format.charAt(formatIndex++));
+            }
+        }
+
+        if (argIndex < args.length) {
+            throw new IllegalArgumentException("Too many arguments for format string");
+        }
+
+        return result.toString();
+    }
+
 }
