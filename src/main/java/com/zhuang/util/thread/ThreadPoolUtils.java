@@ -27,6 +27,8 @@ public class ThreadPoolUtils {
                     // 线程工厂（threadFactory）：用于创建新线程的工厂
                     //new NamedThreadFactory("test-thread", false),
                     // 拒绝策略（handler）：当任务太多以至于无法及时处理时，线程池采取的策略
+                    //new ThreadPoolExecutor.CallerRunsPolicy() // 由调用方执行
+                    new ThreadPoolExecutor.DiscardPolicy()
                     //new ThreadPoolExecutor.DiscardPolicy()
                     ((r, executor) -> {
                         log.error("Thread pool rejected execution -> activeCount=" + executor.getActiveCount());

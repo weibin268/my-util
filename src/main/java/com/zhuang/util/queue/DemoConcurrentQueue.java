@@ -18,6 +18,7 @@ public class DemoConcurrentQueue {
     }
 
     public static Element poll() {
+        // 作用是从队列中移除并返回头部元素。如果队列为空，则返回null
         return QUEUE.poll();
     }
 
@@ -29,6 +30,11 @@ public class DemoConcurrentQueue {
             element = poll();
         }
         return result;
+    }
+
+    public static Element peek() {
+        // 用于查看队列的头部元素，但不会移除它。如果队列为空，则返回null
+        return QUEUE.peek();
     }
 
     public static int size() {

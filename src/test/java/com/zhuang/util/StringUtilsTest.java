@@ -33,6 +33,11 @@ public class StringUtilsTest {
     }
 
     @Test
+    public void format2() {
+        System.out.println(StringUtils.format2("{}a{}b", "1", "2"));
+    }
+
+    @Test
     public void trim() {
         System.out.println(StringUtils.trim("000B00A00", '0'));
         System.out.println(StringUtils.trim("@000B00A00!.", '!', '0', '.', '@'));

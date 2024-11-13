@@ -3,7 +3,9 @@ package com.zhuang.util;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -221,6 +223,26 @@ public class BigDecimalUtils {
         int size = numList.size();
         if (size == 0) return null;
         return divide(sum(numList), BigDecimal.valueOf(size), scale, roundingMode);
+    }
+
+    /**
+     *
+     * @param numList
+     * @return
+     */
+    public static BigDecimal mid(Collection<BigDecimal> numList){
+        ArrayList<BigDecimal> list = new ArrayList<>(numList);
+        Collections.sort(list);
+        int size = list.size();
+        if (size % 2 == 0) {
+            int midIndex1 = size / 2 - 1;
+            int midIndex2 = size / 2;
+            BigDecimal num1 = list.get(midIndex1);
+            BigDecimal num2 = list.get(midIndex2);
+            return num1.add(num2).divide(BigDecimal.valueOf(2));
+        } else {
+            return list.get(size / 2);
+        }
     }
 
     /**

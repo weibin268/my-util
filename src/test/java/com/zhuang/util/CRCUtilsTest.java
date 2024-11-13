@@ -23,4 +23,11 @@ public class CRCUtilsTest {
         System.out.println(String.format("%02x", b));
     }
 
+    @Test
+    public void getCRC7() {
+        // 680868 0044182301966101 CC16
+        byte crc7 = CRCUtils.getCRC7(ByteUtils.hexToBytes("0044182301966101"));
+        System.out.println(ByteUtils.bytesToHex(new byte[]{crc7}));
+    }
+
 }
