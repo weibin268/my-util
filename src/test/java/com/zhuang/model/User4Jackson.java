@@ -1,6 +1,7 @@
 package com.zhuang.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.zhuang.util.jackson.DecimalToStringSerializer;
@@ -18,6 +19,7 @@ public class User4Jackson {
     private BigDecimal height;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("job_title")
     private String jobTitle;
 
