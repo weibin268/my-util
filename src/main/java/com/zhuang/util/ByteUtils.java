@@ -288,6 +288,10 @@ public class ByteUtils {
             return ByteUtils.getUInt(bytes1, bo);
         }
 
+        public void skipBytes(int length) {
+            offset = offset + length;
+        }
+
         public void markOffset() {
             markedOffset = offset;
         }
