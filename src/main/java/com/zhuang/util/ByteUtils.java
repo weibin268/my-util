@@ -219,10 +219,12 @@ public class ByteUtils {
     public static class BytesReader {
         private byte[] bytes;
         private int offset;
+        private int markedOffset;
 
         public BytesReader(byte[] bytes) {
             this.bytes = bytes;
             this.offset = 0;
+            this.markedOffset = 0;
         }
 
         public byte[] getBytes(int length) {
@@ -284,6 +286,14 @@ public class ByteUtils {
         public long getUInt(ByteOrder bo) {
             byte[] bytes1 = getBytes(4);
             return ByteUtils.getUInt(bytes1, bo);
+        }
+
+        public void markOffset() {
+            markedOffset = offset;
+        }
+
+        public void resetOffset() {
+            offset = markedOffset;
         }
 
     }
