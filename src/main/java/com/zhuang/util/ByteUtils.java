@@ -186,12 +186,7 @@ public class ByteUtils {
         if (bytes == null) return null;
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {
-            String strBin = Integer.toBinaryString(b);
-            int lack = 8 - strBin.length();
-            if (lack > 0) {
-                strBin = repeat('0', lack) + strBin;
-            }
-            sb.append(strBin);
+            sb.append(String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0'));
         }
         return sb.toString();
     }
