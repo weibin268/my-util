@@ -11,6 +11,16 @@ import java.nio.charset.StandardCharsets;
 public class ByteUtilsTest {
 
     @Test
+    public void trick() {
+        int bin = 0b11110000;
+        System.out.println("0b11110000=" + bin);
+        int hex = 0xF0;
+        System.out.println("0xF0=" + hex);
+        byte[] bytes = ByteUtils.hexToBytes("F0");
+        System.out.println("byte(F0)&0xFF=" + (bytes[0] & 0xFF));
+    }
+
+    @Test
     public void getFloat() {
         try (InputStream inputStream = new FileInputStream("/Users/zhuang/Desktop/PP00004593_20220108104100float.data")) {
             while (inputStream.available() > 0) {
