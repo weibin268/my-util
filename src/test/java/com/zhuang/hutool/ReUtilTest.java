@@ -23,6 +23,23 @@ public class ReUtilTest {
     }
 
     @Test
+    public void findAll() {
+        int index = 0;
+        int length = 100;
+        String tpl1 = "{}.{}：{}";
+        String tpl2 = "原：{}\n新：{}";
+        System.out.println(StrUtil.repeat('-', length));
+
+        String title = "提取括号及里面的内容";
+        String pattern = "\\[(.*?)\\]";
+        String content = "aa[4452812005]bb[1234567890]cc";
+        System.out.println(StrUtil.format(tpl1, (++index), title, pattern));
+        String result = StrUtil.format("group0={},group1={}", String.join(",", ReUtil.findAll(pattern, content, 0)), String.join(",", ReUtil.findAll(pattern, content, 1)));
+        System.out.println(StrUtil.format(tpl2, content, result));
+        System.out.println(StrUtil.repeat('-', length));
+    }
+
+    @Test
     public void delAll() {
         int index = 0;
         int length = 100;
