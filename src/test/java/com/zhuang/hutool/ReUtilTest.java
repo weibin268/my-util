@@ -34,7 +34,7 @@ public class ReUtilTest {
         String pattern = "\\[(.*?)\\]";
         String content = "aa[4452812005]bb[1234567890]cc";
         System.out.println(StrUtil.format(tpl1, (++index), title, pattern));
-        String result = StrUtil.format("group0={},group1={}", String.join(",", ReUtil.findAll(pattern, content, 0)), String.join(",", ReUtil.findAll(pattern, content, 1)));
+        String result = StrUtil.format("group0={}、group1={}", String.join(",", ReUtil.findAll(pattern, content, 0)), String.join(",", ReUtil.findAll(pattern, content, 1)));
         System.out.println(StrUtil.format(tpl2, content, result));
         System.out.println(StrUtil.repeat('-', length));
     }
