@@ -36,7 +36,7 @@ public class ThreadPoolUtilsTest {
         IntStream.range(0, 100).forEach(i -> {
             ThreadUtil.sleep(100, TimeUnit.MILLISECONDS);
             Future<Integer> future = threadPoolExecutor.submit(() -> {
-                System.out.println("i=" + i);
+                System.out.println("[" + Thread.currentThread().getName() + "] i=" + i);
                 ThreadUtil.sleep(30, TimeUnit.SECONDS);
                 return i;
             });
@@ -44,7 +44,7 @@ public class ThreadPoolUtilsTest {
         });
         for (Future<Integer> future : futureList) {
             Integer i = future.get();
-            System.out.println("result:" + i);
+            System.out.println("[" + Thread.currentThread().getName() + "] result:" + i);
         }
         System.in.read();
     }
