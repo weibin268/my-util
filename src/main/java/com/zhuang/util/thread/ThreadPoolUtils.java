@@ -28,6 +28,7 @@ public class ThreadPoolUtils {
                     //new NamedThreadFactory("test-thread", false),
                     // 拒绝策略（handler）：当任务太多以至于无法及时处理时，线程池采取的策略
                     //new ThreadPoolExecutor.DiscardPolicy() // 不做任何处理
+                    //new ThreadPoolExecutor.AbortPolicy() // 抛出异常(submit报异常)
                     //new ThreadPoolExecutor.CallerRunsPolicy() // 由调用方执行
                     ((r, executor) -> {
                         log.error("Thread pool rejected execution -> activeCount=" + executor.getActiveCount());
