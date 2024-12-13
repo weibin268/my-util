@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 public class RestTemplateUtils {
 
     public static RestTemplate getRestTemplate() {
+        // 注意：这里的MyRestTemplate是线程不安全的
         return new MyRestTemplate(getHttpsRequestFactory());
     }
 
