@@ -8,10 +8,15 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.lang.Nullable;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -64,6 +69,38 @@ public class RestTemplateUtils {
         public <T> T getForObject(String url, Class<T> responseType, Object... uriVariables) throws RestClientException {
             try {
                 return super.getForObject(url, responseType, uriVariables);
+            } finally {
+                destroy();
+            }
+        }
+
+        @Override
+        public <T> ResponseEntity<T> getForEntity(String url, Class<T> responseType, Object... uriVariables)
+                throws RestClientException {
+            try {
+                return super.getForEntity(url, responseType, uriVariables);
+            } finally {
+                destroy();
+            }
+        }
+
+
+        @Override
+        public <T> ResponseEntity<T> postForEntity(String url, Object request, Class<T> responseType, Object... uriVariables)
+                throws RestClientException {
+            try {
+                return super.postForEntity(url, request, responseType, uriVariables);
+            } finally {
+                destroy();
+            }
+        }
+
+        @Override
+        public <T> ResponseEntity<T> exchange(String url, HttpMethod method,
+                                              HttpEntity<?> requestEntity, Class<T> responseType, Object... uriVariables) throws RestClientException {
+
+            try {
+                return super.exchange(url, method, requestEntity, responseType, uriVariables);
             } finally {
                 destroy();
             }
