@@ -8,8 +8,11 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.lang.Nullable;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
@@ -21,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 public class RestTemplateUtils {
 
     public static RestTemplate getRestTemplate() {
-        return new RestTemplate(getHttpsRequestFactory());
+        return new MyRestTemplate(getHttpsRequestFactory());
     }
 
     public static void setStringHttpMessageConverterAsUtf8(RestTemplate restTemplate) {
@@ -47,6 +50,31 @@ public class RestTemplateUtils {
             return factory;
         } catch (Exception e) {
             throw new RuntimeException("getHttpsRequestFactory fail!", e);
+        }
+    }
+
+    public static class MyRestTemplate extends RestTemplate {
+
+        public MyRestTemplate(ClientHttpRequestFactory requestFactory) {
+            super(requestFactory);
+        }
+
+        @Override
+        @Nullable
+        public <T> T getForObject(String url, Class<T> responseType, Object... uriVariables) throws RestClientException {
+            try {
+                return super.getForObject(url, responseType, uriVariables);
+            } finally {
+                destroy();
+            }
+        }
+
+        public void destroy() {
+            try {
+                ((HttpComponentsClientHttpRequestFactory) this.getRequestFactory()).destroy();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
