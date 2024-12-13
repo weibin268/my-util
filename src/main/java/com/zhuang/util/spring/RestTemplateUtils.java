@@ -14,9 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.lang.Nullable;
-import org.springframework.web.client.RequestCallback;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -65,7 +62,6 @@ public class RestTemplateUtils {
         }
 
         @Override
-        @Nullable
         public <T> T getForObject(String url, Class<T> responseType, Object... uriVariables) throws RestClientException {
             try {
                 return super.getForObject(url, responseType, uriVariables);
