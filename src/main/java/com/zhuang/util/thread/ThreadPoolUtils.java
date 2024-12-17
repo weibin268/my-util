@@ -34,6 +34,8 @@ public class ThreadPoolUtils {
                         log.error("Thread pool rejected execution -> activeCount=" + executor.getActiveCount());
                     })
             );
+            // 设置核心线程可以回收（线程空闲时间超过keepAliveTime就回收）
+            //threadPoolExecutor.allowCoreThreadTimeOut(true);
         }
         return threadPoolExecutor;
     }
