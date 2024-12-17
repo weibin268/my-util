@@ -12,7 +12,7 @@ public class ThreadPoolUtils {
     public static synchronized ThreadPoolExecutor getThreadPoolExecutor() {
         if (threadPoolExecutor == null) {
             threadPoolExecutor = new ThreadPoolExecutor(
-                    // 核心线程数（corePoolSize）：这是线程池中始终保持活动的线程数量，即使它们是空闲的，如果提交的任务数超过了核心线程数，那么额外的任务会被放入队列中等待
+                    // 核心线程数（corePoolSize）：用到时创建，用完空闲不会销毁（除非设置allowCoreThreadTimeOut=true），如果提交的任务数超过了核心线程数，那么额外的任务会被放入队列中等待
                     5,
                     // 最大线程数（maximumPoolSize）：如果队列已满且当前线程数小于最大线程数，线程池会创建新的线程来执行任务
                     10,
