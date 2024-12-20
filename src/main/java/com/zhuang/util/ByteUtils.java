@@ -203,6 +203,14 @@ public class ByteUtils {
         return hexString.toUpperCase();
     }
 
+    public static byte[] reverse(byte[] bytes) {
+        byte[] reversedBytes = new byte[bytes.length];
+        for (byte i = 0; i < bytes.length; i++) {
+            reversedBytes[bytes.length - 1 - i] = bytes[i];
+        }
+        return reversedBytes;
+    }
+
     public static BytesReader getBytesReader(byte[] bytes) {
         return new BytesReader(bytes);
     }
