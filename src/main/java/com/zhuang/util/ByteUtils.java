@@ -303,6 +303,9 @@ public class ByteUtils {
             offset = markedOffset;
         }
 
+        public int readableBytes() {
+            return bytes.length - offset;
+        }
     }
 
     public static class BytesWriter {
