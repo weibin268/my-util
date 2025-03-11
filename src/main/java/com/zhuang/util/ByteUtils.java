@@ -291,6 +291,15 @@ public class ByteUtils {
             return ByteUtils.getUInt(bytes1, bo);
         }
 
+        public float getFloat() {
+            return getFloat(DEFAULT_BYTE_ORDER);
+        }
+
+        public float getFloat(ByteOrder bo) {
+            byte[] bytes1 = getBytes(4);
+            return ByteUtils.getFloat(bytes1, bo);
+        }
+
         public void skipBytes(int length) {
             offset = offset + length;
         }
